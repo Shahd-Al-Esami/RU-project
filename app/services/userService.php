@@ -76,7 +76,6 @@ public static function restore($id) {
     return jsonTrait::jsonResponse(200, 'restored successfully', $deletedUser);
 }
 
-///////////////////////patient
 
 public static function getAllPatient(Request $request){
 
@@ -104,7 +103,6 @@ public static function allPendingDoctors() {
     // Fetch all pending doctors
     $pendingDoctors = User::where('role', 'doctor')->where('isAgreeDoctorRegistration','LIKE', 'pending')->get();
 
-    // Return a JSON response with the pending doctors
     return jsonTrait::jsonResponse(200, 'Pending doctors', $pendingDoctors);
 }
 

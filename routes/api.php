@@ -42,7 +42,7 @@ Route::get('/countBlockUser',[BlockedUserController::class,'countBlockUser'])->m
 Route::get('/patientBills/{id}',[BillController::class,'patientBills'])->middleware('auth:sanctum');
 Route::get('/monthBills',[BillController::class,'monthBills'])->middleware('auth:sanctum');
 Route::get('/addBillToDoctor/{doctor_id}',[BillController::class,'addBillToDoctor'])->middleware('auth:sanctum');
-Route::get('/countBill',[BillController::class,'countBill'])->middleware('auth:sanctum');
+Route::get('/countBills',[BillController::class,'countBills'])->middleware('auth:sanctum');
 
   // *****************************************************************
   //doctor

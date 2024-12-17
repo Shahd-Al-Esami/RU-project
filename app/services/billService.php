@@ -14,7 +14,7 @@ class billService
 
 use jsonTrait;
 //admin
-public static function monthBills(Request $request)
+public static function monthBills(Request $request)//to filter bills by year and month
     {
         $month=$request->input('month');
         $year=$request->input('year');
@@ -37,7 +37,8 @@ public static function monthBills(Request $request)
         return jsonTrait::jsonResponse(200,'All Bills of patient',$bills);
 
     }
-   public static function addBillToDoctor($doctor_id){
+   public static function addBillToDoctor($doctor_id) //doctorBill to admin
+   {
     $price=PlanOrder::where('doctor_id',$doctor_id)->select('price')->get();
      $total=$price->sum('price');
      $bill=40 * $total /100;
@@ -45,7 +46,7 @@ public static function monthBills(Request $request)
 
 
     }
-    public static function countBill(){
+    public static function countBills(){
    $bills=Bill::all();
      $countBills=count($bills);
     return jsonTrait::jsonResponse(200,'Bill for Admin',$countBills);

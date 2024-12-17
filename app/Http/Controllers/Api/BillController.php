@@ -29,9 +29,9 @@ class BillController extends Controller
 
         return response()->json(['message' => $result]);
     }
-    public  function countBill()
+    public  function countBills()
     {
-        $result = billService::countBill();
+        $result = billService::countBills();
 
         return response()->json(['message' => $result]);
     }
