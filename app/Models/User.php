@@ -12,21 +12,22 @@ use App\Models\Review;
 use App\Models\Comment;
 use App\Models\Suggest;
 use App\Models\PlanOrder;
+use App\Models\MonthBills;
 use App\Models\Appointment;
 use App\Models\BlockedUser;
 use App\Models\MonthReport;
 use App\Models\DoctorInformation;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\PatientInformation;
+use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
@@ -47,7 +48,8 @@ class User extends Authenticatable
         'image',
         'gender'
         ,'role',
-        'isAgreeDoctorRegistration'
+        'isAgreeDoctorRegistration',
+        'blocked'
     ];
 
     public function getAuthPasswordName(): string
@@ -133,6 +135,9 @@ class User extends Authenticatable
     }
     public function doctors(): BelongsToMany{
         return $this->belongsToMany(User::class,'follows','patient_id','doctor_id');
+    }
+    public function monthBills(): HasMany{
+        return $this->hasMany(MonthBills::class);
     }
 
 }

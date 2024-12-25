@@ -2,14 +2,19 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BillController;
+use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\PlanOrderController;
+use App\Http\Controllers\Api\MonthBillsController;
 use App\Http\Controllers\Api\BlockedUserController;
+use App\Http\Controllers\Api\DoctorInformationController;
 
 
-
+Route::get('/home', [HomeController::class, 'index']);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -41,9 +46,38 @@ Route::get('/countBlockUser',[BlockedUserController::class,'countBlockUser'])->m
 
 Route::get('/patientBills/{id}',[BillController::class,'patientBills'])->middleware('auth:sanctum');
 Route::get('/monthBills',[BillController::class,'monthBills'])->middleware('auth:sanctum');
-Route::get('/addBillToDoctor/{doctor_id}',[BillController::class,'addBillToDoctor'])->middleware('auth:sanctum');
-Route::get('/countBills',[BillController::class,'countBills'])->middleware('auth:sanctum');
+// Route::get('/addBillToDoctor/{doctor_id}',[BillController::class,'addBillToDoctor'])->middleware('auth:sanctum');
+
+
+Route::get('/countMonthBills',[MonthBillsController::class,'countMonthBills'])->middleware('auth:sanctum');
 
   // *****************************************************************
-  //doctor
+  //doctors
+
+  Route::get('/allPosts',[PostController::class,'allPosts'])->middleware('auth:sanctum');
+  Route::get('/doctorPosts/{doctor_id}',[PostController::class,'doctorPosts'])->middleware('auth:sanctum');
+  Route::get('/myPosts',[PostController::class,'myPosts'])->middleware('auth:sanctum');
+  Route::post('/storePost',[PostController::class,'storePost'])->middleware('auth:sanctum');
+  Route::post('/update/{id}',[PostController::class,'update'])->middleware('auth:sanctum');
+  Route::delete('/softDelete/post/{id}',[PostController::class,'softDelete'])->middleware('auth:sanctum');
+  Route::post('/restore/post/{id}',[PostController::class,'restore'])->middleware('auth:sanctum');
+  Route::get('/countMyPosts',[PostController::class,'countMyPosts'])->middleware('auth:sanctum');
+
+ Route::post('/store/comment/{post_id}',[CommentController::class,'store'])->middleware('auth:sanctum');
+  Route::post('/update/comment/{comment_id}',[CommentController::class,'update'])->middleware('auth:sanctum');
+  Route::delete('/delete/comment/{id}',[CommentController::class,'delete'])->middleware('auth:sanctum');
+  Route::get('/index/{post_id}',[CommentController::class,'index'])->middleware('auth:sanctum');
+  Route::get('/countPostComments/{post_id}',[CommentController::class,'countPostComments'])->middleware('auth:sanctum');//test
+
+
+  Route::get('/myProfile',[DoctorInformationController::class,'myProfile'])->middleware('auth:sanctum');
+  Route::post('/updateProfile',[DoctorInformationController::class,'updateProfile'])->middleware('auth:sanctum');
+  Route::post('/store/info',[DoctorInformationController::class,'store'])->middleware('auth:sanctum');
+
+
+
+
+
+
+
 

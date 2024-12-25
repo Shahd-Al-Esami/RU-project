@@ -4,8 +4,10 @@ namespace App\Models;
 
 use App\Models\Plan;
 use App\Models\User;
+use App\Models\MealWeek;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -20,4 +22,5 @@ class PlanOrder extends Model
      public function plan(): HasOne {
         return $this->hasOne(Plan::class);
      }
+  
 }

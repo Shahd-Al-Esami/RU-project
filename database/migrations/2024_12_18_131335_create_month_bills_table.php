@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('food_meals', function (Blueprint $table) {
+        Schema::create('month_bills', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('food_id')->constrained('foods')->onDelete('cascade');
-            $table->foreignId('meal_id')->constrained('meals')->onDelete('cascade');
-            $table->foreignId('plan_order_id')->constrained('plan_orders')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users');
+            $table->boolean('isPaid')->default(0);
+            $table->decimal('price',8,2);
+            $table->date('billing_date');
+
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('food_meals');
+        Schema::dropIfExists('month_bills');
     }
 };

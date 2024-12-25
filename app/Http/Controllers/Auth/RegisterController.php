@@ -71,22 +71,22 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $path=null;
-        if(request()->hasFile('image')){
-        $file=request()->file('image');
+    
 
-            $path = uploadImage($file, $data['role'] == 'doctor' ? 'doctors' : ($data['role'] == 'patient' ? 'patients' : 'admins'), 'public');
-        }
+
+         $path = uploadImage(request()->file('image'), $data['role'] == 'doctor' ? 'doctors' : ($data['role'] == 'patient' ? 'patients' : 'admins'), 'public');
+
+
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'country' => $data['country'],
-            'age' => $data['age'],
-            'gender' => $data['gender'],
+            'name'         => $data['name'],
+            'email'        => $data['email'],
+            'country'      => $data['country'],
+            'age'          => $data['age'],
+            'gender'       => $data['gender'],
             'phone_number' => $data['phone_number'],
-            'role' => $data['role'],
-            'image' =>$path,
-            'password' => Hash::make($data['password']),
+            'role'         => $data['role'],
+            'image'        =>$path,
+            'password'     => Hash::make($data['password']),
         ]);
 
    }

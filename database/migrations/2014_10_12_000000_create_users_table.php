@@ -16,15 +16,15 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('country')->nullable();
+            $table->string('country');
             $table->string('image')->nullable();
-            $table->string('age')->nullable();
+            $table->string('age');
             $table->boolean('blocked')->default(false);
 
-            $table->string('phone_number')->nullable();
-            $table->enum('gender',['male','female'])->nullable();
-            $table->enum('isAgreeDoctorRegistration',['pending','agree','disAgree'])->default('pending')->nullable();
-            $table->enum('role',['patient','doctor','admin'])->nullable();
+            $table->string('phone_number');
+            $table->enum('gender',['male','female']);
+            $table->enum('isAgreeDoctorRegistration',['pending','agree','disAgree'])->default('pending');
+            $table->enum('role',['patient','doctor','admin']);
             $table->timestamps();
             $table->softDeletes();
         });

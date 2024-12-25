@@ -26,6 +26,15 @@ public static function getAllPlanOrders(){
         $planOrder=PlanOrder::findOrfail($id);
        return jsonTrait::jsonResponse(200, ' plan orders  ', $planOrder);
     }
+//doctors
+
+public static function getPlanOrders(){
+    $id=auth()->user()->id;
+    $planOrders=PlanOrder::where('doctor_id',$id)->orderBy('created_at', 'DESC')->get();
+    return jsonTrait::jsonResponse(200, 'All plan orders  ', $planOrders);
+
+}
+
 
 
 }

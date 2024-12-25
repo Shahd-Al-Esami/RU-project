@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('plans', function (Blueprint $table) {
+        Schema::create('meal_weeks', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->enum('state',['modified','initial']);
+            $table->foreignId('week_id')->constrained('weeks');
+            $table->foreignId('meal_id')->constrained('meals');
+            $table->foreignId('ingredient_food_id')->constrained('ingredient_food');
+            $table->foreignId('plan_id')->constrained('plans');
             $table->foreignId('plan_order_id')->constrained('plan_orders')->onDelete('cascade');
-            $table->date('start_date');
-            $table->date('end_date');
+
+            $table->boolean('isDone')->default(0);
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('plans');
+        Schema::dropIfExists('meal_weeks');
     }
 };

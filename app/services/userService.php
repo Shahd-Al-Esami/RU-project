@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Models\PlanOrder;
 use Illuminate\Http\Request;
 use App\Http\Traits\jsonTrait;
 
@@ -105,6 +106,22 @@ public static function allPendingDoctors() {
 
     return jsonTrait::jsonResponse(200, 'Pending doctors', $pendingDoctors);
 }
+
+//doctors
+
+
+public static function myPatients(){
+    $id=auth()->user()->id;
+    $myPatientsIds=PlanOrder::where('doctor_id',$id)->pluck('patient_id');
+     $patients=User::whereIn('id',$myPatientsIds)->with('patientInformation')->get();
+    return jsonTrait::jsonResponse(200, ' doctor patients', $patients);
+
+}
+
+
+
+
+
 
 
 }

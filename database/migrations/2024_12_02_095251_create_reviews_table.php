@@ -16,8 +16,7 @@ return new class extends Migration
             $table->string('comment');
             $table->morphs('reviewable');
             $table->integer('rate')->min(1)->max(5);
-            $table->foreignId('doctor_id')->constrained('users');
-            $table->foreignId('patient_id')->constrained('users');
+            $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });
     }
