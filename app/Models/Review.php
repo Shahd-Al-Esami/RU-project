@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Review extends Model
 {
     use HasFactory;
-    protected $fillable=['patient_id','doctor_id','rate','comment','reviewable'];
+    protected $fillable=['reviewable_id','user_id','rate','comment','reviewable_type'];
 
 
 

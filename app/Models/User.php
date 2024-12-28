@@ -116,9 +116,7 @@ class User extends Authenticatable
     public function notes(): HasMany{
         return $this->hasMany(Note::class);
     }
-    public function monthReports(): HasMany{
-        return $this->hasMany(MonthReport::class);
-    }
+   
     public function appointments(): HasMany{
         return $this->hasMany(Appointment::class);
     }

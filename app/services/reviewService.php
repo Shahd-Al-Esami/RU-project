@@ -10,20 +10,42 @@ class reviewService
 
 use jsonTrait;
 //doctor
-public static function addReview(Request $request){
+public static function addPatientReview(Request $request,$patient_id){
 
+    $request->validate([
+        'rate' => 'required|integer|min:1|max:5',
+        'comment' => 'required|string|max:255',
+    ]);
   $review=Review::create([
     'comment'         => $request->comment,
     'rate'            => $request->rate,
     'user_id'         => auth()->user()->id,
-    'reviewable_id'   => $request->reviewable_id,
-    'reviewable_type' => $request->reviewable_type,
+    'reviewable_id'   => $patient_id,
+    'reviewable_type' => 'patient',
   ]);
 
     return jsonTrait::jsonResponse(200, 'review added successfully ', $review);
 
 }
 
+//patient
+public static function addPlanReview(Request $request,$plan_id){
+
+    $request->validate([
+        'rate' => 'required|integer|min:1|max:5',
+        'comment' => 'required|string|max:255',
+    ]);
+    $review=Review::create([
+      'comment'         => $request->comment,
+      'rate'            => $request->rate,
+      'user_id'         => auth()->user()->id,
+      'reviewable_id'   => $plan_id,
+      'reviewable_type' => 'plan',
+    ]);
+
+      return jsonTrait::jsonResponse(200, 'review added successfully ', $review);
+
+  }
 public static function getPlanReview($id){
 
      $review=Review::where('reviewable_type','plan')->where('reviewable_id',$id)->get();
@@ -39,21 +61,21 @@ public static function getPlansReviews(){
 
     }
 
- public static function getDoctorReview($id){
+    public static function getPatientReview($id){
 
-    $review=Review::where('reviewable_type','doctor')->where('reviewable_id',$id)->get();
+        $review=Review::where('reviewable_type','patient')->where('reviewable_id',$id)->get();
+       return jsonTrait::jsonResponse(200, 'review of the patient ', $review);
 
-    return jsonTrait::jsonResponse(200, 'reviews of the doctor ', $review);
+   }
 
- }
+//doctor
+public static function myReviewForMyPatients($id){
 
- public static function getDoctorsReviews(){
+    $id=auth()->user()->id;
+    $review=Review::where('user_id',$id)->get();
+   return jsonTrait::jsonResponse(200, 'review of my patients ', $review);
 
-     $review=Review::where('reviewable_type','doctor')->get();
-
-    return jsonTrait::jsonResponse(200, 'reviews of the doctors ', $review);
-
- }
+}
 
 
 }

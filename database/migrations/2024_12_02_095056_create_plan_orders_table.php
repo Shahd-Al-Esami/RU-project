@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('description');
             $table->text('goals');
             $table->boolean('isPaid')->default(0);
-            $table->float('price');
+            $table->float('price')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

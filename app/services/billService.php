@@ -31,32 +31,21 @@ public static function monthBills(Request $request)//to filter bills by year and
        return jsonTrait::jsonResponse(200, 'All Bills', $bills);
     }
 
-    public static function patientBills($id){
-        $bills=User::where('id',$id)->with('bills')->get();
-        return jsonTrait::jsonResponse(200,'All Bills of patient',$bills);
-
-    }
 
 
-//    public static function addBillToDoctor($doctor_id) //doctorBill to admin
-//    {
-//     $price=PlanOrder::where('doctor_id',$doctor_id)->select('price')->get();
-//      $total=$price->sum('price');
-//      $bill=40 * $total /100;
-//     return jsonTrait::jsonResponse(200,'Bill for Admin',$bill);
 
 
-//     }
 
 //doctor
 
-public static function patientsBills(){
-    $id=auth()->user()->id;
-    $myPatientsIds=PlanOrder::where('doctor_id',$id)->pluck('patient_id');
-     $bills=User::whereIn('id',$myPatientsIds)->with('bills')->get();
-    return jsonTrait::jsonResponse(200, ' bills of patients', $bills);
+
+
+public static function patientBills($id){
+    $bills=Bill::where('user_id',$id)->with('planOrder')->get();
+   return jsonTrait::jsonResponse(200,'All Bills of patient',$bills);
 
 }
+
 
 
 }

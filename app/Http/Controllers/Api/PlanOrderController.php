@@ -32,4 +32,32 @@ public function countPlans()
         return response()->json(['message' => $result]);
     }
 
+    public  function getPlanOrders()
+    {
+        $result = planOrderService::getPlanOrders();
+
+        return response()->json(['message' => $result]);
+    }
+
+
+    public  function countPlanOrders()
+    {
+        $result = planOrderService::countPlanOrders();
+
+        return response()->json(['message' => $result]);
+    }
+    public  function paid($planOrder_id)
+    {
+        $result = planOrderService::paid($planOrder_id);
+
+        return response()->json(['message' => $result]);
+    }
+
+    public  function addPrice(Request $request,$planOrder_id)
+    {
+        $result = planOrderService::addPrice($request,$planOrder_id);
+
+        return response()->json(['message' => $result]);
+    }
+
 }

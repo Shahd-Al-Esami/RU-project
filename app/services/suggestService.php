@@ -15,11 +15,11 @@ public static function getSuggests($plan_id){
   return jsonTrait::jsonResponse(200,'all suggests of this plan',$suggests);
 }
 
-public static function patientSuggests($id)
+public static function patientSuggests()
 {
-
+    $id=auth()->user()->id;
     $suggests=User::where('id',$id)->with('suggests')->get();
-    return jsonTrait::jsonResponse(200,'all suggests of this patient',$suggests);
+    return jsonTrait::jsonResponse(200,'all  my suggests ',$suggests);
 
 }
 

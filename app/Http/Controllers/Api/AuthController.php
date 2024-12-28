@@ -36,13 +36,20 @@ class AuthController extends Controller
      */
     public function login(LoginRequest $request)
     {
-        $user = User::where('email', $request->email)->first();
+        $user = User::withTrashed()->where('email', $request->email)->first();
 
-        if ($user && Hash::check($request->password, $user->password)) {
-            
-
+        // Check if user exists
+        if (!$user) {
+            return $this->jsonResponse(404, 'User not found');
+        }
+ // Restore the user if they are soft-deleted
+ if ($user->trashed()) {
+    $user->restore();
+}
+        if (Hash::check($request->password, $user->password)) {
             // Create and return token with user information
             $token = $user->createToken('YourAppName')->plainTextToken;
+
             return $this->jsonResponse(200, 'success', ['token' => $token, 'user' => $user]);
         }
 

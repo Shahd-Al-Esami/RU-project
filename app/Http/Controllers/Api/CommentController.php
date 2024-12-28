@@ -33,6 +33,12 @@ class CommentController extends Controller
 
         return response()->json(['message' => $result]);
     }
+    // public  function indexOnlyComments($post_id)
+    // {
+    //     $result = commentService::indexOnlyComments($post_id);
+
+    //     return response()->json(['message' => $result]);
+    // }
     public  function countPostComments($post_id)
     {
         $result = commentService::countPostComments($post_id);

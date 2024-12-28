@@ -20,7 +20,7 @@ public static function updateNote(Request $request,$patient_id,$id)
          $note->update([
              'doctor_id' => $id,
              'patient_id' => $patient_id,
-              'description' => $request->desription,
+              'description' => $request->description,
              ]);
     return jsonTrait::jsonResponse(200,'update note',$note);
 
@@ -31,20 +31,22 @@ public static function updateNote(Request $request,$patient_id,$id)
     $note=Note::create([
     'doctor_id' => $id,
     'patient_id' => $patient_id,
-    'description' => $request->desription,
+    'description' => $request->description,
          ]);
     return jsonTrait::jsonResponse(200,'note:',$note);
 
     }
-    public static function deleteNote(Note $note)
+    public static function deleteNote($id)
     {
+       $note=Note::findOrFail($id);
        $note->delete();
     return jsonTrait::jsonResponse(200,'delete note',null);
 
     }
 
     public static function allNotesOfPatient($id){
-      $notes=User::where('id',$id)->with('notes')->get();
+        $doc_id=auth()->user()->id;
+     $notes=Note::where('patient_id',$id)->where('doctor_id',$doc_id)->get();
      return jsonTrait::jsonResponse(200,'all notes of this patient',$notes);
 
     }

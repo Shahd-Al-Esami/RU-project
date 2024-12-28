@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('month_bills', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('user_id')->constrained('users');//for doctor
             $table->boolean('isPaid')->default(0);
             $table->decimal('price',8,2);
             $table->date('billing_date');

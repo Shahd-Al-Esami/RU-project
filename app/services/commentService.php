@@ -15,17 +15,23 @@ use jsonTrait;
 //doctor && patient
 public static function store(Request $request,$post_id)
     {
+        $reply=$request->input('replyComment_id');
      $comment=Comment::create([
         'description' =>$request->description,
         'patient_id' =>auth()->user()->id,
         'post_id' =>$post_id,
     ]);
 
+    if($reply){
+      $comment->replyComment_id=$reply;
+      $comment->save();
+    }
     return jsonTrait::jsonResponse(200,'add comment',$comment);
 
     }
     public static function update(Request $request,$comment_id)
     {
+
         $comment = Comment::findOrFail($comment_id); // Corrected to find the comment by ID
         $post_id=$comment->post_id;
        $comment->update([
@@ -33,6 +39,8 @@ public static function store(Request $request,$post_id)
         'patient_id' =>auth()->user()->id,
         'post_id' =>$post_id,
     ]);
+
+
     return jsonTrait::jsonResponse(200,'update comment',$comment);
 
     }
@@ -50,6 +58,12 @@ public static function store(Request $request,$post_id)
 
     }
 
+    // public static function indexOnlyComments($post_id)
+    // {
+    // $comments=Comment::where('post_id',$post_id)->where('replyComment_id',0)->get();
+    // return jsonTrait::jsonResponse(200,'disply  comments of this post',$comments);
+
+    // }
     public static function countPostComments($post_id)
     {
     $comments=Comment::where('post_id',$post_id)->get();

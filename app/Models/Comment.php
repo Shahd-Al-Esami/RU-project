@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Comment extends Model
 {
     use HasFactory;
-    protected $fillable=['patient_id','post_id','description'];
+    protected $fillable=['patient_id','post_id','description','replyComment_id'];
     public function user(): BelongsTo{
         return $this->belongsTo(User::class);
     }

@@ -38,9 +38,9 @@ public static function getDoctor($id){
 
         if($search){
 
-            $doctors=User::where('role','doctor')->where('name', 'LIKE', '%' . $search . '%')->with( 'doctorInformation')->get();
+            $doctors=User::where('role','doctor')->where('name', 'LIKE', '%' . $search . '%')->get();
         }else{
-        $doctors=User::where('role','doctor')->with( 'doctorInformation')->get();
+        $doctors=User::where('role','doctor')->get();
         }
       return jsonTrait::jsonResponse(200, 'doctors with their information', $doctors);
 
@@ -83,9 +83,9 @@ public static function getAllPatient(Request $request){
     $search=$request->input('search');
 
     if($search){
-    $patients=User::where('role','patient')->where('name', 'LIKE', '%' . $search . '%')->with( 'PatientInformation')->get();
+    $patients=User::where('role','patient')->where('name', 'LIKE', '%' . $search . '%')->get();
     }
-    $patients=User::where('role','patient')->with( 'PatientInformation')->get();
+    $patients=User::where('role','patient')->get();
 
     return jsonTrait::jsonResponse(200, 'restored successfuly', $patients);
 
@@ -111,15 +111,34 @@ public static function allPendingDoctors() {
 
 
 public static function myPatients(){
-    $id=auth()->user()->id;
-    $myPatientsIds=PlanOrder::where('doctor_id',$id)->pluck('patient_id');
-     $patients=User::whereIn('id',$myPatientsIds)->with('patientInformation')->get();
-    return jsonTrait::jsonResponse(200, ' doctor patients', $patients);
+    $id = auth()->user()->id;
+    $myPatientsIds = PlanOrder::where('doctor_id', $id)->pluck('patient_id')->all();
 
+    $patients = User::whereIn('id', $myPatientsIds)->get();
+
+    return jsonTrait::jsonResponse(200, 'doctor patients', $patients);
+}
+public static function getPatientWithInfo($id){
+
+    $patient = User::where('id', $id)->with('patientInformation')->firstOrFail();
+
+
+    return jsonTrait::jsonResponse(200, 'patient with details', $patient);
 }
 
+public static function softDeleteMe()//الغاء تنشيط حسابي
+{
+    $id=auth()->user()->id;
+    $user=User::findOrfail($id);
+    $token = $user->currentAccessToken();
+    if ($token) {
+        $token->delete();
+    }
+    $user->delete();
 
 
+    return jsonTrait::jsonResponse(200, ' Deleted successfully and logout', null);
+}
 
 
 

@@ -6,7 +6,9 @@ use App\Models\Review;
 use App\Models\Suggest;
 use App\Models\MealWeek;
 use App\Models\PlanOrder;
+use App\Models\DescriptionPlan;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -25,8 +27,8 @@ class Plan extends Model
     public function planOrder(): BelongsTo{
         return $this->belongsTo(PlanOrder::class);
      }
-     public function mealWeeks(): HasMany {
-        return $this->hasMany(MealWeek::class);
+     public function descriptionPlan(): HasOne {
+        return $this->hasOne(DescriptionPlan::class);
      }
      public function suggests(): HasMany{
         return $this->hasMany(Suggest::class);

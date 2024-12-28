@@ -11,12 +11,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Report extends Model
 {
     use HasFactory;
-    protected $fillable=['plan_id','doctor_id','monthRepost_id','recommended','filePath','date','description','title','patient_id'];
+    protected $fillable=['plan_id','doctor_id','recommended','filePath','date','description','title','patient_id'];
 
     public function user(): BelongsTo{
         return $this->belongsTo(User::class);
      }
-     public function monthReport(): BelongsTo{
-        return $this->belongsTo(MonthReport::class);
-     }
+
 }

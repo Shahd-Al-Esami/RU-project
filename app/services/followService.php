@@ -4,6 +4,8 @@ namespace App\Services;
 
 
 
+use App\Models\Post;
+use App\Models\User;
 use App\Models\Follow;
 use App\Http\Traits\jsonTrait;
 
@@ -14,9 +16,16 @@ use jsonTrait;
 //doctor
 public static function getfollows(){
     $id=auth()->user()->id;
-  $follows=Follow::where('doctor_id',$id)->get();
-  return jsonTrait::jsonResponse(200,'all follows ',$follows);
+  $follows=Follow::where('doctor_id',$id)->pluck('patient_id')->all();
+  $users=User::whereIn('id',$follows)->get();
+  return jsonTrait::jsonResponse(200,'all users who follow for me ',$users);
 
+}
+
+public static function countfollows(){
+    $id = auth()->user()->id;
+    $count = Follow::where('doctor_id', $id)->count();
+    return jsonTrait::jsonResponse(200, 'count follows for me', $count);
 }
 
 //patient
@@ -36,8 +45,14 @@ public static function followDoctor($doctor_id)
         'patient_id' => $patient_id,
         'doctor_id' => $doctor_id,
     ]);
+       // Fetch the last 10 posts from the followed doctor
+       $posts = Post::where('doctor_id', $doctor_id)
+       ->orderBy('created_at', 'desc')
+       ->take(10)
+       ->get();
 
-    return jsonTrait::jsonResponse(200, 'Successfully followed the doctor', $follow);
+    return jsonTrait::jsonResponse(200, 'Successfully followed the doctor',
+    ['follow'=>$follow,'posts'=>$posts]);
 }
 
 }

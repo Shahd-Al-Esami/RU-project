@@ -70,7 +70,7 @@ public static function doctorPosts ($doctor_id){
             ]);
             return jsonTrait::jsonResponse(200, 'Updated post successfully', $post);
         }
-    public static function softDelete( $id){
+    public static function softDelete($id){
        $post= Post::findOrfail($id);
 
        $post->delete();
@@ -85,6 +85,10 @@ public static function doctorPosts ($doctor_id){
         return jsonTrait::jsonResponse(200, 'Restored post successfully', $post);
     }
 
+    public static function getDeletedPosts(){
+        $posts = Post::onlyTrashed()->get();
 
+        return jsonTrait::jsonResponse(200, 'Retrieved deleted posts successfully', $posts);
+    }
 
 }

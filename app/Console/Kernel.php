@@ -12,7 +12,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('generate:monthly-bills')->monthly(); // جدولة المهمة لتعمل شهريًا
+        $schedule->command('app:generate-monthly-bills')->everyTenSeconds(); // جدولة المهمة لتعمل شهريًا
     }
 
     /**

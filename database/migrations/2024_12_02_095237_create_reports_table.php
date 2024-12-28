@@ -18,9 +18,8 @@ return new class extends Migration
             $table->date('date');
             $table->string('filePath');
             $table->text('recommended');
-            $table->foreignId('monthReport_id')->constrained('month_reports');
             $table->foreignId('doctor_id')->constrained('users');
-            
+
             $table->foreignId('patient_id')->constrained('users');
             $table->foreignId('plan_id')->constrained('plans')->cascadeOnDelete();
             $table->softDeletes();

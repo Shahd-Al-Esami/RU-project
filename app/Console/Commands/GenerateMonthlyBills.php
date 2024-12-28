@@ -21,7 +21,7 @@ class GenerateMonthlyBills extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Generate monthly bills for doctors';
 
     /**
      * Execute the console command.
@@ -34,14 +34,15 @@ class GenerateMonthlyBills extends Command
         foreach ($users as $user) {
 
             $doctor_id=$user->id;
+            
             $total = PlanOrder::where('doctor_id', $doctor_id)->sum('price'); //لنجمع اسعار كل الخطط اللي مشتغلها الطبيب
 
-            $bill=0.4 * $total ;//40% من فاتورة الطبيب للادمن
+            $bill= 0.4 * $total ; // 40 % من فاتورة الطبيب للادمن
 
             MonthBills::create([
-                'user_id' => $doctor_id,
-                'isPaid' => false,
-                'price' => $bill,
+                'user_id'    => $doctor_id,
+                'isPaid'     => false,
+                'price'      => $bill,
                 'billing_date' => now(),
             ]);
     }

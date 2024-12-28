@@ -54,6 +54,15 @@ public  function countUser(){
         return response()->json(['message' => $result]);
     }
 
+    public function softDeleteMe()//الغاء تنشيط
+    {
+
+        $result = userService::softDeleteMe();
+
+
+        return response()->json(['message' => $result]);
+    }
+
     public function deletedUsers()
     {
         $result = userService::deletedUsers();
@@ -89,5 +98,20 @@ public  function countUser(){
         return response()->json(['message' => $result]);
     }
 
+    //doctor
 
+  public function myPatients()
+    {
+        $result = userService::myPatients();
+
+        return response()->json(['message' => $result]);
+    }
+
+
+  public function getPatientWithInfo($id)
+  {
+      $result = userService::getPatientWithInfo($id);
+
+      return response()->json(['message' => $result]);
+  }
 }

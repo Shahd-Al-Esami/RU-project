@@ -60,4 +60,10 @@ class PostController extends Controller
 
         return response()->json(['message' => $result]);
     }
+    public  function getDeletedPosts()
+    {
+        $result = postService::getDeletedPosts();
+
+        return response()->json(['message' => $result]);
+    }
 }

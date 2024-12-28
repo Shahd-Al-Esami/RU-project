@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Bill;
 use App\Models\Plan;
 use App\Models\User;
 use App\Models\MealWeek;
@@ -22,5 +23,8 @@ class PlanOrder extends Model
      public function plan(): HasOne {
         return $this->hasOne(Plan::class);
      }
-  
+     public function bill(): HasOne {
+        return $this->hasOne(Bill::class);
+     }
+
 }
