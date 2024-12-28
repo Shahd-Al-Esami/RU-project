@@ -41,9 +41,9 @@ class ReviewController extends Controller
 
         return response()->json(['message' => $result]);
     }
-    public  function myReviewForMyPatients($id)
+    public  function myReviewForMyPatients()
     {
-        $result = reviewService::myReviewForMyPatients($id);
+        $result = reviewService::myReviewForMyPatients();
 
         return response()->json(['message' => $result]);
     }

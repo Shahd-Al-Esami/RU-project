@@ -169,7 +169,7 @@ Route::get('/foodIngredient/{id}',[FoodController::class,'foodIngredient'])->mid
   Route::get('/getPlanReview/{id}',[ReviewController::class,'getPlanReview'])->middleware('auth:sanctum');
   Route::get('/getPlansReviews',[ReviewController::class,'getPlansReviews'])->middleware('auth:sanctum');
   Route::get('/getPatientReview/{id}',[ReviewController::class,'getPatientReview'])->middleware('auth:sanctum');
-  Route::get('/myReviewForMyPatients/{id}',[ReviewController::class,'myReviewForMyPatients'])->middleware('auth:sanctum');
+  Route::get('/myReviewForMyPatients',[ReviewController::class,'myReviewForMyPatients'])->middleware('auth:sanctum');
 
 
 
