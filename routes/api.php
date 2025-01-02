@@ -86,18 +86,24 @@ Route::get('/getPlansReviews',[ReviewController::class,'getPlansReviews'])->midd
   // *****************************************************************
   //doctors
 
+  
   Route::post('/login',[AuthController::class,'login']);//تنشيط الحساب
-  Route::delete('/softDeleteMe',[UserController::class,'softDeleteMe'])->middleware('auth:sanctum');//الغاء تنشيط الحساب
 
-  Route::post('/storePlan/{plan_order_id}',[PlanController::class,'storePlan'])->middleware('auth:sanctum');
-  Route::post('/updatePlan/{plan_order_id}/{plan_id}',[PlanController::class,'updatePlan'])->middleware('auth:sanctum');
-  Route::delete('/deletePlan/{id}',[PlanController::class,'deletePlan'])->middleware('auth:sanctum');
+  Route::middleware(['auth:sanctum','isAgreeDoctor'])->group(function(){
+
+    Route::post('/storePlan/{plan_order_id}',[PlanController::class,'storePlan'])->middleware('auth:sanctum');
+    Route::post('/updatePlan/{plan_order_id}/{plan_id}',[PlanController::class,'updatePlan'])->middleware('auth:sanctum');
+    Route::delete('/deletePlan/{id}',[PlanController::class,'deletePlan'])->middleware('auth:sanctum');
+
+
+
+  Route::delete('/softDeleteMe',[UserController::class,'softDeleteMe'])->middleware('auth:sanctum');//الغاء تنشيط الحساب
 
 
   Route::get('/allPosts',[PostController::class,'allPosts']);
   Route::get('/doctorPosts/{doctor_id}',[PostController::class,'doctorPosts'])->middleware('auth:sanctum');
   Route::get('/myPosts',[PostController::class,'myPosts'])->middleware('auth:sanctum');
-  Route::post('/storePost',[PostController::class,'storePost'])->middleware('auth:sanctum');
+  Route::post('/storePost',[PostController::class,'storePost'])->middleware(['BlockUser','auth:sanctum']);//if was not blocked
   Route::post('/update/{id}',[PostController::class,'update'])->middleware('auth:sanctum');
   Route::delete('/softDelete/post/{id}',[PostController::class,'softDelete'])->middleware('auth:sanctum');
   Route::post('/restore/post/{id}',[PostController::class,'restore'])->middleware('auth:sanctum');
@@ -178,6 +184,8 @@ Route::get('/getPlansReviews',[ReviewController::class,'getPlansReviews'])->midd
 
   Route::get('/getAppointments',[AppointmentController::class,'getAppointments'])->middleware('auth:sanctum');
 
+  });
+
 
 //   *********************************************************************************
 
@@ -200,7 +208,7 @@ Route::get('/getPlansReviews',[ReviewController::class,'getPlansReviews'])->midd
 
 
 
- Route::post('/store/comment/{post_id}',[CommentController::class,'store'])->middleware('auth::sanctum');
+ Route::post('/store/comment/{post_id}',[CommentController::class,'store'])->middleware(['BlockUser','auth:sanctum']);//if was not blocked
  Route::post('/update/comment/{comment_id}',[CommentController::class,'update'])->middleware('auth::sanctum');
  Route::delete('/delete/comment/{id}',[CommentController::class,'delete'])->middleware('auth::sanctum');
  Route::get('/index/{post_id}',[CommentController::class,'index']);
@@ -248,3 +256,5 @@ Route::get('/getPlansReviews',[ReviewController::class,'getPlansReviews'])->midd
   Route::post('/bookAppointment',[AppointmentController::class,'bookAppointment'])->middleware('auth:sanctum');
   Route::get('/getAvailable/{doctor_id}/{day}/{date}',[AppointmentController::class,'getAvailable'])->middleware('auth:sanctum');
   Route::get('/myAppointments',[AppointmentController::class,'myAppointments'])->middleware('auth:sanctum');
+
+
