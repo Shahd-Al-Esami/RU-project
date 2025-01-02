@@ -49,6 +49,7 @@ public static function deleteDescriptionPlan($id){
       return jsonTrait::jsonResponse(200,'delete description of Plan ',null);
 
     }
+    
 //for patient
     public static function isDone($id){
         $descriptionPlan=DescriptionPlan::findOrFail($id);
@@ -68,6 +69,7 @@ public static function deleteDescriptionPlan($id){
 
             }
             public static function index($id){
+                
                 $descriptionPlan=DescriptionPlan::where('plan_id',$id)->get();
 
 

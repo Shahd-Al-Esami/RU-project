@@ -46,6 +46,17 @@ public static function addPlanReview(Request $request,$plan_id){
       return jsonTrait::jsonResponse(200, 'review added successfully ', $review);
 
   }
+
+
+  public static function getReview(){
+
+    $id=auth()->user()->id;
+    $review=Review::where('user_id',$id)->where('reviewable_type','plan')->get();
+
+    return jsonTrait::jsonResponse(200, 'show review of the plan ', $review);
+
+}
+
   //doctor
 public static function getPlanReview($id){
 

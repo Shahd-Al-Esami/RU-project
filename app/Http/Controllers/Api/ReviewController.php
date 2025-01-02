@@ -15,12 +15,7 @@ class ReviewController extends Controller
         return response()->json(['message' => $result]);
     }
 
-    public  function addPlanReview(Request $request,$plan_id)
-    {
-        $result = reviewService::addPlanReview($request,$plan_id);
 
-        return response()->json(['message' => $result]);
-    }
 
     public  function getPlanReview($id)
     {
@@ -47,4 +42,19 @@ class ReviewController extends Controller
 
         return response()->json(['message' => $result]);
     }
+//patient
+    public  function getReview()
+    {
+        $result = reviewService::getReview();
+
+        return response()->json(['message' => $result]);
+    }
+
+    public  function addPlanReview(Request $request,$plan_id)
+    {
+        $result = reviewService::addPlanReview($request,$plan_id);
+
+        return response()->json(['message' => $result]);
+    }
+
 }

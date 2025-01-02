@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Bill;
 use App\Models\PlanOrder;
 use Illuminate\Http\Request;
 use App\Http\Traits\jsonTrait;
@@ -56,8 +57,14 @@ public static function addPrice(Request $request,$planOrder_id){
 
 //for patient to paid for this plan order
 
-public static function paid($planOrder_id){
+public static function paid($planOrder_id,Request $request){
+   $user_id=auth()->user()->id;
+    $bill=Bill::create([
+        'planOrder_id'=>$planOrder_id,
+        'user_id'=>$user_id,
+        'payment_method'=>$request->payment_method,
 
+    ]);
     $planOrder=PlanOrder::findOrFail($planOrder_id);
      // Check if the plan order is already paid
      if ($planOrder->isPaid) {
@@ -69,4 +76,39 @@ public static function paid($planOrder_id){
     return jsonTrait::jsonResponse(200, 'done paid successfully', );
 
 }
+
+
+//patient
+public static function myOrdersPlans(){
+    $id=auth()->user()->id;
+    $planOrders=PlanOrder::where('patient_id',$id)->get();
+    return jsonTrait::jsonResponse(200, 'my plan orders',$planOrders );
+
+}
+
+
+public static function storePlanOrder(Request $request){
+$patient_id=auth()->user()->id;
+    $planOrder=PlanOrder::create([
+    'description'         =>$request->description,
+    'goals'               =>$request->goals,
+    'patient_id'          =>$patient_id,
+    'doctor_id'           =>$request->doctor_id,
+     ]);
+
+    return jsonTrait::jsonResponse(200,'store plan order ',$planOrder);
+
+  }
+
+  public static function updatePlanOrder(Request $request,$id){
+        $planOrder=PlanOrder::findOrfail($id);
+        $planOrder->update([
+        'description'         =>$request->description,
+        'goals'               =>$request->goals,
+        'doctor_id'           =>$request->doctor_id,
+         ]);
+
+        return jsonTrait::jsonResponse(200,'update plan order ',$planOrder);
+
+      }
 }

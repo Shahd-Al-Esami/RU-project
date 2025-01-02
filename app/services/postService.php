@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use App\Models\Post;
+use App\Models\Follow;
 use Illuminate\Http\Request;
 use App\Http\Traits\jsonTrait;
 use Illuminate\Support\Facades\Log;
@@ -16,11 +17,7 @@ $posts=Post::with(['comments','likes'])->orderBy('created_at', 'DESC')->get();
 return jsonTrait::jsonResponse(200, 'All posts with comments  ', $posts);
 
 }
-public static function doctorPosts ($doctor_id){
-    $posts=Post::with(['comments','likes'])->where( 'doctor_id', $doctor_id)->orderBy('created_at','DESC')->get();
-    return jsonTrait::jsonResponse(200, 'All posts of doctor with comments  ', $posts);
 
-    }
 
     public static function myPosts (){
         $id=auth()->user()->id;
@@ -90,5 +87,24 @@ public static function doctorPosts ($doctor_id){
 
         return jsonTrait::jsonResponse(200, 'Retrieved deleted posts successfully', $posts);
     }
+
+    //patient
+    public static function doctorPosts ($doctor_id){
+        $posts=Post::with(['comments','likes'])->where( 'doctor_id', $doctor_id)->orderBy('created_at','DESC')->get();
+        return jsonTrait::jsonResponse(200, 'All posts of doctor with comments  ', $posts);
+
+        }
+
+
+    public static function homePosts (){
+        $id=auth()->user()->id;
+
+        $doctor_ids= Follow::where('patient_id',$id)->pluck('doctor_id')->all();
+
+        $posts=Post::whereIn('doctor_id',$doctor_ids)->latest()->take(10)->get();
+
+        return jsonTrait::jsonResponse(200, 'Latest 10 posts from followed doctors ', $posts);
+
+        }
 
 }

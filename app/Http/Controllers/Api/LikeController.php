@@ -21,10 +21,16 @@ class LikeController extends Controller
 
         return response()->json(['message' => $result]);
     }
-
+//patient
       public  function createLike($post_id)
     {
         $result = likeService::createLike( $post_id);
+
+        return response()->json(['message' => $result]);
+    }
+    public  function disLike($post_id)
+    {
+        $result = likeService::disLike($post_id);
 
         return response()->json(['message' => $result]);
     }

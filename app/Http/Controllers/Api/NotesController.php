@@ -33,4 +33,11 @@ class NotesController extends Controller
 
         return response()->json(['message' => $result]);
     }
+
+    public  function myNotes()
+    {
+        $result = notesService::myNotes();
+
+        return response()->json(['message' => $result]);
+    }
 }

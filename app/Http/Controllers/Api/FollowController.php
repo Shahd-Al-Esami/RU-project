@@ -15,15 +15,31 @@ class FollowController extends Controller
 
         return response()->json(['message' => $result]);
     }
+ 
+    public  function countfollows()
+    {
+        $result = followService::countfollows();
+
+        return response()->json(['message' => $result]);
+    }
+//patient
     public  function followDoctor($doctor_id)
     {
         $result = followService::followDoctor( $doctor_id);
 
         return response()->json(['message' => $result]);
     }
-    public  function countfollows()
+
+    public  function disfollowDoctor($doctor_id)
     {
-        $result = followService::countfollows();
+        $result = followService::disfollowDoctor( $doctor_id);
+
+        return response()->json(['message' => $result]);
+    }
+
+    public  function myFollowers()
+    {
+        $result = followService::myFollowers();
 
         return response()->json(['message' => $result]);
     }

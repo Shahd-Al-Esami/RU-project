@@ -31,25 +31,22 @@ public static function getDoctor($id){
 
 
 
-
+// patient+admin
      public static function getAllDoctors(Request $request){
 
         $search=$request->input('search');
 
         if($search){
 
-            $doctors=User::where('role','doctor')->where('name', 'LIKE', '%' . $search . '%')->get();
+        $doctors=User::where('role','doctor')->where('isAgreeDoctorRegistration','agree')->where('name', 'LIKE', '%' . $search . '%')->get();
         }else{
-        $doctors=User::where('role','doctor')->get();
+        $doctors=User::where('role','doctor')->where('isAgreeDoctorRegistration','agree')->get();
         }
       return jsonTrait::jsonResponse(200, 'doctors with their information', $doctors);
 
     }
 
-
-
-
-
+//admin
     public static function getDoctorWithPatients($id){
         $doctor = User::findOrFail($id);
         $hisPatients = $doctor->planOrders->pluck('patient_id');
@@ -126,6 +123,7 @@ public static function getPatientWithInfo($id){
     return jsonTrait::jsonResponse(200, 'patient with details', $patient);
 }
 
+//patient+admin +doctor
 public static function softDeleteMe()//الغاء تنشيط حسابي
 {
     $id=auth()->user()->id;

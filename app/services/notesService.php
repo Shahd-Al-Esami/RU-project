@@ -50,4 +50,12 @@ public static function updateNote(Request $request,$patient_id,$id)
      return jsonTrait::jsonResponse(200,'all notes of this patient',$notes);
 
     }
+
+    //patient
+public static function myNotes(){
+    $id=auth()->user()->id;
+    $notes=Note::where('patient_id',$id)->get();
+    return jsonTrait::jsonResponse(200, 'my notes',$notes );
+
+}
 }

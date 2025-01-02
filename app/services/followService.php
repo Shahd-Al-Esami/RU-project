@@ -55,4 +55,31 @@ public static function followDoctor($doctor_id)
     ['follow'=>$follow,'posts'=>$posts]);
 }
 
+
+public static function disfollowDoctor($doctor_id)
+{
+    $patient_id = auth()->user()->id;
+
+    $Follow = Follow::where('patient_id', $patient_id)
+        ->where('doctor_id', $doctor_id)
+        ->first();
+
+    if ($Follow) {
+        $Follow->delete();
+        return jsonTrait::jsonResponse(400, ' unfollowing this doctor');
+    }
+
+    return jsonTrait::jsonResponse(200, 'already unfollowed the doctor',
+    );
+}
+
+
+public static function myFollowers(){
+    $id=auth()->user()->id;
+    $doctors=Follow::where('patient_id',$id)->get();
+
+
+    return jsonTrait::jsonResponse(200,'all doctors following ',$doctors);
+
+}
 }

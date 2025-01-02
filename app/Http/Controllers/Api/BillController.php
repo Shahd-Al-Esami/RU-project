@@ -23,12 +23,13 @@ class BillController extends Controller
 
         return response()->json(['message' => $result]);
     }
-    // public  function addBillToDoctor($doctor_id)
-    // {
-    //     $result = billService::addBillToDoctor($doctor_id);
+   
+    public  function myBills()
+    {
+        $result = billService::myBills();
 
-    //     return response()->json(['message' => $result]);
-    // }
+        return response()->json(['message' => $result]);
+    }
 
  
 

@@ -43,4 +43,23 @@ if ($Like) {
     return jsonTrait::jsonResponse(200,'you like this post',$like);
 
   }
+
+  public static function disLike($post_id){
+    $id=auth()->user()->id;
+    $Like = Like::where('patient_id', $id)
+    ->where('post_id', $post_id)
+    ->first();
+    if ($Like){
+
+     $Like->delete();
+    }else{
+     return jsonTrait::jsonResponse(200,'you already dislike this post',);
+    }
+
+
+
+    return jsonTrait::jsonResponse(200,'dis like this post',);
+
+  }
+
 }

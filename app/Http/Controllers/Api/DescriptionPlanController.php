@@ -27,7 +27,8 @@ class DescriptionPlanController extends Controller
 
         return response()->json(['message' => $result]);
     }
-
+    
+//patient
     public  function show($id)
     {
         $result = descriptionPlanService::show($id);
@@ -40,10 +41,13 @@ class DescriptionPlanController extends Controller
 
         return response()->json(['message' => $result]);
     }
+
     public  function isDone($id)
     {
         $result = descriptionPlanService::isDone($id);
 
         return response()->json(['message' => $result]);
     }
+
+ 
 }

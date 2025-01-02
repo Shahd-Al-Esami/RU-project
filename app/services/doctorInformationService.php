@@ -59,4 +59,13 @@ public static function updateProfile(Request $request){
 
 
 }
+
+//patient
+public static function doctorProfile($id){
+    $doctorProfile=User::where('id',$id)->with('doctorInformation')->first();
+    return jsonTrait::jsonResponse(200,'doctor profile',$doctorProfile);
+
+}
+
+
 }

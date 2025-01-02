@@ -16,6 +16,7 @@ use App\Models\MonthBills;
 use App\Models\Appointment;
 use App\Models\BlockedUser;
 use App\Models\MonthReport;
+use App\Models\DoctorHoliday;
 use App\Models\DoctorInformation;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\PatientInformation;
@@ -46,8 +47,8 @@ class User extends Authenticatable
         'country',
         'phone_number',
         'image',
-        'gender'
-        ,'role',
+        'gender',
+        'role',
         'isAgreeDoctorRegistration',
         'blocked'
     ];
@@ -116,7 +117,7 @@ class User extends Authenticatable
     public function notes(): HasMany{
         return $this->hasMany(Note::class);
     }
-   
+
     public function appointments(): HasMany{
         return $this->hasMany(Appointment::class);
     }
@@ -127,7 +128,9 @@ class User extends Authenticatable
         return $this->hasMany(BlockedUser::class);
     }
 
-
+    public function doctorHoliday(): HasMany{
+        return $this->hasMany(DoctorHoliday::class,'doctor_id');
+    }
     public function patients(): BelongsToMany{
         return $this->belongsToMany(User::class,'follows','doctor_id','patient_id');
     }

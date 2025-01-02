@@ -74,8 +74,9 @@ public static function getAllreports(){
 $reports=Report::paginate(5);
 return jsonTrait::jsonResponse(200, 'all reports', $reports);
 
-
 }
+
+
 
 
 }

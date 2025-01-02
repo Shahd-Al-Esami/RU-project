@@ -29,7 +29,7 @@ class RegisterRequest extends FormRequest
             'phone_number' => ['required', 'numeric', 'regex:/^09[0-9]{8}$/'],
             'role' =>['required','in:patient,doctor,admin'],
             'gender' =>['required','in:male,female'],
-            'image' => ['nullable','mimes:jpg,jpeg,png', 'max:2048' ],
+            // 'image' => ['nullable','mimes:jpg,jpeg,png','max:2048'],
             'password' => ['required', 'string', 'min:8'],
         ];
     }

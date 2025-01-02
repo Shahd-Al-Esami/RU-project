@@ -2,37 +2,34 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\DoctorInformation;
 use App\Http\Controllers\Controller;
-use App\Services\doctorInformationService;
+use App\Services\patientInformationService;
 
-class DoctorInformationController extends Controller
+class PatientInformationController extends Controller
 {
     public  function myProfile()
     {
-        $result = doctorInformationService::myProfile();
+        $result = patientInformationService::myProfile();
 
         return response()->json(['message' => $result]);
     }
     public  function updateProfile(Request $request)
     {
-        $result = doctorInformationService::updateProfile($request);
+        $result = patientInformationService::updateProfile($request,);
 
         return response()->json(['message' => $result]);
     }
 
     public  function store(Request $request)
     {
-        $result = doctorInformationService::store( $request);
+        $result = patientInformationService::store($request);
 
         return response()->json(['message' => $result]);
     }
-
-    public  function doctorProfile($id)
+    public  function update(Request $request,$id)
     {
-        $result = doctorInformationService::doctorProfile($id);
+        $result = patientInformationService::update($request,$id);
 
         return response()->json(['message' => $result]);
     }

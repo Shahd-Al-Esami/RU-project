@@ -33,9 +33,6 @@ public static function monthBills(Request $request)//to filter bills by year and
 
 
 
-
-
-
 //doctor
 
 
@@ -45,7 +42,13 @@ public static function patientBills($id){
    return jsonTrait::jsonResponse(200,'All Bills of patient',$bills);
 
 }
+//patient
 
+public static function myBills(){
+    $id=auth()->user()->id;
+    $bills=Bill::where('user_id',$id)->with('planOrder')->get();
+   return jsonTrait::jsonResponse(200,'All Bills of patient',$bills);
 
+}
 
 }

@@ -1,13 +1,16 @@
 <?php
 
 use App\Models\Ingredient;
+use App\Models\Appointment;
 use Illuminate\Http\Request;
+use App\Models\DoctorHoliday;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BillController;
 use App\Http\Controllers\Api\FoodController;
 use App\Http\Controllers\Api\LikeController;
+use App\Http\Controllers\Api\PlanController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\NotesController;
@@ -19,9 +22,12 @@ use App\Http\Controllers\Api\SuggestController;
 use App\Http\Controllers\Api\PlanOrderController;
 use App\Http\Controllers\Api\IngredientController;
 use App\Http\Controllers\Api\MonthBillsController;
+use App\Http\Controllers\Api\AppointmentController;
 use App\Http\Controllers\Api\BlockedUserController;
+use App\Http\Controllers\Api\DoctorHolidayController;
 use App\Http\Controllers\Api\DescriptionPlanController;
 use App\Http\Controllers\Api\DoctorInformationController;
+use App\Http\Controllers\Api\PatientInformationController;
 
 Route::get('/home', [HomeController::class, 'index']);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -76,6 +82,8 @@ Route::get('/index/food',[FoodController::class,'index'])->middleware('auth:sanc
 Route::get('/foodIngredient/{id}',[FoodController::class,'foodIngredient'])->middleware('auth:sanctum');
 
 
+Route::get('/getPlansReviews',[ReviewController::class,'getPlansReviews'])->middleware('auth:sanctum');
+
 
 
   // *****************************************************************
@@ -84,6 +92,9 @@ Route::get('/foodIngredient/{id}',[FoodController::class,'foodIngredient'])->mid
   Route::post('/login',[AuthController::class,'login']);//تنشيط الحساب
   Route::delete('/softDeleteMe',[UserController::class,'softDeleteMe'])->middleware('auth:sanctum');//الغاء تنشيط الحساب
 
+  Route::post('/storePlan/{plan_order_id}',[PlanController::class,'storePlan'])->middleware('auth:sanctum');
+  Route::post('/updatePlan/{plan_order_id}/{plan_id}',[PlanController::class,'updatePlan'])->middleware('auth:sanctum');
+  Route::delete('/deletePlan/{id}',[PlanController::class,'deletePlan'])->middleware('auth:sanctum');
 
 
   Route::get('/allPosts',[PostController::class,'allPosts']);
@@ -100,7 +111,6 @@ Route::get('/foodIngredient/{id}',[FoodController::class,'foodIngredient'])->mid
   Route::post('/update/comment/{comment_id}',[CommentController::class,'update']);
   Route::delete('/delete/comment/{id}',[CommentController::class,'delete']);
   Route::get('/index/{post_id}',[CommentController::class,'index']);
-//   Route::get('/indexOnlyComments/{post_id}',[CommentController::class,'indexOnlyComments'])->middleware('auth:sanctum');
   Route::get('/countPostComments/{post_id}',[CommentController::class,'countPostComments']);
 
 
@@ -113,18 +123,17 @@ Route::get('/foodIngredient/{id}',[FoodController::class,'foodIngredient'])->mid
   Route::get('/myPatients',[UserController::class,'myPatients'])->middleware('auth:sanctum');
   Route::get('/getPatientWithInfo/{id}',[UserController::class,'getPatientWithInfo'])->middleware('auth:sanctum');
 
-  Route::post('/followDoctor/{doctor_id}',[FollowController::class,'followDoctor'])->middleware('auth:sanctum');
   Route::get('/getfollows',[FollowController::class,'getfollows'])->middleware('auth:sanctum');
   Route::get('/countfollows',[FollowController::class,'countfollows'])->middleware('auth:sanctum');
 
 
-  Route::post('/createLike/{post_id}',[LikeController::class,'createLike']);
   Route::get('/countlikes/{post_id}',[LikeController::class,'countlikes'])->middleware('auth:sanctum');
   Route::get('/getlikes/{post_id}',[LikeController::class,'getlikes'])->middleware('auth:sanctum');
 
 
   Route::get('/getPlanOrders',[PlanOrderController::class,'getPlanOrders'])->middleware('auth:sanctum');
   Route::get('/countPlanOrders',[PlanOrderController::class,'countPlanOrders'])->middleware('auth:sanctum');
+  Route::post('/addPrice/{planOrder_id}',[PlanOrderController::class,'addPrice'])->middleware('auth:sanctum');
 
 
   Route::get('/getSuggests/{plan_id}',[SuggestController::class,'getSuggests'])->middleware('auth:sanctum');
@@ -136,8 +145,6 @@ Route::get('/foodIngredient/{id}',[FoodController::class,'foodIngredient'])->mid
   Route::get('/allNotesOfPatient/{id}',[NotesController::class,'allNotesOfPatient'])->middleware('auth:sanctum');
 
 
-  Route::post('/paid/{planOrder_id}',[PlanOrderController::class,'paid'])->middleware('auth:sanctum');
-  Route::post('/addPrice/{planOrder_id}',[PlanOrderController::class,'addPrice'])->middleware('auth:sanctum');
 
   Route::get('/patientBills/{id}',[BillController::class,'patientBills'])->middleware('auth:sanctum');
 
@@ -159,24 +166,84 @@ Route::get('/foodIngredient/{id}',[FoodController::class,'foodIngredient'])->mid
   Route::post('/storeDescriptionPlan/{plan_id}',[DescriptionPlanController::class,'storeDescriptionPlan'])->middleware('auth:sanctum');
   Route::post('/updateDescriptionPlan/{plan_id}/{id}',[DescriptionPlanController::class,'updateDescriptionPlan'])->middleware('auth:sanctum');
   Route::delete('/deleteDescriptionPlan/{id}',[DescriptionPlanController::class,'deleteDescriptionPlan'])->middleware('auth:sanctum');
+ 
+
+
+  Route::post('/addPatientReview/{patient_id}',[ReviewController::class,'addPatientReview'])->middleware('auth:sanctum');
+  Route::get('/getPlanReview/{id}',[ReviewController::class,'getPlanReview'])->middleware('auth:sanctum');
+  Route::get('/getPatientReview/{id}',[ReviewController::class,'getPatientReview'])->middleware('auth:sanctum');//+admin
+  Route::get('/myReviewForMyPatients',[ReviewController::class,'myReviewForMyPatients'])->middleware('auth:sanctum');
+
+
+  Route::get('/holiday/index',[DoctorHolidayController::class,'index'])->middleware('auth:sanctum');
+  Route::get('/doctorHolidays/{doc_id}',[DoctorHolidayController::class,'doctorHolidays'])->middleware('auth:sanctum');
+  Route::get('/myHolidays',[DoctorHolidayController::class,'myHolidays'])->middleware('auth:sanctum');
+  Route::post('/storeHoliday',[DoctorHolidayController::class,'storeHoliday'])->middleware('auth:sanctum');
+  Route::post('/updateHoliday/{id}',[DoctorHolidayController::class,'updateHoliday'])->middleware('auth:sanctum');
+  Route::delete('/deleteHoliday/{id}',[DoctorHolidayController::class,'deleteHoliday'])->middleware('auth:sanctum');
+
+
+
+  Route::get('/getAppointments',[AppointmentController::class,'getAppointments'])->middleware('auth:sanctum');
+
+
+//   *********************************************************************************
+
+  //patient
+
+  Route::post('/storeSuggest/{plan_id}',[SuggestController::class,'storeSuggest'])->middleware('auth:sanctum');
+  Route::post('/updateSuggest/{id}/{plan_id}',[SuggestController::class,'updateSuggest'])->middleware('auth:sanctum');
+  Route::delete('/deleteSuggest/{id}',[SuggestController::class,'deleteSuggest'])->middleware('auth:sanctum');
+
+
+
+  Route::post('/addPlanReview/{plan_id}',[ReviewController::class,'addPlanReview'])->middleware('auth:sanctum');
+  Route::get('/getReview',[ReviewController::class,'getReview'])->middleware('auth:sanctum');
+
+
+
+  Route::get('/doctorPosts/{doctor_id}',[PostController::class,'doctorPosts'])->middleware('auth:sanctum');
+  Route::get('/homePosts',[PostController::class,'homePosts'])->middleware('auth:sanctum');
+
+
+  Route::post('/paid/{planOrder_id}',[PlanOrderController::class,'paid'])->middleware('auth:sanctum');
+  Route::post('/storePlanOrder',[PlanOrderController::class,'storePlanOrder'])->middleware('auth:sanctum');
+  Route::get('/myOrdersPlans',[PlanOrderController::class,'myOrdersPlans'])->middleware('auth:sanctum');
+  Route::post('/updatePlanOrder/{id}',[PlanOrderController::class,'updatePlanOrder'])->middleware('auth:sanctum');
+
+
+  Route::get('/getPlan/{plan_order_id}',[PlanController::class,'getPlan'])->middleware('auth:sanctum');
+
+
+  Route::get('/myProfile/patient',[PatientInformationController::class,'myProfile'])->middleware('auth:sanctum');
+  Route::post('/updateProfile/patient',[PatientInformationController::class,'updateProfile'])->middleware('auth:sanctum');
+  Route::post('/store/patient/info',[PatientInformationController::class,'store'])->middleware('auth:sanctum');
+  Route::post('/update/patient/{id}',[PatientInformationController::class,'update'])->middleware('auth:sanctum');
+
+
+  Route::get('/myNotes',[NotesController::class,'myNotes'])->middleware('auth:sanctum');
+
+
+  Route::post('/createLike/{post_id}',[LikeController::class,'createLike']);
+  Route::delete('/disLike/{post_id}',[LikeController::class,'disLike']);
+
+
+  Route::post('/followDoctor/{doctor_id}',[FollowController::class,'followDoctor'])->middleware('auth:sanctum');
+  Route::post('/disfollowDoctor/{doctor_id}',[FollowController::class,'disfollowDoctor'])->middleware('auth:sanctum');
+  Route::get('/myFollowers',[FollowController::class,'myFollowers'])->middleware('auth:sanctum');
+
+
+  Route::get('/doctorProfile/{id}',[DoctorInformationController::class,'doctorProfile'])->middleware('auth:sanctum');
+
+
   Route::get('/show/desc/{id}',[DescriptionPlanController::class,'show'])->middleware('auth:sanctum');
   Route::get('/index/desc/{id}',[DescriptionPlanController::class,'index'])->middleware('auth:sanctum');
   Route::post('/isDone/{id}',[DescriptionPlanController::class,'isDone'])->middleware('auth:sanctum');
 
-//doctor+admin+patient
-  Route::post('/addPatientReview/{patient_id}',[ReviewController::class,'addPatientReview'])->middleware('auth:sanctum');
-  Route::post('/addPlanReview/{plan_id}',[ReviewController::class,'addPlanReview'])->middleware('auth:sanctum');
-  Route::get('/getPlanReview/{id}',[ReviewController::class,'getPlanReview'])->middleware('auth:sanctum');
-  Route::get('/getPlansReviews',[ReviewController::class,'getPlansReviews'])->middleware('auth:sanctum');
-  Route::get('/getPatientReview/{id}',[ReviewController::class,'getPatientReview'])->middleware('auth:sanctum');
-  Route::get('/myReviewForMyPatients',[ReviewController::class,'myReviewForMyPatients'])->middleware('auth:sanctum');
+
+  Route::get('/myBills',[BillController::class,'myBills'])->middleware('auth:sanctum');
 
 
-
-
-
-
-
-
-
-
+  Route::post('/bookAppointment',[AppointmentController::class,'bookAppointment'])->middleware('auth:sanctum');
+  Route::get('/getAvailable/{doctor_id}/{day}/{date}',[AppointmentController::class,'getAvailable'])->middleware('auth:sanctum');
+  Route::get('/myAppointments',[AppointmentController::class,'myAppointments'])->middleware('auth:sanctum');

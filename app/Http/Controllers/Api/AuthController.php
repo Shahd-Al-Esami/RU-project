@@ -14,8 +14,9 @@ class AuthController extends Controller
 {   use jsonTrait;
     public function register(RegisterRequest $request)
     {
-//for upload image
-            $image = uploadImage($request->image, $request->role == 'doctor' ? 'doctors' : ($request->role == 'patient' ? 'patients' : 'admins'), 'public');
+            //for upload image
+            $image=uploadImage($request->image,'pp');
+            // $image = uploadImage($request->image, $request->role == 'doctor' ? 'doctors' : ($request->role == 'patient' ? 'patients' : 'admins'), 'public');
             $user = User::create([
             'name' =>$request->name,
             'email' => $request->email,

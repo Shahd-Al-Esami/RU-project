@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Appointment extends Model
+class DoctorHoliday extends Model
 {
     use HasFactory;
-    protected $fillable=['patient_id','doctor_id','description','date','time'];
-
+    protected $fillable=['day','doctor_id'];
     public function user(): BelongsTo{
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,);
      }
+
 }
