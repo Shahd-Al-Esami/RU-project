@@ -1,9 +1,6 @@
 <?php
 
-use App\Models\Ingredient;
-use App\Models\Appointment;
 use Illuminate\Http\Request;
-use App\Models\DoctorHoliday;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Api\AuthController;
@@ -107,11 +104,6 @@ Route::get('/getPlansReviews',[ReviewController::class,'getPlansReviews'])->midd
   Route::get('/countMyPosts',[PostController::class,'countMyPosts'])->middleware('auth:sanctum');
   Route::get('/getDeletedPosts',[PostController::class,'getDeletedPosts'])->middleware('auth:sanctum');
 
- Route::post('/store/comment/{post_id}',[CommentController::class,'store']);
-  Route::post('/update/comment/{comment_id}',[CommentController::class,'update']);
-  Route::delete('/delete/comment/{id}',[CommentController::class,'delete']);
-  Route::get('/index/{post_id}',[CommentController::class,'index']);
-  Route::get('/countPostComments/{post_id}',[CommentController::class,'countPostComments']);
 
 
   Route::get('/myProfile',[DoctorInformationController::class,'myProfile'])->middleware('auth:sanctum');
@@ -166,7 +158,7 @@ Route::get('/getPlansReviews',[ReviewController::class,'getPlansReviews'])->midd
   Route::post('/storeDescriptionPlan/{plan_id}',[DescriptionPlanController::class,'storeDescriptionPlan'])->middleware('auth:sanctum');
   Route::post('/updateDescriptionPlan/{plan_id}/{id}',[DescriptionPlanController::class,'updateDescriptionPlan'])->middleware('auth:sanctum');
   Route::delete('/deleteDescriptionPlan/{id}',[DescriptionPlanController::class,'deleteDescriptionPlan'])->middleware('auth:sanctum');
- 
+
 
 
   Route::post('/addPatientReview/{patient_id}',[ReviewController::class,'addPatientReview'])->middleware('auth:sanctum');
@@ -202,9 +194,17 @@ Route::get('/getPlansReviews',[ReviewController::class,'getPlansReviews'])->midd
 
 
 
-  Route::get('/doctorPosts/{doctor_id}',[PostController::class,'doctorPosts'])->middleware('auth:sanctum');
+  Route::get('/doctorPosts/{doctor_id}',[PostController::class,'doctorPosts']);
   Route::get('/homePosts',[PostController::class,'homePosts'])->middleware('auth:sanctum');
 
+
+
+
+ Route::post('/store/comment/{post_id}',[CommentController::class,'store'])->middleware('auth::sanctum');
+ Route::post('/update/comment/{comment_id}',[CommentController::class,'update'])->middleware('auth::sanctum');
+ Route::delete('/delete/comment/{id}',[CommentController::class,'delete'])->middleware('auth::sanctum');
+ Route::get('/index/{post_id}',[CommentController::class,'index']);
+ Route::get('/countPostComments/{post_id}',[CommentController::class,'countPostComments']);
 
   Route::post('/paid/{planOrder_id}',[PlanOrderController::class,'paid'])->middleware('auth:sanctum');
   Route::post('/storePlanOrder',[PlanOrderController::class,'storePlanOrder'])->middleware('auth:sanctum');
@@ -213,19 +213,19 @@ Route::get('/getPlansReviews',[ReviewController::class,'getPlansReviews'])->midd
 
 
   Route::get('/getPlan/{plan_order_id}',[PlanController::class,'getPlan'])->middleware('auth:sanctum');
+  Route::get('/showPlan/{plan_order_id}',[PlanController::class,'showPlan'])->middleware('auth:sanctum');
 
 
   Route::get('/myProfile/patient',[PatientInformationController::class,'myProfile'])->middleware('auth:sanctum');
   Route::post('/updateProfile/patient',[PatientInformationController::class,'updateProfile'])->middleware('auth:sanctum');
   Route::post('/store/patient/info',[PatientInformationController::class,'store'])->middleware('auth:sanctum');
-  Route::post('/update/patient/{id}',[PatientInformationController::class,'update'])->middleware('auth:sanctum');
 
 
   Route::get('/myNotes',[NotesController::class,'myNotes'])->middleware('auth:sanctum');
 
 
-  Route::post('/createLike/{post_id}',[LikeController::class,'createLike']);
-  Route::delete('/disLike/{post_id}',[LikeController::class,'disLike']);
+  Route::post('/createLike/{post_id}',[LikeController::class,'createLike'])->middleware('auth:sanctum');
+  Route::delete('/disLike/{post_id}',[LikeController::class,'disLike'])->middleware('auth:sanctum');
 
 
   Route::post('/followDoctor/{doctor_id}',[FollowController::class,'followDoctor'])->middleware('auth:sanctum');
@@ -237,7 +237,8 @@ Route::get('/getPlansReviews',[ReviewController::class,'getPlansReviews'])->midd
 
 
   Route::get('/show/desc/{id}',[DescriptionPlanController::class,'show'])->middleware('auth:sanctum');
-  Route::get('/index/desc/{id}',[DescriptionPlanController::class,'index'])->middleware('auth:sanctum');
+  //show all desc-plan of this plan
+  Route::get('/index/desc/{plan_id}',[DescriptionPlanController::class,'index'])->middleware('auth:sanctum');
   Route::post('/isDone/{id}',[DescriptionPlanController::class,'isDone'])->middleware('auth:sanctum');
 
 

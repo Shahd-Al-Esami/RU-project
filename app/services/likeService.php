@@ -40,7 +40,7 @@ if ($Like) {
         'patient_id' => $id,
         'post_id' => $post_id,
 ]);
-    return jsonTrait::jsonResponse(200,'you like this post',$like);
+    return jsonTrait::jsonResponse(200,'you like this post',);
 
   }
 

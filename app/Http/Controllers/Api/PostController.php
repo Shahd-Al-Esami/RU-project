@@ -66,4 +66,13 @@ class PostController extends Controller
 
         return response()->json(['message' => $result]);
     }
+    //patient
+
+
+    public  function homePosts()
+    {
+        $result = postService::homePosts();
+
+        return response()->json(['message' => $result]);
+    }
 }

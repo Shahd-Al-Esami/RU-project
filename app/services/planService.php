@@ -56,10 +56,20 @@ public static function storePlan($plan_order_id,Request $request){
 
 //patient + doctor
 
+
+public static function showPlan($plan_order_id){
+
+    $plan=Plan::where('plan_order_id',$plan_order_id)->get();
+    return jsonTrait::jsonResponse(200,' show plan ',$plan);
+
+   }
+//export excel
 public static function getPlan($plan_order_id){
 
-    $plan=Plan::where('plan_order_id',$plan_order_id)->with('descriptionPlan')->get();
+    $plan=Plan::where('plan_order_id',$plan_order_id)->with('descriptionPlans')->get();
     return jsonTrait::jsonResponse(200,'plan with its details',$plan);
- 
+
    }
+
+
 }

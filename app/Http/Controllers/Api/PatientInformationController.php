@@ -27,10 +27,5 @@ class PatientInformationController extends Controller
 
         return response()->json(['message' => $result]);
     }
-    public  function update(Request $request,$id)
-    {
-        $result = patientInformationService::update($request,$id);
-
-        return response()->json(['message' => $result]);
-    }
+  
 }

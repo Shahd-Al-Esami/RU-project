@@ -66,7 +66,7 @@ public static function disfollowDoctor($doctor_id)
 
     if ($Follow) {
         $Follow->delete();
-        return jsonTrait::jsonResponse(400, ' unfollowing this doctor');
+        return jsonTrait::jsonResponse(400, ' unfollowing this doctor successfully');
     }
 
     return jsonTrait::jsonResponse(200, 'already unfollowed the doctor',
@@ -76,8 +76,8 @@ public static function disfollowDoctor($doctor_id)
 
 public static function myFollowers(){
     $id=auth()->user()->id;
-    $doctors=Follow::where('patient_id',$id)->get();
-
+    $doctorIds=Follow::where('patient_id',$id)->pluck( 'doctor_id')->all();
+     $doctors=User::whereIn('id',$doctorIds)->pluck('name')->all();
 
     return jsonTrait::jsonResponse(200,'all doctors following ',$doctors);
 

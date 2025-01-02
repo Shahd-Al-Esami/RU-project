@@ -30,22 +30,7 @@ public static function store(Request $request){
 
       }
 
-      public static function update(Request $request,$id){
-        $patient_id=auth()->user()->id;
-        $patientInformation=PatientInformation::findOrFail($id);
-            $patientInformation->update([
-            'desirable_foods'           =>$request->desirable_foods,
-            'height'                    =>$request->height,
-            'patient_id'                =>$patient_id,
-            'weight'                    =>$request->weight,
-            'answers'                   =>$request->answers,
-            'financial_state'           =>$request->financial_state,
-            'health_state'              =>$request->health_state,
-             ]);
 
-            return jsonTrait::jsonResponse(200,'store patient information  ',$patientInformation);
-
-          }
           public static function myProfile(){
             $id=auth()->user()->id;
             $myProfile=User::where('id',$id)->with('patientInformation')->first();

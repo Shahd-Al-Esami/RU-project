@@ -16,9 +16,9 @@ use jsonTrait;
 public static function storeDescriptionPlan(Request $request,$plan_id){
 
     $descriptionPlan=DescriptionPlan::create([
-        'meal' =>$request->meal,
-        'week' =>$request->week,
-        'day' =>$request->day,
+        'meal'    =>$request->meal,
+        'week'    =>$request->week,
+        'day'     =>$request->day,
         'plan_id' =>$plan_id,
         'food_id' =>$request->food_id,
     ]);
@@ -29,10 +29,11 @@ public static function storeDescriptionPlan(Request $request,$plan_id){
 public static function updateDescriptionPlan(Request $request,$plan_id,$id){
 
     $descriptionPlan=DescriptionPlan::findOrFail($id);
+
     $descriptionPlan=$descriptionPlan->update([
-        'meal' =>$request->meal,
-        'week' =>$request->week,
-        'day' =>$request->day,
+        'meal'    =>$request->meal,
+        'week'    =>$request->week,
+        'day'     =>$request->day,
         'plan_id' =>$plan_id,
         'food_id' =>$request->food_id,
     ]);
@@ -49,7 +50,7 @@ public static function deleteDescriptionPlan($id){
       return jsonTrait::jsonResponse(200,'delete description of Plan ',null);
 
     }
-    
+
 //for patient
     public static function isDone($id){
         $descriptionPlan=DescriptionPlan::findOrFail($id);
@@ -68,9 +69,9 @@ public static function deleteDescriptionPlan($id){
               return jsonTrait::jsonResponse(200,'show description of Plan ',$descriptionPlan);
 
             }
-            public static function index($id){
-                
-                $descriptionPlan=DescriptionPlan::where('plan_id',$id)->get();
+            public static function index($plan_id){
+
+                $descriptionPlan=DescriptionPlan::where('plan_id',$plan_id)->get();
 
 
                   return jsonTrait::jsonResponse(200,'disply description of Plan ',$descriptionPlan);

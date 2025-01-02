@@ -27,8 +27,8 @@ class Plan extends Model
     public function planOrder(): BelongsTo{
         return $this->belongsTo(PlanOrder::class);
      }
-     public function descriptionPlan(): HasOne {
-        return $this->hasOne(DescriptionPlan::class);
+     public function descriptionPlans(): HasMany {
+        return $this->hasMany(DescriptionPlan::class);
      }
      public function suggests(): HasMany{
         return $this->hasMany(Suggest::class);

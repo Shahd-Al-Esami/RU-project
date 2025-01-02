@@ -37,5 +37,10 @@ class PlanController extends Controller
 
         return response()->json(['message' => $result]);
     }
+    public  function showPlan($plan_order_id)
+    {
+        $result = planService::showPlan($plan_order_id);
 
+        return response()->json(['message' => $result]);
+    }
 }
