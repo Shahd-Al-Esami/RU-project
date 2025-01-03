@@ -9,6 +9,7 @@ use App\Models\MealWeek;
 use App\Models\PlanOrder;
 use Illuminate\Http\Request;
 use App\Http\Traits\jsonTrait;
+use App\Http\Requests\PlanRequest;
 
 class planService
 {
@@ -16,7 +17,7 @@ class planService
 use jsonTrait;
 //doctor
 
-public static function storePlan($plan_order_id,Request $request){
+public static function storePlan($plan_order_id,PlanRequest $request){
 
     $plan=Plan::create([
     'title'        =>$request->title,
@@ -24,14 +25,13 @@ public static function storePlan($plan_order_id,Request $request){
     'end_date'     =>$request->end_date,
     'plan_order_id'=>$plan_order_id,
     'state'        =>$request->state,
-    'rate'         =>$request->rate,
      ]);
 
     return jsonTrait::jsonResponse(200,'the plan ',$plan);
 
   }
 
-  public static function updatePlan($plan_order_id,Request $request,$plan_id){
+  public static function updatePlan($plan_order_id,PlanRequest $request,$plan_id){
     $plan=Plan::findOrFail($plan_id);
     $plan->update([
     'title'         =>$request->title,
@@ -39,7 +39,6 @@ public static function storePlan($plan_order_id,Request $request){
     'end_date'      =>$request->end_date,
     'plan_order_id' =>$plan_order_id,
     'state'         =>$request->state,
-    'rate'          =>$request->rate,
      ]);
 
     return jsonTrait::jsonResponse(200,'update plan ',$plan);

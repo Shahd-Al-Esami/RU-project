@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Models\Suggest;
 use Illuminate\Http\Request;
 use App\Http\Traits\jsonTrait;
+use App\Http\Requests\SuggestRequest;
 
 class suggestService
 {
@@ -24,7 +25,7 @@ public static function patientSuggests()
 
 }
 //patient
-public static function storeSuggest(Request $request,$plan_id){
+public static function storeSuggest(SuggestRequest $request,$plan_id){
        $suggest = Suggest::create([
         'suggest'      => $request->suggest,
         'patient_id'   => auth()->user()->id,
@@ -33,7 +34,7 @@ public static function storeSuggest(Request $request,$plan_id){
     return jsonTrait::jsonResponse(201, 'Stored suggest successfully', $suggest);
 }
 
-public static function updateSuggest(Request $request,$id,$plan_id){
+public static function updateSuggest(SuggestRequest $request,$id,$plan_id){
     $suggest=Suggest::findOrfail($id);
     $suggest->update([
      'suggest'      => $request->suggest,

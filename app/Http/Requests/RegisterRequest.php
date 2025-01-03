@@ -22,15 +22,15 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'country' => ['string', 'max:255'],
-            'age' => ['numeric', 'required'],
-            'phone_number' => ['required', 'numeric', 'regex:/^09[0-9]{8}$/'],
-            'role' =>['required','in:patient,doctor,admin'],
-            'gender' =>['required','in:male,female'],
-            // 'image' => ['nullable','mimes:jpg,jpeg,png','max:2048'],
-            'password' => ['required', 'string', 'min:8'],
+            'name'        => ['required', 'string', 'max:255'],
+            'email'       => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'country'     => ['string', 'max:255'],
+            'age'         => ['numeric', 'required'],
+            'phone_number'=> ['required', 'numeric', 'regex:/^09[0-9]{8}$/'],
+            'role'        =>['required','in:patient,doctor,admin'],
+            'gender'      =>['required','in:male,female'],
+            'image'       => ['nullable','mimes:jpg,jpeg,png','max:2048'],
+            'password'    => ['required', 'string', 'min:8'],
         ];
     }
 }

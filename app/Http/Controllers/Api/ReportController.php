@@ -5,17 +5,18 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Services\reportService;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ReportRequest;
 
 class ReportController extends Controller
 {
-    public  function storeReport(Request $request,$patient_id,$plan_id)
+    public  function storeReport(ReportRequest $request,$patient_id,$plan_id)
     {
         $result = reportService::storeReport($request,$patient_id,$plan_id);
 
         return response()->json(['message' => $result]);
     }
 
-    public  function updateReport(Request $request,$id,$patient_id,$plan_id)
+    public  function updateReport(ReportRequest $request,$id,$patient_id,$plan_id)
     {
         $result = reportService::updateReport($request,$id,$patient_id,$plan_id);
 

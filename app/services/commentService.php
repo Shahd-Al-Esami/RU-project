@@ -15,6 +15,12 @@ use jsonTrait;
 //doctor && patient
 public static function store(Request $request,$post_id)
     {
+        $request->validate([
+            'description'=>  'required', 'string', 'max:255',
+            'patient_id' =>  'exists:users,id',
+            'post_id'    =>  'exists:posts,id',
+
+        ]);
         $reply=$request->input('replyComment_id');
      $comment=Comment::create([
         'description' =>$request->description,
@@ -31,7 +37,12 @@ public static function store(Request $request,$post_id)
     }
     public static function update(Request $request,$comment_id)
     {
+        $request->validate([
+            'description'=>  'required', 'string', 'max:255',
+            'patient_id' =>  'exists:users,id',
+            'post_id'    =>  'exists:posts,id',
 
+        ]);
         $comment = Comment::findOrFail($comment_id); // Corrected to find the comment by ID
         $post_id=$comment->post_id;
        $comment->update([
@@ -58,7 +69,7 @@ public static function store(Request $request,$post_id)
 
     }
 
-  
+
     public static function countPostComments($post_id)
     {
     $comments=Comment::where('post_id',$post_id)->get();

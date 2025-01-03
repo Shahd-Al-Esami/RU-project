@@ -12,6 +12,10 @@ use jsonTrait;
 //admin
 
 public static function storeFood(Request $request){
+    $request->validate([
+        'name' =>  'required', 'string', 'max:255',
+        'calories' =>  'required', 'numeric',
+    ]);
     $food=Food::create([
         'name' =>$request->name,
         'calories' =>$request->calories,
@@ -25,6 +29,10 @@ public static function storeFood(Request $request){
 }
 
 public static function updateFood(Request $request, $id){
+    $request->validate([
+        'name' =>  'required', 'string', 'max:255',
+        'calories' =>  'required', 'numeric',
+    ]);
     $food=Food::findOrFail($id);
     $food->update([
         'name' =>$request->name,
@@ -52,11 +60,11 @@ public static function index(){
         return jsonTrait::jsonResponse(200,'display food  ',$food);
 
     }
-
+//patient +doctor
     public static function foodIngredient($id){
 
-        $food=Food::findOrfail($id)->with('ingredients')->get();
-            return jsonTrait::jsonResponse(200,'display food  ',$food);
+        $food=Food::where('id',$id)->with('ingredients')->get();
+            return jsonTrait::jsonResponse(200,'display  food and its ingredients ',$food);
 
         }
 

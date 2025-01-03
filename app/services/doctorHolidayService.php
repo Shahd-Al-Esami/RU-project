@@ -32,6 +32,10 @@ return jsonTrait::jsonResponse(200,'my holidays ',$myHolidays);
 
 }
 public static function storeHoliday(Request $request){
+    $request->validate([
+        'bio' =>  'required', 'string', 'max:255',
+
+    ]);
     $id=auth()->user()->id;
        $holiday=DoctorHoliday::create([
     'doctor_id' => $id,
@@ -41,6 +45,10 @@ return jsonTrait::jsonResponse(200,'store holiday successfully ',$holiday);
 
 }
 public static function updateHoliday(Request $request,$id){
+    $request->validate([
+        'day' =>  'required', 'string', 'max:255',
+
+    ]);
     $holiday=DoctorHoliday::findOrFail($id);
     $doctor_id=auth()->user()->id;
     $holiday->update([

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Services\suggestService;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SuggestRequest;
 
 class SuggestController extends Controller
 {
@@ -15,14 +16,14 @@ class SuggestController extends Controller
         return response()->json(['message' => $result]);
     }
 
-     public  function storeSuggest(Request $request,$plan_id)
+     public  function storeSuggest(SuggestRequest $request,$plan_id)
     {
         $result = suggestService::storeSuggest($request,$plan_id);
 
         return response()->json(['message' => $result]);
     }
 
-    public  function updateSuggest(Request $request,$id,$plan_id)
+    public  function updateSuggest(SuggestRequest $request,$id,$plan_id)
     {
         $result = suggestService::updateSuggest($request,$id,$plan_id);
 
@@ -35,5 +36,5 @@ class SuggestController extends Controller
 
         return response()->json(['message' => $result]);
     }
-    
+
 }

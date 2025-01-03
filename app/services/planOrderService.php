@@ -6,6 +6,7 @@ use App\Models\Bill;
 use App\Models\PlanOrder;
 use Illuminate\Http\Request;
 use App\Http\Traits\jsonTrait;
+use App\Http\Requests\PlanOrderRequest;
 
 class planOrderService
 {
@@ -59,6 +60,11 @@ public static function addPrice(Request $request,$planOrder_id){
 
 public static function paid($planOrder_id,Request $request){
    $user_id=auth()->user()->id;
+   $request->validate([
+    'planOrder_id'   =>  'exists:plan_orders,id',
+    'user_id'        =>   'exists:users,id',
+    'payment_method' => 'required,in:credit_card,paypal',
+]);
     $bill=Bill::create([
         'planOrder_id'=>$planOrder_id,
         'user_id'=>$user_id,
@@ -87,7 +93,7 @@ public static function myOrdersPlans(){
 }
 
 
-public static function storePlanOrder(Request $request){
+public static function storePlanOrder(PlanOrderRequest $request){
 $patient_id=auth()->user()->id;
     $planOrder=PlanOrder::create([
     'description'         =>$request->description,
@@ -100,7 +106,7 @@ $patient_id=auth()->user()->id;
 
   }
 
-  public static function updatePlanOrder(Request $request,$id){
+  public static function updatePlanOrder(PlanOrderRequest $request,$id){
         $planOrder=PlanOrder::findOrfail($id);
         $planOrder->update([
         'description'         =>$request->description,

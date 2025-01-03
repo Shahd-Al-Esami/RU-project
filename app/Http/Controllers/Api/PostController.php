@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Services\postService;
+use App\Http\Requests\PostRequest;
 use App\Http\Controllers\Controller;
 
 class PostController extends Controller
@@ -35,13 +36,13 @@ class PostController extends Controller
 
         return response()->json(['message' => $result]);
     }
-    public  function storePost(Request $request)
+    public  function storePost(PostRequest $request)
     {
         $result = postService::storePost($request);
 
         return response()->json(['message' => $result]);
     }
-    public  function update($id,Request $request)
+    public  function update($id,PostRequest $request)
     {
 
         $result = postService::update($request,$id);
@@ -60,12 +61,21 @@ class PostController extends Controller
 
         return response()->json(['message' => $result]);
     }
+    //admin
     public  function getDeletedPosts()
     {
         $result = postService::getDeletedPosts();
 
         return response()->json(['message' => $result]);
     }
+    //doctor
+    public  function myDeletedPosts()
+    {
+        $result = postService::myDeletedPosts();
+
+        return response()->json(['message' => $result]);
+    }
+
     //patient
 
 

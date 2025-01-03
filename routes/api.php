@@ -51,6 +51,10 @@ Route::get('/getAllPlanOrders',[PlanOrderController::class,'getAllPlanOrders'])-
 Route::get('/showPlanOrder/{id}',[PlanOrderController::class,'showPlanOrder'])->middleware('auth:sanctum');
 Route::get('/countPlans',[PlanOrderController::class,'countPlans'])->middleware('auth:sanctum');
 
+
+Route::get('/getDeletedPosts',[PostController::class,'getDeletedPosts'])->middleware('auth:sanctum');
+
+
 Route::get('/getBlockedUsers',[BlockedUserController::class,'getBlockedUsers'])->middleware('auth:sanctum');
 Route::post('/blockUser/{id}',[BlockedUserController::class,'blockUser'])->middleware('auth:sanctum');
 Route::post('/disblockUser/{id}',[BlockedUserController::class,'disblockUser'])->middleware('auth:sanctum');
@@ -76,7 +80,6 @@ Route::post('/storeFood',[FoodController::class,'storeFood'])->middleware('auth:
 Route::delete('/deleteFood/{id}',[FoodController::class,'deleteFood'])->middleware('auth:sanctum');
 Route::post('/updateFood/{id}',[FoodController::class,'updateFood'])->middleware('auth:sanctum');
 Route::get('/index/food',[FoodController::class,'index'])->middleware('auth:sanctum');
-Route::get('/foodIngredient/{id}',[FoodController::class,'foodIngredient'])->middleware('auth:sanctum');
 
 
 Route::get('/getPlansReviews',[ReviewController::class,'getPlansReviews'])->middleware('auth:sanctum');
@@ -86,7 +89,7 @@ Route::get('/getPlansReviews',[ReviewController::class,'getPlansReviews'])->midd
   // *****************************************************************
   //doctors
 
-  
+
   Route::post('/login',[AuthController::class,'login']);//تنشيط الحساب
 
   Route::middleware(['auth:sanctum','isAgreeDoctor'])->group(function(){
@@ -108,7 +111,7 @@ Route::get('/getPlansReviews',[ReviewController::class,'getPlansReviews'])->midd
   Route::delete('/softDelete/post/{id}',[PostController::class,'softDelete'])->middleware('auth:sanctum');
   Route::post('/restore/post/{id}',[PostController::class,'restore'])->middleware('auth:sanctum');
   Route::get('/countMyPosts',[PostController::class,'countMyPosts'])->middleware('auth:sanctum');
-  Route::get('/getDeletedPosts',[PostController::class,'getDeletedPosts'])->middleware('auth:sanctum');
+  Route::get('/myDeletedPosts',[PostController::class,'myDeletedPosts'])->middleware('auth:sanctum');
 
 
 
@@ -248,6 +251,8 @@ Route::get('/getPlansReviews',[ReviewController::class,'getPlansReviews'])->midd
   //show all desc-plan of this plan
   Route::get('/index/desc/{plan_id}',[DescriptionPlanController::class,'index'])->middleware('auth:sanctum');
   Route::post('/isDone/{id}',[DescriptionPlanController::class,'isDone'])->middleware('auth:sanctum');
+
+  Route::get('/foodIngredient/{id}',[FoodController::class,'foodIngredient'])->middleware('auth:sanctum');
 
 
   Route::get('/myBills',[BillController::class,'myBills'])->middleware('auth:sanctum');

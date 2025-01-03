@@ -16,6 +16,10 @@ use jsonTrait;
 //doctor
 
 public static function store(Request $request){
+    $request->validate([
+        'bio' =>  'required', 'string', 'max:255',
+        
+    ]);
     $id=auth()->user()->id;
 $info=DoctorInformation::create([
     'bio' => $request->bio,

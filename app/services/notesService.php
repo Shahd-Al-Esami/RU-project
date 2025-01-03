@@ -15,6 +15,10 @@ use jsonTrait;
 //doctor
 public static function updateNote(Request $request,$patient_id,$id)
     {
+        $request->validate([
+            'description' =>  'required', 'string', 'max:255',
+        ]);
+
         $note=Note::findOrfail($id);
         $id=auth()->user()->id;
          $note->update([
@@ -27,6 +31,9 @@ public static function updateNote(Request $request,$patient_id,$id)
     }
     public static function storeNote(Request $request,$patient_id)
     {
+        $request->validate([
+            'description' =>  'required', 'string', 'max:255',
+        ]);
         $id=auth()->user()->id;
     $note=Note::create([
     'doctor_id' => $id,

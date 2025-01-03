@@ -11,6 +11,10 @@ class ingredientService
 use jsonTrait;
 //admin
 public static function storeIngredient(Request $request){
+    $request->validate([
+        'name' =>  'required', 'string', 'max:255',
+        'calories' =>  'required', 'numeric',
+    ]);
     $ingredient=Ingredient::create([
         'name'     =>$request->name,
         'calories' =>$request->calories,
@@ -21,6 +25,10 @@ public static function storeIngredient(Request $request){
 }
 
 public static function updateingredient(Request $request, $id){
+    $request->validate([
+        'name' =>  'required', 'string', 'max:255',
+        'calories' =>  'required', 'numeric',
+    ]);
     $ingredient=Ingredient::findOrFail($id);
 
     $ingredient->update([

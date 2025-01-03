@@ -4,17 +4,17 @@ namespace App\Services;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use App\Http\Traits\jsonTrait;
+use App\Http\Requests\ReviewRequest;
 
 class reviewService
 {
 
 use jsonTrait;
 //doctor
-public static function addPatientReview(Request $request,$patient_id){
+public static function addPatientReview(ReviewRequest $request,$patient_id){
 
     $request->validate([
-        'rate' => 'required|integer|min:1|max:5',
-        'comment' => 'required|string|max:255',
+        'reviewable_id' => 'exists:users,id',
     ]);
   $review=Review::create([
     'comment'         => $request->comment,
@@ -29,11 +29,10 @@ public static function addPatientReview(Request $request,$patient_id){
 }
 
 //patient
-public static function addPlanReview(Request $request,$plan_id){
+public static function addPlanReview(ReviewRequest $request,$plan_id){
 
     $request->validate([
-        'rate' => 'required|integer|min:1|max:5',
-        'comment' => 'required|string|max:255',
+        'reviewable_id' =>  'exists:plans,id',
     ]);
     $review=Review::create([
       'comment'         => $request->comment,

@@ -5,6 +5,7 @@ use App\Models\Post;
 use App\Models\Follow;
 use Illuminate\Http\Request;
 use App\Http\Traits\jsonTrait;
+use App\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\Log;
 
 class postService
@@ -34,7 +35,7 @@ return jsonTrait::jsonResponse(200, 'All posts with comments  ', $posts);
 
             }
 
-        public static function storePost(Request $request){
+        public static function storePost(PostRequest $request){
             $image = null;
             if ($request->hasFile('image')) {
                 $image = uploadImage($request->file('image'), 'posts', 'public'); // Correctly passing the file
@@ -51,7 +52,7 @@ return jsonTrait::jsonResponse(200, 'All posts with comments  ', $posts);
         }
 
 
-        public static function update(Request $request, $id){
+        public static function update(PostRequest $request,$id){
             $post = Post::findOrFail($id);
             $image = null;
             if ($request->hasFile('image')) {
@@ -81,13 +82,19 @@ return jsonTrait::jsonResponse(200, 'All posts with comments  ', $posts);
 
         return jsonTrait::jsonResponse(200, 'Restored post successfully', $post);
     }
-
+//admin
     public static function getDeletedPosts(){
         $posts = Post::onlyTrashed()->get();
 
         return jsonTrait::jsonResponse(200, 'Retrieved deleted posts successfully', $posts);
     }
+//doctor
+    public static function myDeletedPosts(){
+        $id=auth()->user()->id;
+        $posts = Post::onlyTrashed()->where('doctor_id',$id)->get();
 
+        return jsonTrait::jsonResponse(200,  '  Retrieved my deleted posts successfully', $posts);
+    }
     //patient
     public static function doctorPosts ($doctor_id){
         $posts=Post::with(['comments','likes'])->where( 'doctor_id', $doctor_id)->orderBy('created_at','DESC')->get();

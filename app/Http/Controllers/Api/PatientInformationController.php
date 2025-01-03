@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\patientInformationService;
+use App\Http\Requests\PatientInformationRequest;
 
 class PatientInformationController extends Controller
 {
@@ -21,11 +22,11 @@ class PatientInformationController extends Controller
         return response()->json(['message' => $result]);
     }
 
-    public  function store(Request $request)
+    public  function store(PatientInformationRequest $request)
     {
         $result = patientInformationService::store($request);
 
         return response()->json(['message' => $result]);
     }
-  
+
 }

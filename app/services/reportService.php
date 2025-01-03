@@ -4,18 +4,18 @@ namespace App\Services;
 use App\Models\Report;
 use Illuminate\Http\Request;
 use App\Http\Traits\jsonTrait;
+use App\Http\Requests\ReportRequest;
 
 class reportService
 {
 
 use jsonTrait;
 //doctor
-public static function storeReport(Request $request,$patient_id,$plan_id){
+public static function storeReport(ReportRequest $request,$patient_id,$plan_id){
     $id=auth()->user()->id;
     $report=Report::create([
         'title'       => $request->title,
         'description' => $request->description,
-        'filePath'    => $request->filePath,
         'date'        => $request->date,
         'recommended' => $request->recommended,
         'plan_id'     => $plan_id,
@@ -25,13 +25,12 @@ public static function storeReport(Request $request,$patient_id,$plan_id){
 return jsonTrait::jsonResponse(200, 'add report successfully', $report);
 
 }
-public static function updateReport(Request $request,$id,$plan_id,$patient_id){
+public static function updateReport(ReportRequest $request,$id,$plan_id,$patient_id){
     $doctor_id=auth()->user()->id;
     $report=Report::findOrFail($id);
     $report->update([
         'title'       => $request->title,
         'description' => $request->description,
-        'filePath'    => $request->filePath,
         'date'        => $request->date,
         'recommended' => $request->recommended,
         'plan_id'     => $plan_id,

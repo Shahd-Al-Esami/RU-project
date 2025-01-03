@@ -7,6 +7,7 @@ use App\Models\PlanOrder;
 use Illuminate\Http\Request;
 use App\Http\Traits\jsonTrait;
 use App\Models\PatientInformation;
+use App\Http\Requests\PatientInformationRequest;
 
 class patientInformationService
 {
@@ -14,14 +15,14 @@ class patientInformationService
 use jsonTrait;
 
 
-public static function store(Request $request){
+public static function store(PatientInformationRequest $request){
     $patient_id=auth()->user()->id;
         $patientInformation=PatientInformation::create([
         'desirable_foods'           =>$request->desirable_foods,
         'height'                    =>$request->height,
         'patient_id'                =>$patient_id,
         'weight'                    =>$request->weight,
-        'answers'                   =>$request->answers,
+        'answers'                   =>json_encode($request->answers),
         'financial_state'           =>$request->financial_state,
         'health_state'              =>$request->health_state,
          ]);

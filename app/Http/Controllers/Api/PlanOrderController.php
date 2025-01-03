@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Traits\jsonTrait;
 use App\Services\planOrderService;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PlanOrderRequest;
 
 class PlanOrderController extends Controller
 {
@@ -72,14 +73,14 @@ public function countPlans()
         return response()->json(['message' => $result]);
     }
 
-    public  function storePlanOrder(Request $request)
+    public  function storePlanOrder(PlanOrderRequest $request)
     {
         $result = planOrderService::storePlanOrder($request);
 
         return response()->json(['message' => $result]);
     }
 
-    public  function updatePlanOrder(Request $request ,$id)
+    public  function updatePlanOrder(PlanOrderRequest $request ,$id)
     {
         $result = planOrderService::updatePlanOrder($request,$id);
 

@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Services\reviewService;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ReviewRequest;
 
 class ReviewController extends Controller
 {
-    public  function addPatientReview(Request $request,$patient_id)
+    public  function addPatientReview(ReviewRequest $request,$patient_id)
     {
         $result = reviewService::addPatientReview($request,$patient_id);
 
@@ -50,7 +51,7 @@ class ReviewController extends Controller
         return response()->json(['message' => $result]);
     }
 
-    public  function addPlanReview(Request $request,$plan_id)
+    public  function addPlanReview(ReviewRequest $request,$plan_id)
     {
         $result = reviewService::addPlanReview($request,$plan_id);
 

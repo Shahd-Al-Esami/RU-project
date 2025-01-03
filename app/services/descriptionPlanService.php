@@ -63,7 +63,7 @@ public static function deleteDescriptionPlan($id){
         }
 
         public static function show($id){
-            $descriptionPlan=DescriptionPlan::where('id',$id)->get();
+            $descriptionPlan=DescriptionPlan::where('id',$id)->with('food')->get();
 
 
               return jsonTrait::jsonResponse(200,'show description of Plan ',$descriptionPlan);
