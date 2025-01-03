@@ -44,4 +44,11 @@ class PlanController extends Controller
 
         return response()->json(['message' => $result]);
     }
+
+    public  function export($planId)
+    {
+        $result = planService::export($planId);
+
+        return response()->json(['message' => $result]);
+    }
 }

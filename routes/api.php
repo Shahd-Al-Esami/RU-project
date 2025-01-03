@@ -263,3 +263,7 @@ Route::get('/getPlansReviews',[ReviewController::class,'getPlansReviews'])->midd
   Route::get('/myAppointments',[AppointmentController::class,'myAppointments'])->middleware('auth:sanctum');
 
 
+
+  Route::get('/export/{planId}',[PlanController::class,'export'])->middleware('auth:sanctum');
+
+
