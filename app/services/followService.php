@@ -9,7 +9,7 @@ use App\Models\User;
 use App\Models\Follow;
 use App\Http\Traits\jsonTrait;
 
-class followService
+class FollowService
 {
 
 use jsonTrait;

@@ -7,7 +7,7 @@ use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Http\Traits\jsonTrait;
 
-class commentService
+class CommentService
 {
 
 use jsonTrait;

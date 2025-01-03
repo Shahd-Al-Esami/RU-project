@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Services\userService;
+use App\Services\UserService;
 use App\Http\Traits\jsonTrait;
 use App\Http\Controllers\Controller;
 
@@ -13,7 +13,7 @@ class UserController extends Controller
 
 //admin
 public  function countUser(){
-    $result = userService::countUser();
+    $result = UserService::countUser();
 
     return response()->json(['message' => $result]);
 
@@ -21,7 +21,7 @@ public  function countUser(){
     public function getAllDoctors(Request $request)
     {
 
-        $result = userService::getAllDoctors($request);
+        $result = UserService::getAllDoctors($request);
 
 
         return response()->json(['message' => $result]);
@@ -30,7 +30,7 @@ public  function countUser(){
     public function getDoctor($id)
     {
 
-        $result = userService::getDoctor($id);
+        $result = UserService::getDoctor($id);
 
 
         return response()->json(['message' => $result]);
@@ -39,7 +39,7 @@ public  function countUser(){
     public function getDoctorWithPatients($id)
     {
 
-        $result = userService::getDoctorWithPatients($id);
+        $result = UserService::getDoctorWithPatients($id);
 
 
         return response()->json(['message' => $result]);
@@ -48,7 +48,7 @@ public  function countUser(){
     public function softDelete($id)
     {
         $user=User::findOrfail($id);
-        $result = userService::softDelete($user);
+        $result = UserService::softDelete($user);
 
 
         return response()->json(['message' => $result]);
@@ -57,7 +57,7 @@ public  function countUser(){
     public function softDeleteMe()//الغاء تنشيط
     {
 
-        $result = userService::softDeleteMe();
+        $result = UserService::softDeleteMe();
 
 
         return response()->json(['message' => $result]);
@@ -65,14 +65,14 @@ public  function countUser(){
 
     public function deletedUsers()
     {
-        $result = userService::deletedUsers();
+        $result = UserService::deletedUsers();
 
 
         return response()->json(['message' => $result]);
     }
     public function restore($id)
     {
-        $result = userService::restore($id);
+        $result = UserService::restore($id);
 
 
         return response()->json(['message' => $result]);
@@ -80,20 +80,20 @@ public  function countUser(){
 
     public function getAllPatient(Request $request)
     {
-        $result = userService::getAllPatient($request);
+        $result = UserService::getAllPatient($request);
 
 
         return response()->json(['message' => $result]);
     }
     public function isAgreeDoctor(Request $request,$id)
     {
-        $result = userService::isAgreeDoctor($id,$request);
+        $result = UserService::isAgreeDoctor($id,$request);
 
         return response()->json(['message' => $result]);
     }
     public function allPendingDoctors()
     {
-        $result = userService::allPendingDoctors();
+        $result = UserService::allPendingDoctors();
 
         return response()->json(['message' => $result]);
     }
@@ -102,7 +102,7 @@ public  function countUser(){
 
   public function myPatients()
     {
-        $result = userService::myPatients();
+        $result = UserService::myPatients();
 
         return response()->json(['message' => $result]);
     }
@@ -110,7 +110,7 @@ public  function countUser(){
 
   public function getPatientWithInfo($id)
   {
-      $result = userService::getPatientWithInfo($id);
+      $result = UserService::getPatientWithInfo($id);
 
       return response()->json(['message' => $result]);
   }

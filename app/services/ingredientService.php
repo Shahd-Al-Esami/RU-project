@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Traits\jsonTrait;
 use App\Models\Ingredient;
 
-class ingredientService
+class IngredientService
 {
 
 use jsonTrait;

@@ -8,7 +8,7 @@ use App\Models\PlanOrder;
 use Illuminate\Http\Request;
 use App\Http\Traits\jsonTrait;
 
-class billService
+class BillService
 {
 
 use jsonTrait;

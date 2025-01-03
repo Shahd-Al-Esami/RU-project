@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Traits\jsonTrait;
 
-class notesService
+class NotesService
 {
 
 use jsonTrait;

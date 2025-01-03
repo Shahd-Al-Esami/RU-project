@@ -6,7 +6,7 @@ use App\Models\MonthBills;
 
 use App\Http\Traits\jsonTrait;
 
-class monthBillsService
+class MonthBillsService
 {
 
 use jsonTrait;

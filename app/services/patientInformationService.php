@@ -9,7 +9,7 @@ use App\Http\Traits\jsonTrait;
 use App\Models\PatientInformation;
 use App\Http\Requests\PatientInformationRequest;
 
-class patientInformationService
+class PatientInformationService
 {
 
 use jsonTrait;

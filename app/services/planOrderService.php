@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Traits\jsonTrait;
 use App\Http\Requests\PlanOrderRequest;
 
-class planOrderService
+class PlanOrderService
 {
 
 use jsonTrait;

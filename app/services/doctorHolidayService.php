@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Traits\jsonTrait;
 use App\Models\DoctorHoliday;
 
-class doctorHolidayService
+class DoctorHolidayService
 {
 
 use jsonTrait;

@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Traits\jsonTrait;
 use App\Services\planOrderService;
 use App\Http\Controllers\Controller;
-use App\Services\blockedUserService;
+use App\Services\BlockedUserService;
 
 class BlockedUserController extends Controller
 {
@@ -16,27 +16,27 @@ class BlockedUserController extends Controller
 //admin
     public  function getBlockedUsers()
     {
-        $result = blockedUserService::getBlockedUsers();
+        $result = BlockedUserService::getBlockedUsers();
 
         return response()->json(['message' => $result]);
     }
     public  function blockUser($id,Request $request)
     {
 
-        $result = blockedUserService::blockUser($id,$request);
+        $result = BlockedUserService::blockUser($id,$request);
 
         return response()->json(['message' => $result]);
     }
     public  function disblockUser($id)
     {
-        $result = blockedUserService::disblockUser($id);
+        $result = BlockedUserService::disblockUser($id);
 
         return response()->json(['message' => $result]);
     }
 
     public  function countBlockUser()
     {
-        $result = blockedUserService::countBlockUser();
+        $result = BlockedUserService::countBlockUser();
 
         return response()->json(['message' => $result]);
     }

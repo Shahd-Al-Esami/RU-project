@@ -8,7 +8,7 @@ use App\Http\Traits\jsonTrait;
 use App\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\Log;
 
-class postService
+class PostService
 {
 
 use jsonTrait;

@@ -8,7 +8,7 @@ use App\Models\Like;
 use App\Models\User;
 use App\Http\Traits\jsonTrait;
 
-class likeService
+class LikeService
 {
 
 use jsonTrait;

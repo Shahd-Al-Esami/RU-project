@@ -7,7 +7,7 @@ use App\Models\PlanOrder;
 use Illuminate\Http\Request;
 use App\Http\Traits\jsonTrait;
 
-class userService
+class UserService
 {
 
 use jsonTrait;

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Traits\jsonTrait;
 use App\Http\Requests\ReportRequest;
 
-class reportService
+class ReportService
 {
 
 use jsonTrait;

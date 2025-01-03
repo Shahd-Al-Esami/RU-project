@@ -5,7 +5,7 @@ use App\Models\Food;
 use Illuminate\Http\Request;
 use App\Http\Traits\jsonTrait;
 
-class foodService
+class FoodService
 {
 
 use jsonTrait;

@@ -9,7 +9,7 @@ use App\Models\Appointment;
 use Illuminate\Http\Request;
 use App\Http\Traits\jsonTrait;
 
-class appointmentService
+class AppointmentService
 {
 
 use jsonTrait;
@@ -31,8 +31,8 @@ public static function getAvailable($doctor_id, $day, $date) {
 // dd($appointments);
 
     $availableTimes = [];
-    $start = Carbon::createFromTime(9, 0); 
-    $end = Carbon::createFromTime(17, 0); 
+    $start = Carbon::createFromTime(9, 0);
+    $end = Carbon::createFromTime(17, 0);
 
     while ($start <= $end) {
         $appoint = $start->format('H:i:s');
@@ -80,7 +80,7 @@ public static function getAvailable($doctor_id, $day, $date) {
     }
 
 //doctor
-  
+
 public static function getAppointments(Request $request)
 {
     $id = auth()->user()->id;

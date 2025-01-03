@@ -13,7 +13,7 @@ use App\Http\Traits\jsonTrait;
 use App\Http\Requests\PlanRequest;
 use Maatwebsite\Excel\Facades\Excel;
 
-class planService
+class PlanService
 {
 
 use jsonTrait;
@@ -66,17 +66,17 @@ public static function showPlan($plan_order_id){
    }
 //export excel
 
-public static function export($planId){
-  $plan = Plan::findOrFail($planId);
+// public static function export($planId){
+//   $plan = Plan::findOrFail($planId);
 
-     return Excel::download(new PlanExport($planId),'plan.xlsx');
-   }
+//      return Excel::download(new PlanExport($planId),'plan_details.xlsx');
+//    }
 public static function getPlan($plan_order_id){
 
     $plan=Plan::where('plan_order_id',$plan_order_id)->with('descriptionPlans')->get();
     return jsonTrait::jsonResponse(200,'plan with its details',$plan);
 
    }
-  
+
 
 }

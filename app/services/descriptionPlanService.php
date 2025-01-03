@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Traits\jsonTrait;
 use App\Models\DescriptionPlan;
 
-class descriptionPlanService
+class DescriptionPlanService
 
 {
 

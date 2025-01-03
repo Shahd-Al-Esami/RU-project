@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Traits\jsonTrait;
 use App\Http\Requests\SuggestRequest;
 
-class suggestService
+class SuggestService
 {
 
 use jsonTrait;

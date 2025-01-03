@@ -7,7 +7,7 @@ use App\Models\BlockedUser;
 use Illuminate\Http\Request;
 use App\Http\Traits\jsonTrait;
 
-class blockedUserService
+class BlockedUserService
 {
 
 use jsonTrait;

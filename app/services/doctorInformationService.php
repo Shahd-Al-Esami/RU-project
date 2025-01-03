@@ -9,7 +9,7 @@ use App\Http\Traits\jsonTrait;
 use App\Models\DoctorInformation;
 use Illuminate\Support\Facades\Hash;
 
-class doctorInformationService
+class DoctorInformationService
 {
 
 use jsonTrait;
@@ -18,7 +18,7 @@ use jsonTrait;
 public static function store(Request $request){
     $request->validate([
         'bio' =>  'required', 'string', 'max:255',
-        
+
     ]);
     $id=auth()->user()->id;
 $info=DoctorInformation::create([
