@@ -38,7 +38,7 @@ return jsonTrait::jsonResponse(200, 'All posts with comments  ', $posts);
         public static function storePost(PostRequest $request){
             $image = null;
             if ($request->hasFile('image')) {
-                $image = uploadImage($request->file('image'), 'posts', 'public'); // Correctly passing the file
+                $image = uploadImage('image', 'posts', 'public'); // Correctly passing the file
             }
 
             $post = Post::create([
