@@ -66,11 +66,20 @@ public static function showPlan($plan_order_id){
    }
 //export excel
 
-// public static function export($planId){
+public static function export($planId){
 //   $plan = Plan::findOrFail($planId);
+$plan = Plan::find($planId);
 
-//      return Excel::download(new PlanExport($planId),'plan_details.xlsx');
-//    }
+if (!$plan) {
+    return response()->json(['error' => 'Plan not found'], 404);
+}
+
+$export = new PlanExport($planId);
+return Excel::download($export, 'plan_' . $planId . '.xlsx');
+
+
+    //  return Excel::download(new PlanExport($planId),'plan_details.xlsx');
+   }
 public static function getPlan($plan_order_id){
 
     $plan=Plan::where('plan_order_id',$plan_order_id)->with('descriptionPlans')->get();

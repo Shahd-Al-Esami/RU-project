@@ -35,13 +35,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/register',[AuthController::class,'register'])->name('register');
 Route::post('/login',[AuthController::class,'login'])->name('login');
 Route::post('/logout',[AuthController::class,'logout'])->name('logout')->middleware('auth:sanctum');
+
+
 //admins
+
+
 Route::get('/getAllDoctors',[UserController::class,'getAllDoctors'])->middleware('auth:sanctum')->name('getAllDoctors');
 Route::get('/getDoctor/{id}',[UserController::class,'getDoctor'])->middleware('auth:sanctum')->name('getDoctor');
 Route::get('/getDoctorWithPatients/{id}',[UserController::class,'getDoctorWithPatients'])->middleware('auth:sanctum')->name('getDoctorWithPatients');
-Route::delete('/softDelete/{id}',[UserController::class,'softDelete'])->middleware('auth:sanctum')->name('softDelete');//doctor
+Route::delete('/softDelete/{id}',[UserController::class,'softDelete'])->middleware('auth:sanctum')->name('user.softDelete');//doctor
 Route::get('/deletedUsers',[UserController::class,'deletedUsers'])->middleware('auth:sanctum')->name('deletedUsers');
-Route::post('/restore/{id}',[UserController::class,'restore'])->middleware('auth:sanctum')->name('restore');
+Route::post('/restore/{id}',[UserController::class,'restore'])->middleware('auth:sanctum')->name('user.restore');
 Route::get('/getAllPatient',[UserController::class,'getAllPatient'])->middleware('auth:sanctum')->name('getAllPatient');
 Route::post('/isAgreeDoctor/{id}',[UserController::class,'isAgreeDoctor'])->middleware('auth:sanctum')->name('isAgreeDoctor');
 Route::get('/allPendingDoctors',[UserController::class,'allPendingDoctors'])->middleware('auth:sanctum')->name('allPendingDoctors');
@@ -87,10 +91,10 @@ Route::get('/getPlansReviews',[ReviewController::class,'getPlansReviews'])->midd
 
 
   // *****************************************************************
+
   //doctors
 
-
-  Route::post('/login',[AuthController::class,'login']);//تنشيط الحساب
+  Route::post('/login',[AuthController::class,'login']);//تنشيط الحساب  doctor+ patient+admin
 
   Route::middleware(['auth:sanctum','isAgreeDoctor'])->group(function(){
 
@@ -107,9 +111,9 @@ Route::get('/getPlansReviews',[ReviewController::class,'getPlansReviews'])->midd
   Route::get('/doctorPosts/{doctor_id}',[PostController::class,'doctorPosts'])->middleware('auth:sanctum')->name('doctorPosts');
   Route::get('/myPosts',[PostController::class,'myPosts'])->middleware('auth:sanctum')->name('myPosts');
   Route::post('/storePost',[PostController::class,'storePost'])->middleware(['BlockUser','auth:sanctum'])->name('storePost');//if was not blocked
-  Route::post('/update/{id}',[PostController::class,'update'])->middleware('auth:sanctum')->name('plan.update');
-  Route::delete('/softDelete/post/{id}',[PostController::class,'softDelete'])->middleware('auth:sanctum')->name('plan.softDelete');
-  Route::post('/restore/post/{id}',[PostController::class,'restore'])->middleware('auth:sanctum')->name('plan.restore');
+  Route::post('/update/{id}',[PostController::class,'update'])->middleware('auth:sanctum')->name('post.update');
+  Route::delete('/softDelete/post/{id}',[PostController::class,'softDelete'])->middleware('auth:sanctum')->name('post.softDelete');
+  Route::post('/restore/post/{id}',[PostController::class,'restore'])->middleware('auth:sanctum')->name('post.restore');
   Route::get('/countMyPosts',[PostController::class,'countMyPosts'])->middleware('auth:sanctum')->name('countMyPosts');
   Route::get('/myDeletedPosts',[PostController::class,'myDeletedPosts'])->middleware('auth:sanctum')->name('myDeletedPosts');
 
@@ -194,6 +198,8 @@ Route::get('/getPlansReviews',[ReviewController::class,'getPlansReviews'])->midd
 
   //patient
 
+
+
   Route::post('/storeSuggest/{plan_id}',[SuggestController::class,'storeSuggest'])->middleware('auth:sanctum')->name('storeSuggest');
   Route::post('/updateSuggest/{id}/{plan_id}',[SuggestController::class,'updateSuggest'])->middleware('auth:sanctum')->name('updateSuggest');
   Route::delete('/deleteSuggest/{id}',[SuggestController::class,'deleteSuggest'])->middleware('auth:sanctum')->name('deleteSuggest');
@@ -247,9 +253,9 @@ Route::get('/getPlansReviews',[ReviewController::class,'getPlansReviews'])->midd
   Route::get('/doctorProfile/{id}',[DoctorInformationController::class,'doctorProfile'])->middleware('auth:sanctum')->name('doctorProfile');
 
 
-  Route::get('/show/desc/{id}',[DescriptionPlanController::class,'show'])->middleware('auth:sanctum')->name('storeSuggest');
+  Route::get('/show/desc/{id}',[DescriptionPlanController::class,'show'])->middleware('auth:sanctum')->name('planDescription.show');
   //show all desc-plan of this plan
-  Route::get('/index/desc/{plan_id}',[DescriptionPlanController::class,'index'])->middleware('auth:sanctum')->name('DescriptionPlan,index');
+  Route::get('/index/desc/{plan_id}',[DescriptionPlanController::class,'index'])->middleware('auth:sanctum')->name('DescriptionPlan.index');
   Route::post('/isDone/{id}',[DescriptionPlanController::class,'isDone'])->middleware('auth:sanctum')->name('DescriptionPlan.isDone');
 
   Route::get('/foodIngredient/{id}',[FoodController::class,'foodIngredient'])->middleware('auth:sanctum')->name('foodIngredient');
@@ -264,6 +270,6 @@ Route::get('/getPlansReviews',[ReviewController::class,'getPlansReviews'])->midd
 
 
 
-//   Route::get('/export/{planId}',[PlanController::class,'export'])->middleware('auth:sanctum');
+  Route::get('/export/{planId}',[PlanController::class,'export'])->middleware('auth:sanctum')->name('export');
 
-
+  

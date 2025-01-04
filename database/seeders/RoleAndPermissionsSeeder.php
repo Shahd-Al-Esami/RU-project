@@ -22,14 +22,32 @@ class RoleAndPermissionsSeeder extends Seeder
             'view-users',
         ];
 
+        $DoctorPermissions =[
+
+        ];
+
+        $PatientPermissions =[
+
+        ];
+
         foreach($AdminPermissions as $permission){
             Permission::create(['name'=>$permission]);
         }
          $admin=Role::create(['name' => 'admin']);
          $admin->givePermissionTo($AdminPermissions);
-         $doctor=Role::create(['name' => 'doctor']);
 
+         foreach($DoctorPermissions as $permission){
+            Permission::create(['name'=>$permission]);
+        }
+
+         $doctor=Role::create(['name' => 'doctor']);
+         $doctor->givePermissionTo($DoctorPermissions);
+
+         foreach($PatientPermissions as $permission){
+            Permission::create(['name'=>$permission]);
+        }
          $patient=Role::create(['name' => 'patient']);
+         $patient->givePermissionTo($PatientPermissions);
 
 
     }
