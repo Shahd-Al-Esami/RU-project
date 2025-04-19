@@ -4,8 +4,11 @@ namespace App\Services;
 
 
 
+use App\Models\Food;
 use App\Models\Plan;
+use App\Models\User;
 use App\Models\MealWeek;
+use Barryvdh\DomPDF\PDF;
 use App\Models\PlanOrder;
 use App\Exports\PlanExport;
 use Illuminate\Http\Request;
@@ -66,20 +69,26 @@ public static function showPlan($plan_order_id){
    }
 //export excel
 
-public static function export($planId){
-//   $plan = Plan::findOrFail($planId);
-$plan = Plan::find($planId);
+// public static function export($planId){
+// //   $plan = Plan::findOrFail($planId);
+// // dd('hi');
+// $plan = Plan::find($planId);
 
-if (!$plan) {
-    return response()->json(['error' => 'Plan not found'], 404);
-}
+// if (!$plan) {
+//     return response()->json(['error' => 'Plan not found'], 404);
+// }
 
-$export = new PlanExport($planId);
-return Excel::download($export, 'plan_' . $planId . '.xlsx');
+// $export = new PlanExport($planId);
+// return Excel::download($export, 'plan_' . $planId . '.xlsx');
+
+//     //  return Excel::download(new PlanExport($planId),'plan_details.xlsx');
+//    }
 
 
-    //  return Excel::download(new PlanExport($planId),'plan_details.xlsx');
-   }
+
+
+
+
 public static function getPlan($plan_order_id){
 
     $plan=Plan::where('plan_order_id',$plan_order_id)->with('descriptionPlans')->get();

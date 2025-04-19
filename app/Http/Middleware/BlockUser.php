@@ -20,7 +20,7 @@ class BlockUser
      $blocked=BlockedUser::pluck('id')->toArray();
      $userId=auth()->user()->id;
         if(in_array($userId,$blocked))
-        return jsonTrait::jsonResponse(401,'you is blocked ,you can not do it');
+        return jsonTrait::jsonResponse(401,'you are blocked ,you can not do it');
 
         return $next($request);
     }

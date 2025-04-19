@@ -16,9 +16,13 @@ class PlanOrderController extends Controller
 //admin
 public function countPlans()
 {
-    $result = PlanOrderService::countPlans();
+    $plans = PlanOrderService::countPlans();
+if($plans)
+    return view('admin.dash' , compact ('plans'));
+else{
+    return view('admin.dash');
 
-    return response()->json(['message' => $result]);
+}
 }
     public function getAllPlanOrders()
     {

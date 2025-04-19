@@ -14,11 +14,12 @@ class PlanOrderService
 use jsonTrait;
 //admin
 
+
 public static function countPlans(){
-    $countPlans=count(PlanOrder::all());
-    return jsonTrait::jsonResponse(200, 'All plan orders  ', $countPlans);
+    return count(PlanOrder::all());
 
 }
+
 public static function getAllPlanOrders(){
         $planOrders=PlanOrder::orderBy('created_at', 'DESC')->get();
         return jsonTrait::jsonResponse(200, 'All plan orders  ', $planOrders);

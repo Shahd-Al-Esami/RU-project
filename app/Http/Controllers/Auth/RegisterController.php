@@ -4,23 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request; // Updated to use \Illuminate\Http\Request
 use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
-
     use RegistersUsers;
 
     /**
@@ -28,7 +19,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/home'; // Set a default redirect path
 
     /**
      * Create a new controller instance.
@@ -54,13 +45,13 @@ class RegisterController extends Controller
             'country' => ['string', 'max:255'],
             'age' => ['numeric', 'required'],
             'phone_number' => ['required', 'numeric', 'regex:/^09[0-9]{8}$/'],
-            'role' =>['required','in:patient,doctor,admin'],
-            'gender' =>['required','in:male,female'],
-            'image' => ['nullable','mimes:jpg,jpeg,png', 'max:2048' ],
-            'password' => ['required', 'string', 'min:8'],
-        ]
-    ,[ 'phone_number.regex' => 'phoneNumber must start with 09 and has a 10 numbers',
-]);
+            'role' => ['required', 'in:patient,doctor,admin'],
+            'gender' => ['required', 'in:male,female'],
+            'image' => ['nullable', 'mimes:jpg,jpeg,png', 'max:2048'],
+            'password' => ['required', 'string', 'min:8'], // Added confirmed rule
+        ], [
+            'phone_number.regex' => 'Phone number must start with 09 and contain 10 digits.',
+        ]);
     }
 
     /**
@@ -71,12 +62,9 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $path = uploadImage(request()->file('image'), $data['role'] == 'doctor' ? 'doctors' : ($data['role'] == 'patient' ? 'patients' : 'admins'), 'public');
 
-
-
-         $path = uploadImage(request()->file('image'), $data['role'] == 'doctor' ? 'doctors' : ($data['role'] == 'patient' ? 'patients' : 'admins'), 'public');
-
-
+        // Create the user
         return User::create([
             'name'         => $data['name'],
             'email'        => $data['email'],
@@ -85,9 +73,32 @@ class RegisterController extends Controller
             'gender'       => $data['gender'],
             'phone_number' => $data['phone_number'],
             'role'         => $data['role'],
-            'image'        =>$path,
+            'image'        => $path,
             'password'     => Hash::make($data['password']),
         ]);
+    }
 
-   }
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        // Create the user and log them in
+        $user = $this->create($request->all());
+        Auth::login($user);
+
+        // Redirect based on user role
+        if ($user->role === 'admin') {
+            return redirect()->route('admin.dashboard'); // Admin dashboard route
+        } elseif ($user->role === 'doctor') {
+            return redirect()->route('doctor.dashboard'); // Doctor dashboard route
+        } else {
+            return redirect()->route('home'); // Patient dashboard route
+        }
+    }
 }

@@ -17,6 +17,8 @@ class PlanExport implements FromCollection, WithStyles
     public function __construct($planId)
     {
         $this->planId = $planId;
+    
+
     }
 
     public function collection()

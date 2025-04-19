@@ -1,12 +1,25 @@
 @extends('layouts.app')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-9">
-            <div class="card">
-                <div class="card-header text-primary" style="font-size: 27px">{{ __('Create New Account') }}</div>
 
-                <div class="card-body">
+<div style="background: url(../assets/img/bg.jpg); backface-visibility: hidden;
+background-size: cover;
+background-position-x: center;
+height: 100vh;
+width: 100%;
+background-repeat: no-repeat;
+z-index: -1;" >
+<div class="row mx-0">
+    <h2 style="font-family: cursive"><b>HealthBite</b></h2>
+ <div class="col-6"></div>
+<div class="col-6">
+
+<div class="container" >
+    <div class="row justify-content-center" >
+        {{-- <div class="col-md-9"> --}}
+            <div class=" mt-2">
+                <div class="card-header" style="font-size: 27px;text-align:center">{{ __('Create New Account') }}</div>
+
+                <div class="card-body mt-2">
                     <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                         @csrf
 
@@ -88,7 +101,7 @@
 
 
                         <div class="row mb-3">
-                            <label for="phone_number" class="col-md-4 col-form-label text-md-end">{{ __('phone_number') }}</label>
+                            <label for="phone_number" class="col-md-4 col-form-label text-md-end">{{ __('Phone Number') }}</label>
 
                             <div class="col-md-6">
                                 <input id="phone_number" type="string" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" required autocomplete="phone_number">
@@ -100,7 +113,7 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="gender" class="col-md-4 col-form-label text-md-end">{{ __('gender') }}</label>
+                            <label for="gender" class="col-md-4 col-form-label text-md-end">{{ __('Gender') }}</label>
 
                             <div class="col-md-6">
                                 <select id="gender" class="form-control @error('gender') is-invalid @enderror" name="gender" required autocomplete="gender">
@@ -117,7 +130,7 @@
 
 
                         <div class="row mb-3">
-                            <label for="image" class="col-md-4 col-form-label text-md-end">{{ __('image') }}</label>
+                            <label for="image" class="col-md-4 col-form-label text-md-end">{{ __('Image') }}</label>
 
                             <div class="col-md-6">
                                 <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image"  autocomplete="image">
@@ -130,7 +143,7 @@
                         </div>
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary btn-block col-md-12" style="border-radius: 0%">
+                                <button type="submit" class="btn  w-100 mt-4 mb-0" style="background-image: linear-gradient(310deg, #ff8700, #c55401);">
                                     {{ __('Register') }}
                                 </button>
                             </div>
@@ -140,5 +153,7 @@
             </div>
         </div>
     </div>
+</div>
+</div>
 </div>
 @endsection

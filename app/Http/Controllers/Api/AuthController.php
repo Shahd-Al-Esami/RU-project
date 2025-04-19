@@ -28,7 +28,15 @@ class AuthController extends Controller
             'password' => Hash::make( $request->password),
         ]);
         $token = $user->createToken('YourAppName')->plainTextToken;
-        return $this->jsonResponse(201,'success',['token'=>$token,'user'=>$user]);
+
+        // Determine the view to return based on user role
+        if ($user->role == 'admin') {
+            return view('admin.dash'); // Return admin dashboard view
+        } elseif ($user->role == 'patient') {
+            return view('home'); // Return patient home view
+        } else {
+            return view('doctor.dash'); // Return doctor dashboard view
+        }
     }
 
     /**
@@ -63,7 +71,8 @@ class AuthController extends Controller
     {
         $request->user()->currentAccessToken()->delete();
 
-        return $this->jsonResponse(200,'Logged out successfully');
+        // Redirect to the first page after logout
+        return redirect()->route('firstpage'); // Update 'firstpage' to your actual route name
     }
 
 }
