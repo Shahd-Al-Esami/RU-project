@@ -27,6 +27,8 @@ class RoleAndPermissionsSeeder extends Seeder
         ];
 
         $PatientPermissions =[
+            'view-posts',
+            'show-posts'
 
         ];
 
@@ -36,12 +38,16 @@ class RoleAndPermissionsSeeder extends Seeder
          $admin=Role::create(['name' => 'admin']);
          $admin->givePermissionTo($AdminPermissions);
 
+
+
          foreach($DoctorPermissions as $permission){
             Permission::create(['name'=>$permission]);
         }
 
          $doctor=Role::create(['name' => 'doctor']);
          $doctor->givePermissionTo($DoctorPermissions);
+
+
 
          foreach($PatientPermissions as $permission){
             Permission::create(['name'=>$permission]);

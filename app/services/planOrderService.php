@@ -3,10 +3,14 @@
 namespace App\Services;
 
 use App\Models\Bill;
+use App\Models\User;
 use App\Models\PlanOrder;
 use Illuminate\Http\Request;
 use App\Http\Traits\jsonTrait;
+use App\Models\PatientInformation;
 use App\Http\Requests\PlanOrderRequest;
+use App\Http\Requests\PatientInformationRequest;
+use Illuminate\Support\Facades\DB;
 
 class PlanOrderService
 {
@@ -18,6 +22,10 @@ use jsonTrait;
 public static function countPlans(){
     return count(PlanOrder::all());
 
+}
+public static function createPlanOrder(){
+    $doctors=User::where('role','doctor')->where('isAgreeDoctorRegistration','agree')->get();
+return $doctors;
 }
 
 public static function getAllPlanOrders(){
@@ -35,8 +43,7 @@ public static function getAllPlanOrders(){
 public static function getPlanOrders(){
     $id=auth()->user()->id;
     $planOrders=PlanOrder::where('doctor_id',$id)->orderBy('created_at', 'DESC')->get();
-    return jsonTrait::jsonResponse(200, 'All plan orders  ', $planOrders);
-
+return $planOrders;
 }
 
 public static function countPlanOrders(){
@@ -46,13 +53,14 @@ public static function countPlanOrders(){
 
 }
 //for doctor to add price to this planOrder
-public static function addPrice(Request $request,$planOrder_id){
+public static function addPrice(Request $request){
 
-    $planOrder=PlanOrder::findOrFail($planOrder_id);
-    $price=$planOrder->price=$request->price;
-    $planOrder->save();
-    return jsonTrait::jsonResponse(200, ' price of plan', $price);
-
+//   $planOrder=PlanOrder::setDefaultPrice($request->price);
+   $planOrder=DB::statement("
+            ALTER TABLE plan_orders
+            MODIFY price DECIMAL(10,2) DEFAULT {$request->price}
+        ");
+     return $planOrder;
 }
 
 
@@ -89,21 +97,33 @@ public static function paid($planOrder_id,Request $request){
 public static function myOrdersPlans(){
     $id=auth()->user()->id;
     $planOrders=PlanOrder::where('patient_id',$id)->get();
-    return jsonTrait::jsonResponse(200, 'my plan orders',$planOrders );
-
+return $planOrders;
 }
 
 
-public static function storePlanOrder(PlanOrderRequest $request){
+public static function storePlanOrder(PlanOrderRequest $request,PatientInformationRequest $req){
 $patient_id=auth()->user()->id;
+
     $planOrder=PlanOrder::create([
-    'description'         =>$request->description,
     'goals'               =>$request->goals,
     'patient_id'          =>$patient_id,
     'doctor_id'           =>$request->doctor_id,
      ]);
 
-    return jsonTrait::jsonResponse(200,'store plan order ',$planOrder);
+     $patientInfo=PatientInformation::create([
+        'answers'               =>$req->answers,
+        'patient_id'            =>$patient_id,
+        'height'                =>$req->height,
+        'weight'                =>$req->weight,
+        'financial_state'        =>$req->financial_state,
+        'health_state'           =>$req->health_state,
+        'desirable_foods'        =>$req->desirable_foods,
+
+         ]);
+
+    $theplanOrder = PlanOrder::find($planOrder->id);
+
+    return view('planOrder.stripe',['theplanOrder'=>$theplanOrder]);
 
   }
 

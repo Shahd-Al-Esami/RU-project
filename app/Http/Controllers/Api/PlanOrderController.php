@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Traits\jsonTrait;
 use App\Services\PlanOrderService;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PatientInformationRequest;
 use App\Http\Requests\PlanOrderRequest;
+use App\Models\PatientInformation;
 
 class PlanOrderController extends Controller
 {
@@ -17,12 +19,13 @@ class PlanOrderController extends Controller
 public function countPlans()
 {
     $plans = PlanOrderService::countPlans();
-if($plans)
     return view('admin.dash' , compact ('plans'));
-else{
-    return view('admin.dash');
-
 }
+
+public function createPlanOrder()
+{
+    $doctors = PlanOrderService::createPlanOrder();
+    return view('planOrder.create',['doctors'=>$doctors]);
 }
     public function getAllPlanOrders()
     {
@@ -39,9 +42,9 @@ else{
 
     public  function getPlanOrders()
     {
-        $result = PlanOrderService::getPlanOrders();
+        $planOrders = PlanOrderService::getPlanOrders();
 
-        return response()->json(['message' => $result]);
+return view('doctor.planOrders',['planOrders'=>$planOrders]);
     }
 
 
@@ -53,11 +56,11 @@ else{
     }
 
 
-    public  function addPrice(Request $request,$planOrder_id)
+    public  function addPrice(Request $request)
     {
-        $result = PlanOrderService::addPrice($request,$planOrder_id);
+        $result = PlanOrderService::addPrice($request);
 
-        return response()->json(['message' => $result]);
+        return redirect()->route('getPlanOrders');
     }
 
     //patient
@@ -72,16 +75,17 @@ else{
 
     public  function myOrdersPlans()
     {
-        $result = PlanOrderService::myOrdersPlans();
+        $planOrders = PlanOrderService::myOrdersPlans();
 
-        return response()->json(['message' => $result]);
-    }
+        return view('patient.plans',['planOrders'=>$planOrders]);
+      }
 
-    public  function storePlanOrder(PlanOrderRequest $request)
+    public  function storePlanOrder(PlanOrderRequest $request,PatientInformationRequest $req)
     {
-        $result = PlanOrderService::storePlanOrder($request);
 
-        return response()->json(['message' => $result]);
+        return PlanOrderService::storePlanOrder($request,$req);
+
+
     }
 
     public  function updatePlanOrder(PlanOrderRequest $request ,$id)

@@ -37,23 +37,25 @@ public static function followDoctor($doctor_id)
         ->where('doctor_id', $doctor_id)
         ->first();
 
-    if ($Follow) {
-        return jsonTrait::jsonResponse(400, 'Already following this doctor');
-    }
+    if (!$Follow) {
+
 
     $follow = Follow::create([
         'patient_id' => $patient_id,
         'doctor_id' => $doctor_id,
-    ]);
+    ]);}
        // Fetch the last 10 posts from the followed doctor
-       $posts = Post::where('doctor_id', $doctor_id)
-       ->orderBy('created_at', 'desc')
-       ->take(10)
-       ->get();
+    //    $posts = Post::where('doctor_id', $doctor_id)
+    //    ->orderBy('created_at', 'desc')
+    //    ->take(10)
+    //    ->get();
 
-    return jsonTrait::jsonResponse(200, 'Successfully followed the doctor',
-    ['follow'=>$follow,'posts'=>$posts]);
-}
+    session()->flash('success', 'Successfully followed the doctor.');
+
+
+// Redirect back to the previous page or desired route
+return redirect()->back();
+ }
 
 
 public static function disfollowDoctor($doctor_id)
@@ -66,20 +68,18 @@ public static function disfollowDoctor($doctor_id)
 
     if ($Follow) {
         $Follow->delete();
-        return jsonTrait::jsonResponse(400, ' unfollowing this doctor successfully');
-    }
 
-    return jsonTrait::jsonResponse(200, 'already unfollowed the doctor',
-    );
-}
+
+        // Redirect back to the previous page or desired route
+        return redirect()->back();
+}}
 
 
 public static function myFollowers(){
     $id=auth()->user()->id;
     $doctorIds=Follow::where('patient_id',$id)->pluck( 'doctor_id')->all();
-     $doctors=User::whereIn('id',$doctorIds)->pluck('name')->all();
+     $followers=User::whereIn('id',$doctorIds)->pluck('name')->all();
 
-    return jsonTrait::jsonResponse(200,'all doctors following ',$doctors);
-
+return $followers;
 }
 }

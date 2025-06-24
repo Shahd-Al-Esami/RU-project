@@ -13,7 +13,7 @@ class ReviewController extends Controller
     {
         $result = ReviewService::addPatientReview($request,$patient_id);
 
-        return response()->json(['message' => $result]);
+        return redirect()->back()->with('success', 'تم الانشاء  بنجاح');
     }
 
 
@@ -55,7 +55,7 @@ class ReviewController extends Controller
     {
         $result = ReviewService::addPlanReview($request,$plan_id);
 
-        return response()->json(['message' => $result]);
+        return redirect()->back()->with('success', 'تم الانشاء  بنجاح');
     }
 
 }

@@ -18,6 +18,8 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->date('date');
             $table->time('time');
+            $table->enum('status', ['pending', 'cancel', 'done'])->nullable()->default('pending');
+
 
             $table->timestamps();
         });

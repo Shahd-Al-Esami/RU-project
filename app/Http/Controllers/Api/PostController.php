@@ -11,6 +11,18 @@ use App\Http\Controllers\Controller;
 class PostController extends Controller
 {
     //doctor
+    public  function addPost()
+    {
+
+return view('doctor.addPost');
+    }
+
+    public  function editPost($id)
+    {
+           $post=Post::findOrFail($id);
+     return view('doctor.addPost',['post'=>$post]);
+    }
+
     public  function allPosts()
     {
         $result = PostService::allPosts();
@@ -26,10 +38,9 @@ class PostController extends Controller
 
     public  function myPosts()
     {
-        $result = PostService::myPosts();
+        $posts = PostService::myPosts();
 
-        return response()->json(['message' => $result]);
-    }
+return view('doctor.myPosts',['posts'=>$posts]);    }
     public  function countMyPosts()
     {
         $result = PostService::countMyPosts();
@@ -40,26 +51,28 @@ class PostController extends Controller
     {
         $result = PostService::storePost($request);
 
-        return response()->json(['message' => $result]);
+        return redirect()->route('myPosts');
     }
     public  function update($id,PostRequest $request)
     {
+        $result = PostService::update($id,$request);
+        // dd(request()->all());
 
-        $result = PostService::update($request,$id);
+        return redirect()->route('myPosts');
 
-        return response()->json(['message' => $result]);
     }
     public  function softDelete($id)
     {
-        $result = PostService::softDelete($id);
+         PostService::softDelete($id);
+         return redirect()->back();
 
-        return response()->json(['message' => $result]);
+
     }
     public  function restore($id)
     {
-        $result = PostService::restore($id);
+        $post = PostService::restore($id);
 
-        return response()->json(['message' => $result]);
+        return redirect()->back();
     }
     //admin
     public  function getDeletedPosts()
@@ -71,9 +84,9 @@ class PostController extends Controller
     //doctor
     public  function myDeletedPosts()
     {
-        $result = PostService::myDeletedPosts();
+        $posts = PostService::myDeletedPosts();
 
-        return response()->json(['message' => $result]);
+return view('doctor.deletedPosts',['posts'=>$posts]);
     }
 
     //patient
@@ -81,8 +94,8 @@ class PostController extends Controller
 
     public  function homePosts()
     {
-        $result = PostService::homePosts();
+        $posts = PostService::homePosts();
 
-        return response()->json(['message' => $result]);
+        return view('patient.posts',['posts'=>$posts]);
     }
 }

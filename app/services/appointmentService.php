@@ -15,43 +15,49 @@ class AppointmentService
 use jsonTrait;
 
 //patient
-public static function getAvailable($doctor_id, $day, $date) {
-    $doctor = User::findOrFail($doctor_id);
+public static function getAvailable(Request $request) {
+    $doctor = User::findOrFail($request->doctor_id);
+    $day = Carbon::parse($request->date)->format('l'); // ستظهر اليوم باللغة الانكليزية
 
     foreach ($doctor->doctorHoliday as $holiday) {
-        if ($day == $holiday->day) {
-            return jsonTrait::jsonResponse(400, 'This day is a holiday');
+        if (stripos($day, $holiday->day) !== false) {
+            // If it's a holiday, flash message and redirect back
+           return session()->flash('message', 'This day is a holiday,Please choice another day');
         }
-    }
+      }
 
-    $appointments = Appointment::where('date', $date)
-                               ->where('doctor_id', $doctor_id)
-                               ->pluck('time')
-                               ->toArray();
-// dd($appointments);
+            $appointments = Appointment::where('date', $request->date)
+            ->where('doctor_id', $request->doctor_id)
+            ->pluck('time')
+            ->toArray();
 
-    $availableTimes = [];
-    $start = Carbon::createFromTime(9, 0);
-    $end = Carbon::createFromTime(17, 0);
+             $availableTimes = [];
+             $start = Carbon::createFromTime(9, 0);
+             $end = Carbon::createFromTime(17, 0);
 
-    while ($start <= $end) {
-        $appoint = $start->format('H:i:s');
+             while ($start <= $end) {
+             $appoint = $start->format('H:i:s');
 
-        if (!in_array($appoint, $appointments)) {
-            $availableTimes[] = $appoint;
+             if (!in_array($appoint, $appointments)) {
+             $availableTimes[] = $appoint;
+             }
+             $start->addMinutes(30);
+             }
+
+
+            return $availableTimes;
         }
-        $start->addMinutes(30);
-    }
 
-    return jsonTrait::jsonResponse(200, 'All available appointment times', $availableTimes);
-}
+
+
+
 
 
 //patient
     public static function bookAppointment(Request $request) {
         $request->validate([
             'date' => 'required|date',
-            'time' => 'required|date_format:H:i',
+            'time' => 'required|date_format:H:i:s',
             'description' => 'nullable|string',
         ]);
 
@@ -63,9 +69,8 @@ public static function getAvailable($doctor_id, $day, $date) {
             ->first();
 
         if ($existingAppointment) {
-            return jsonTrait::jsonResponse(400,'This time  is already booked ',);
+            return ['message'=>'This time  is already booked '];
         }
-
         // Create a new appointment
         $patient_id=auth()->user()->id;
         $appointment = Appointment::create([
@@ -74,9 +79,10 @@ public static function getAvailable($doctor_id, $day, $date) {
             'date' => $request->date,
             'time' => $request->time,
             'description' => $request->description,
+            'status' => 'pending',
         ]);
 
-        return jsonTrait::jsonResponse(201,'book a appointment ',$appointment);
+        return $appointment;
     }
 
 //doctor
@@ -88,16 +94,14 @@ public static function getAppointments(Request $request)
 
     $query = Appointment::where('doctor_id', $id);
     if ($search) {
-        $date = date('Y-m-d', strtotime($search));
-        $month = date('m', strtotime($date));
-        $year = date('Y', strtotime($date));
+        $query->whereDate('date', '=', $search);
 
-        $query->whereMonth('date', $month)->whereYear('date', $year);
-    }
+     
+     }
 
-    $allAppoint = $query->orderBy('date', 'DESC')->get();
+    $appointments = $query->orderBy('date', 'DESC')->get();
 
-    return jsonTrait::jsonResponse(200, 'All appointments', $allAppoint);
+    return view('doctor.apoointments',['appointments'=>$appointments]);
 }
 
 
@@ -105,9 +109,46 @@ public static function getAppointments(Request $request)
 public static function myAppointments(){
     $id=auth()->user()->id;
     $allAppoint=Appointment::where('patient_id',$id)->orderBy('date','DESC')->get();
-    return jsonTrait::jsonResponse(200,'All appointment  ',$allAppoint);
+      return $allAppoint;
+       }
 
-}
+       public static function cancelStatus(Request $request, $id)
+
+       {
+        // Validate the incoming status
+        $validatedData = $request->validate([
+            'status' => 'required|string|in:cancel,done'
+        ]);
+
+        // Find the appointment
+        $appointment = Appointment::findOrFail($id);
+
+        // Update the status
+        $appointment->status = $validatedData['status'];
+        $appointment->save();
+
+        // Redirect back with a success message
+        return redirect()->back()->with('success', 'Appointment status updated successfully.');
+    }
+
+    public static function doneStatus(Request $request, $id)
+
+    {
+     // Validate the incoming status
+     $validatedData = $request->validate([
+         'status' => 'required|string|in:cancel,done'
+     ]);
+
+     // Find the appointment
+     $appointment = Appointment::findOrFail($id);
+
+     // Update the status
+     $appointment->status = $validatedData['status'];
+     $appointment->save();
+
+     // Redirect back with a success message
+     return redirect()->back()->with('success', 'Appointment status updated successfully.');
+ }
 
 
 }

@@ -13,13 +13,28 @@ class UserService
 use jsonTrait;
 
 //admin
-public static function countUser(){
+public static function countPatients(){
 
-$allUser=User::all();
-$countUser=count($allUser);
+$allPatients=User::where('role', 'patient')->count();
 
-    return jsonTrait::jsonResponse(200, 'doctor with details', $countUser);
+    return $allPatients;
 }
+
+public static function countDoctors(){
+    // Optimize by counting directly in the query
+    $countDoctor = User::where('role', 'doctor')->where('isAgreeDoctorRegistration', 'agree')->count();
+
+    return $countDoctor;
+}
+
+
+
+
+
+
+
+
+
 public static function getDoctor($id){
 
     $doctor = User::where('id', $id)->with('doctorInformation')->firstOrFail();
@@ -42,8 +57,7 @@ public static function getDoctor($id){
         }else{
         $doctors=User::where('role','doctor')->where('isAgreeDoctorRegistration','agree')->get();
         }
-      return jsonTrait::jsonResponse(200, 'doctors with their information', $doctors);
-
+return $doctors;
     }
 
 //admin
@@ -87,22 +101,28 @@ public static function getAllPatient(Request $request){
     return jsonTrait::jsonResponse(200, 'restored successfuly', $patients);
 
 }
-public static function isAgreeDoctor($id,Request $request){
+public static function isAgreeDoctor($id){
 $doctor=User::findOrfail($id);
-$doctor->isAgreeDoctorRegistration=$request->isAgreeDoctorRegistration;
+$doctor->isAgreeDoctorRegistration='agree';
 $doctor->save();
-return jsonTrait::jsonResponse(200, 'Accepted doctors', $doctor);
-
+return $doctor;
 
 }
 
 
-public static function allPendingDoctors() {
+public static function allPendingDoctors(Request $request) {
+    $search=$request->input('search');
+
+    if($search && $search==='pending'){
     // Fetch all pending doctors
     $pendingDoctors = User::where('role', 'doctor')->where('isAgreeDoctorRegistration','LIKE', 'pending')->get();
 
-    return jsonTrait::jsonResponse(200, 'Pending doctors', $pendingDoctors);
-}
+return $pendingDoctors;
+    }else{
+    $pendingDoctors = User::where('role', 'doctor')->where('isAgreeDoctorRegistration', 'agree')->get();
+
+    }
+ }
 
 //doctors
 
@@ -111,9 +131,9 @@ public static function myPatients(){
     $id = auth()->user()->id;
     $myPatientsIds = PlanOrder::where('doctor_id', $id)->pluck('patient_id')->all();
 
-    $patients = User::whereIn('id', $myPatientsIds)->get();
+    $patients = User::whereIn('id', $myPatientsIds)->pluck('name', 'id');
 
-    return jsonTrait::jsonResponse(200, 'doctor patients', $patients);
+return $patients;
 }
 public static function getPatientWithInfo($id){
 

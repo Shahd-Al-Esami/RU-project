@@ -11,16 +11,16 @@ class SuggestController extends Controller
 {
     public  function getSuggests($plan_id)
     {
-        $result = SuggestService::getSuggests($plan_id);
-
-        return response()->json(['message' => $result]);
+        $suggests = SuggestService::getSuggests($plan_id);
+dd($suggests);
+        return view('doctor.plan', ['suggests'=>$suggests]);
     }
 
      public  function storeSuggest(SuggestRequest $request,$plan_id)
     {
         $result = SuggestService::storeSuggest($request,$plan_id);
 
-        return response()->json(['message' => $result]);
+        return redirect()->back()->with('success', 'تم الانشاء الخطة بنجاح');
     }
 
     public  function updateSuggest(SuggestRequest $request,$id,$plan_id)

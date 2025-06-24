@@ -25,7 +25,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '';
 
     /**
      * Create a new controller instance.
@@ -52,7 +52,7 @@ class LoginController extends Controller
         } elseif ($user->role === 'doctor') {
             return redirect()->route('doctor.dashboard'); // وجهة الطبيب
         } else {
-            return redirect()->intended($this->redirectTo); // وجهة المريض
+            return redirect()->route('home'); // Patient dashboard route
         }
     }
 }

@@ -22,10 +22,11 @@ class ReviewRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'reviewable_id'  => [ 'exists:plans,id'],,
-            'user_id'        =>[ 'exists:users,id'],,
-            'rate'           => 'required|numeric|min:1|max:5',
-            'comment'        => 'required|string|max:255',
+            'reviewable_id' => ['exists:plans,id'],
+            'user_id'       => ['exists:users,id'],
+            'rate'          => ['required', 'numeric', 'min:1', 'max:5'],
+            'comment'       => ['required', 'string', 'max:255'],
         ];
+
     }
 }

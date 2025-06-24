@@ -20,7 +20,7 @@ z-index: -1;" >
                 <div class="card-header" style="font-size: 27px;text-align:center">{{ __('Create New Account') }}</div>
 
                 <div class="card-body mt-2">
-                    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('register') }}"  enctype="multipart/form-data">
                         @csrf
 
                         <div class="row mb-3">
@@ -83,13 +83,17 @@ z-index: -1;" >
                             </div>
                         </div>
 
+
                         <div class="row mb-3">
                             <label for="role" class="col-md-4 col-form-label text-md-end">{{ __('Login as') }}</label>
                             <div class="col-md-6">
-                                <select class="form-control @error('role') is-invalid @enderror" name="role" required value="{{ old('role') }}" required autocomplete="role">
+                                <select class="form-control @error('role') is-invalid @enderror" id="role" name="role" required autocomplete="role">
                                     <option value="" disabled selected>{{ __('Select Role') }}</option>
                                     <option value="patient">{{ __('Patient') }}</option>
                                     <option value="doctor">{{ __('Doctor') }}</option>
+                                    @if(auth()->user() && auth()->user()->role === 'admin')
+                                    <option value="admin">{{ __('Admin') }}</option>
+                                    @endif
                                 </select>
                                 @error('role')
                                     <span class="invalid-feedback" role="alert">
@@ -98,13 +102,19 @@ z-index: -1;" >
                                 @enderror
                             </div>
                         </div>
-
+<!-- Bio input, hidden by default -->
+<div class="row mb-3" id="bio-field" style="display: none;">
+    <label for="bio" class="col-md-4 col-form-label text-md-end">{{ __('Bio') }}</label>
+    <div class="col-md-6">
+        <input type="text" class="form-control" id="bio" name="bio"  placeholder="{{ __('Enter your bio') }}">
+    </div>
+</div>
 
                         <div class="row mb-3">
                             <label for="phone_number" class="col-md-4 col-form-label text-md-end">{{ __('Phone Number') }}</label>
 
                             <div class="col-md-6">
-                                <input id="phone_number" type="string" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" required autocomplete="phone_number">
+                                <input id="phone_number" type="string" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" value="{{ old('phone_number') }}" required autocomplete="phone_number">
                                 @error('phone_number')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -116,7 +126,7 @@ z-index: -1;" >
                             <label for="gender" class="col-md-4 col-form-label text-md-end">{{ __('Gender') }}</label>
 
                             <div class="col-md-6">
-                                <select id="gender" class="form-control @error('gender') is-invalid @enderror" name="gender" required autocomplete="gender">
+                                <select id="gender" class="form-control @error('gender') is-invalid @enderror" value="{{ old('gender') }}" name="gender" required autocomplete="gender">
                                     <option value="male">{{ __('Male') }}</option>
                                     <option value="female">{{ __('Female') }}</option>
                                 </select>
@@ -133,7 +143,7 @@ z-index: -1;" >
                             <label for="image" class="col-md-4 col-form-label text-md-end">{{ __('Image') }}</label>
 
                             <div class="col-md-6">
-                                <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image"  autocomplete="image">
+                                <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image" value="{{ old('image') }}"  autocomplete="image">
                                 @error('image')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -141,6 +151,8 @@ z-index: -1;" >
                                 @enderror
                             </div>
                         </div>
+
+
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn  w-100 mt-4 mb-0" style="background-image: linear-gradient(310deg, #ff8700, #c55401);">
@@ -157,3 +169,19 @@ z-index: -1;" >
 </div>
 </div>
 @endsection
+
+<!-- JavaScript to toggle bio input -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const roleSelect = document.getElementById('role');
+        const bioField = document.getElementById('bio-field');
+
+        roleSelect.addEventListener('change', function () {
+            if (this.value === 'doctor') {
+                bioField.style.display = 'flex'; // or 'block'
+            } else {
+                bioField.style.display = 'none';
+            }
+        });
+    });
+</script>

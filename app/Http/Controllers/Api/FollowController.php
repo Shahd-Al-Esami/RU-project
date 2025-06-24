@@ -27,20 +27,25 @@ class FollowController extends Controller
     {
         $result = FollowService::followDoctor( $doctor_id);
 
-        return response()->json(['message' => $result]);
-    }
+    // Check for result and set success or error messages
+        // return session()->flash('success', 'Successfully followed the doctor.');
+        return redirect()->back();
+
+
+
+     }
 
     public  function disfollowDoctor($doctor_id)
     {
         $result = FollowService::disfollowDoctor( $doctor_id);
 
-        return response()->json(['message' => $result]);
+        return redirect()->back();
     }
 
     public  function myFollowers()
     {
-        $result = FollowService::myFollowers();
+        $followers = FollowService::myFollowers();
 
-        return response()->json(['message' => $result]);
+       return view('patient.myFollowers',['followers'=>$followers]);
     }
 }

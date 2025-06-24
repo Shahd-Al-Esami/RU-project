@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('description_plan', function (Blueprint $table) {
             $table->id();
-            $table->string('week');
-            $table->string('day');
+            $table->integer('week');
+            $table->date('day');
             $table->string('meal');
             $table->foreignId('plan_id')->constrained('plans');
             $table->foreignId('food_id')->constrained('foods');

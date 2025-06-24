@@ -23,8 +23,7 @@ return jsonTrait::jsonResponse(200, 'All posts with comments  ', $posts);
     public static function myPosts (){
         $id=auth()->user()->id;
         $posts=Post::with(['comments','likes'])->where( 'doctor_id', $id)->orderBy('created_at','DESC')->get();
-        return jsonTrait::jsonResponse(200, 'All posts of doctor with comments  ', $posts);
-
+return $posts;
         }
 
         public static function countMyPosts (){
@@ -48,39 +47,38 @@ return jsonTrait::jsonResponse(200, 'All posts with comments  ', $posts);
                 'image'       => $image,
                 'link_source' => $request->link_source,
             ]);
-            return jsonTrait::jsonResponse(201, 'Stored posts successfully', $post);
-        }
+           return $post;
+    }
 
 
-        public static function update(PostRequest $request,$id){
+        public static function update($id,PostRequest $request){
             $post = Post::findOrFail($id);
             $image = null;
             if ($request->hasFile('image')) {
-                $file = $request->file('image');
-                $image = uploadImage($file, 'posts', 'public'); // Correctly passing the file
+                // $file = $request->file('image');
+                $image = uploadImage('image', 'posts', 'public'); // Correctly passing the file
             }
-            $post->update([
+            $post=$post->update([
                 'title'       => $request->title,
                 'description' => $request->description,
                 'doctor_id'   => auth()->user()->id,
                 'image'       => $image,
                 'link_source' => $request->link_source,
             ]);
-            return jsonTrait::jsonResponse(200, 'Updated post successfully', $post);
+           return $post;
         }
     public static function softDelete($id){
        $post= Post::findOrfail($id);
 
        $post->delete();
-    return jsonTrait::jsonResponse(200, 'delete post successfully  ', $post);
-
+        return session()->flash('success', 'post has deleted Successfully');
     }
 
     public static function restore($id){
-        $post = Post::withTrashed()->findOrFail($id);
-        $post->restore();
+        $postdeleted = Post::withTrashed()->findOrFail($id);
+        $post=$postdeleted->restore();
 
-        return jsonTrait::jsonResponse(200, 'Restored post successfully', $post);
+return $post;
     }
 //admin
     public static function getDeletedPosts(){
@@ -93,8 +91,7 @@ return jsonTrait::jsonResponse(200, 'All posts with comments  ', $posts);
         $id=auth()->user()->id;
         $posts = Post::onlyTrashed()->where('doctor_id',$id)->get();
 
-        return jsonTrait::jsonResponse(200,  '  Retrieved my deleted posts successfully', $posts);
-    }
+return $posts;    }
     //patient
     public static function doctorPosts ($doctor_id){
         $posts=Post::with(['comments','likes'])->where( 'doctor_id', $doctor_id)->orderBy('created_at','DESC')->get();
@@ -110,8 +107,7 @@ return jsonTrait::jsonResponse(200, 'All posts with comments  ', $posts);
 
         $posts=Post::whereIn('doctor_id',$doctor_ids)->latest()->take(10)->get();
 
-        return jsonTrait::jsonResponse(200, 'Latest 10 posts from followed doctors ', $posts);
-
+         return $posts;
         }
 
 }

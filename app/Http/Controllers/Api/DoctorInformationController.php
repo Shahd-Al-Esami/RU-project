@@ -12,28 +12,47 @@ class DoctorInformationController extends Controller
 {
     public  function myProfile()
     {
-        $result = DoctorInformationService::myProfile();
+        $doctor = DoctorInformationService::myProfile();
 
-        return response()->json(['message' => $result]);
-    }
+return view('doctor.profile',['doctor'=>$doctor])  ;
+  }
+
+  public  function adminProfile()
+  {
+      $admin = DoctorInformationService::adminProfile();
+
+return view('admin.profile',['admin'=>$admin])  ;
+}
+    public  function editProfile($id)
+  {
+      $doctor = DoctorInformationService::editProfile($id);
+
+return view('doctor.updateProfile',['doctor'=>$doctor])  ;
+}
     public  function updateProfile(Request $request)
-    {
+    { if(!auth()->user()->role==='admin'){
         $result = DoctorInformationService::updateProfile($request);
 
-        return response()->json(['message' => $result]);
+        return redirect()->route('doctor.myProfile');
+    }
+    else{
+        $result = DoctorInformationService::updateProfile($request);
+        return redirect()->route('admin.myProfile');
+
+    }
     }
 
-    public  function store(Request $request)
+    public  function storeProfile(Request $request)
     {
-        $result = DoctorInformationService::store( $request);
+        $result = DoctorInformationService::storeProfile( $request);
 
-        return response()->json(['message' => $result]);
+        return redirect()->route('myProfile');
     }
 
     public  function doctorProfile($id)
     {
-        $result = DoctorInformationService::doctorProfile($id);
+        $doctor = DoctorInformationService::doctorProfile($id);
 
-        return response()->json(['message' => $result]);
+        return view('doctor.profile',['doctor'=>$doctor]);
     }
 }

@@ -22,23 +22,22 @@ public static function storeDescriptionPlan(Request $request,$plan_id){
         'plan_id' =>$plan_id,
         'food_id' =>$request->food_id,
     ]);
-    return jsonTrait::jsonResponse(200,'the description of plan ',$descriptionPlan);
-
-}
+    return $descriptionPlan;
+   }
 
 public static function updateDescriptionPlan(Request $request,$plan_id,$id){
 
     $descriptionPlan=DescriptionPlan::findOrFail($id);
 
-    $descriptionPlan=$descriptionPlan->update([
-        'meal'    =>$request->meal,
-        'week'    =>$request->week,
-        'day'     =>$request->day,
-        'plan_id' =>$plan_id,
-        'food_id' =>$request->food_id,
-    ]);
-    return jsonTrait::jsonResponse(200,'update description of Plan  ',$descriptionPlan);
+    $descriptionPlan->update([
+        'week' => $request->input('week_' . $id),
+        'meal' => $request->input('meal_' . $id),
 
+        'day' => $request->input('day_' . $id),
+       'plan_id' =>$plan_id,
+       'food_id' => $request->input('food_id_' . $id),
+    ]);
+return $descriptionPlan;
 }
 
 
@@ -58,8 +57,7 @@ public static function deleteDescriptionPlan($id){
         $descriptionPlan->isDone=1;
 
         $descriptionPlan->save();
-          return jsonTrait::jsonResponse(200,'done for this day ',null);
-
+return 'success';
         }
 
         public static function show($id){

@@ -22,6 +22,7 @@ public static function store(Request $request,$post_id)
 
         ]);
         $reply=$request->input('replyComment_id');
+        // $reply=$replyComment_id;
      $comment=Comment::create([
         'description' =>$request->description,
         'patient_id'  =>auth()->user()->id,
@@ -32,8 +33,7 @@ public static function store(Request $request,$post_id)
       $comment->replyComment_id=$reply;
       $comment->save();
     }
-    return jsonTrait::jsonResponse(200,'add comment',$comment);
-
+return $comment;
     }
     public static function update(Request $request,$comment_id)
     {

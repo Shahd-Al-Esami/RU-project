@@ -12,14 +12,13 @@ class DescriptionPlanController extends Controller
     {
         $result = DescriptionPlanService::storeDescriptionPlan($request,$plan_id);
 
-        return response()->json(['message' => $result]);
-    }
+        return redirect()->back()->with('success', 'تم الانشاء الخطة بنجاح');       }
+
     public  function updateDescriptionPlan(Request $request,$plan_id,$id)
     {
-        $result = DescriptionPlanService::updateDescriptionPlan($request,$plan_id,$id);
+        $descriptionPlan = DescriptionPlanService::updateDescriptionPlan($request,$plan_id,$id);
 
-        return response()->json(['message' => $result]);
-    }
+        return redirect()->back()->with('success', 'تم تحديث الخطة بنجاح');       }
 
     public  function deleteDescriptionPlan($id)
     {
@@ -46,8 +45,8 @@ class DescriptionPlanController extends Controller
     {
         $result = DescriptionPlanService::isDone($id);
 
-        return response()->json(['message' => $result]);
-    }
+        return redirect()->back()->with('success', 'تم الانشاء الخطة بنجاح');       
+  }
 
 
 }

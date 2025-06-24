@@ -22,9 +22,9 @@ class ReportRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'        => ['required', 'string', 'max:255'],
-            'description'  => ['required', 'string', 'max:255'],
-            'recommended'  => ['required', 'string', 'max:255'],
+            'title'        => ['required', 'string',],
+            'description'  => ['required', 'string',],
+            'recommended'  => ['required', 'string',],
             'date'         => ['nullable', 'date'],
             'patient_id'   => [ 'exists:users,id'],
             'doctor_id'    => [ 'exists:users,id'],

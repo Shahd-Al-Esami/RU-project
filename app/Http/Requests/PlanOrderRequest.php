@@ -22,8 +22,8 @@ class PlanOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'description' => ['required', 'string', 'max:1000'], 
-            'goals'       => ['required', 'string', 'max:1000'], 
+            'goals'       => ['required', 'string', 'max:1000'],
+            'price' => ['nullable', 'numeric', 'min:0'], // Ensures price is a number >= 0
             'patient_id'  => [ 'exists:users,id'],
             'doctor_id'   => ['exists:users,id'],
         ];

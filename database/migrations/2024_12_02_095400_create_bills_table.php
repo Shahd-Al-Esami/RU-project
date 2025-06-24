@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('bills', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('planOrder_id')->constrained('plan_orders');
+            $table->foreignId('plan_order_id')->constrained('plan_orders');
             $table->foreignId('user_id')->constrained('users');//patient_id
-            $table->enum('payment_method',['credit_card','paypal']);
+            // $table->enum('payment_method',['credit_card','paypal']);
             $table->timestamps();
             $table->softDeletes();
         });

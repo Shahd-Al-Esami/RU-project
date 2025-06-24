@@ -32,6 +32,13 @@ class BillController extends Controller
     }
 
 
+//doctor
 
+public  function planBills()
+{
+    $bills = BillService::planBills();
+
+return view('doctor.bills',['bills'=>$bills]);
+}
 
 }

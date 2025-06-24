@@ -12,8 +12,8 @@ class CommentController extends Controller
     {
         $result = CommentService::store($request,$post_id);
 
-        return response()->json(['message' => $result]);
-    }
+        return redirect()->back();
+}
 
     public  function update(Request $request,$comment_id)
     {

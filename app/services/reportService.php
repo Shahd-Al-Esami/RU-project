@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 
+use App\Models\User;
 use App\Models\Report;
 use Illuminate\Http\Request;
 use App\Http\Traits\jsonTrait;
@@ -11,21 +12,20 @@ class ReportService
 
 use jsonTrait;
 //doctor
-public static function storeReport(ReportRequest $request,$patient_id,$plan_id){
+public static function storeReport(ReportRequest $request){
     $id=auth()->user()->id;
     $report=Report::create([
         'title'       => $request->title,
         'description' => $request->description,
         'date'        => $request->date,
         'recommended' => $request->recommended,
-        'plan_id'     => $plan_id,
-        'patient_id'  => $patient_id,
+        // 'plan_id'     => $plan_id,
+        'patient_id'  => $request->patient_id,
         'doctor_id'   => $id,
 ]);
-return jsonTrait::jsonResponse(200, 'add report successfully', $report);
-
+return $report;
 }
-public static function updateReport(ReportRequest $request,$id,$plan_id,$patient_id){
+public static function updateReport(ReportRequest $request,$id,$patient_id){
     $doctor_id=auth()->user()->id;
     $report=Report::findOrFail($id);
     $report->update([
@@ -33,12 +33,11 @@ public static function updateReport(ReportRequest $request,$id,$plan_id,$patient
         'description' => $request->description,
         'date'        => $request->date,
         'recommended' => $request->recommended,
-        'plan_id'     => $plan_id,
+        // 'plan_id'     => $plan_id,
         'patient_id'  => $patient_id,
         'doctor_id'   => $doctor_id,
 ]);
-  return jsonTrait::jsonResponse(200, 'update report successfully', $report);
-
+return $report;
 }
 public static function deleteReport($id){
     $report=Report::findOrFail($id);
@@ -49,8 +48,8 @@ public static function deleteReport($id){
 }
 public static function myReports(){
 $id=auth()->user()->id;
-    $reports=Report::where('doctor_id',$id)->paginate(5);
- return jsonTrait::jsonResponse(200, 'my reports', $reports);
+    $reports=Report::where('patient_id',$id)->get();
+return $reports;
 
 }
 public static function patientReports($id){
@@ -60,6 +59,29 @@ public static function patientReports($id){
 
 }
 
+public static function getReports(Request $request)
+{
+    $search = $request->input('search');
+    $doc_id = auth()->user()->id;
+
+    // Get all patient IDs for the current doctor
+    $patient_ids_query = Report::where('doctor_id', $doc_id)->pluck('patient_id');
+
+    if ($search) {
+        // Find patients matching the search
+        $patient_ids = User::whereIn('id', $patient_ids_query)
+            ->where('name', 'LIKE', '%' . $search . '%')
+            ->pluck('id');
+
+        // Fetch reports for these patients
+        $reports = Report::whereIn('patient_id', $patient_ids)->get();
+    } else {
+        // Fetch all reports for the doctor
+        $reports = Report::where('doctor_id', $doc_id)->get();
+    }
+
+    return $reports;
+}
 
 //admin
 public static function allreportsOfDoctor($id){

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('desirable_foods')->nullable();
             $table->float('height');
             $table->float('weight');
-            $table->text('answers');
+            $table->text('answers')->nullable();
             $table->enum('financial_state',['finanically comfortable','medium','poor']);
             $table->text('health_state');
             $table->timestamps();

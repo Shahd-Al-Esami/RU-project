@@ -72,15 +72,15 @@
                                 </div>
                                 <div class="mb-3">
                                   <label for="password">Password</label>
-                                  <input type="password" class="form-control" name="password" id="password" placeholder="Password" aria-label="Password" aria-describedby="password-addon">
+                                  <input type="password" class="form-control" name="password" id="password"aria-label="Password" aria-describedby="password-addon">
                                   @error('password')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                   @enderror
                                 </div>
-                                <div class="form-check form-switch">
+                                {{-- <div class="form-check form-switch">
                                   <input class="form-check-input" type="checkbox" id="rememberMe" checked="" style="background-color: rgb(151 90 46);">
                                   <label class="form-check-label" for="rememberMe">Remember me</label>
-                                </div>
+                                </div> --}}
                                 <div class="text-center">
                                   <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0" style="background-image: linear-gradient(310deg, #ff8700, #c55401);">Sign in</button>
                                 </div>

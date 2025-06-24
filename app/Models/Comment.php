@@ -13,7 +13,7 @@ class Comment extends Model
     use HasFactory;
     protected $fillable=['patient_id','post_id','description','replyComment_id'];
     public function user(): BelongsTo{
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,);
     }
 
     public function post(): BelongsTo{

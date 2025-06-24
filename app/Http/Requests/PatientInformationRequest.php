@@ -26,7 +26,7 @@ class PatientInformationRequest extends FormRequest
             'height'           => ['required', 'numeric', 'between:30,300'],
             'patient_id'       => [ 'exists:users,id'],
             'weight'           => ['required', 'numeric', 'between:5,500'],
-            'answers'          => [ 'array'],
+            'answers'          => ['string'],
             'financial_state'  => ['nullable', 'in:finanically comfortable,medium,poor'],
             'health_state'     => ['nullable', 'string', 'max:255'],
         ];

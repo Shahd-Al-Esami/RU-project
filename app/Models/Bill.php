@@ -17,6 +17,6 @@ class Bill extends Model
         return $this->belongsTo(User::class,'user_id');
      }
      public function planOrder(): BelongsTo{
-        return $this->belongsTo(PlanOrder::class,'planOrder_id');
+        return $this->belongsTo(PlanOrder::class,'plan_order_id');
      }
 }

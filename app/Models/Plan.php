@@ -22,7 +22,7 @@ class Plan extends Model
 
     public function review(): MorphOne
     {
-        return $this->morphOne(Review::class, 'reviewable')->chaperone();
+        return $this->morphOne(Review::class, 'reviewable',);
     }
     public function planOrder(): BelongsTo{
         return $this->belongsTo(PlanOrder::class);

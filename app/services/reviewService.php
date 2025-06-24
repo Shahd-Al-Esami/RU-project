@@ -21,29 +21,27 @@ public static function addPatientReview(ReviewRequest $request,$patient_id){
     'rate'            => $request->rate,
     'user_id'         => auth()->user()->id,
     'reviewable_id'   => $patient_id,
-    'reviewable_type' => 'patient',
+    'reviewable_type' => 'App\Models\User',
   ]);
 
-    return jsonTrait::jsonResponse(200, 'review added successfully ', $review);
-
+return $review;
 }
 
 //patient
 public static function addPlanReview(ReviewRequest $request,$plan_id){
 
-    $request->validate([
-        'reviewable_id' =>  'exists:plans,id',
-    ]);
+    // $request->validate([
+    //     'reviewable_id' =>  'exists:plans,id',
+    // ]);
     $review=Review::create([
       'comment'         => $request->comment,
       'rate'            => $request->rate,
       'user_id'         => auth()->user()->id,
       'reviewable_id'   => $plan_id,
-      'reviewable_type' => 'plan',
+      'reviewable_type' => 'App\Models\Plan',
     ]);
 
-      return jsonTrait::jsonResponse(200, 'review added successfully ', $review);
-
+return $review;
   }
 
 
@@ -60,8 +58,7 @@ public static function addPlanReview(ReviewRequest $request,$plan_id){
 public static function getPlanReview($id){
 
      $review=Review::where('reviewable_type','plan')->where('reviewable_id',$id)->get();
-    return jsonTrait::jsonResponse(200, 'review of the plan ', $review);
-
+      return $review;
 }
 //admin
 public static function getPlansReviews(){

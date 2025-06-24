@@ -6,9 +6,102 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.12/dist/css/splide.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.12/dist/js/splide.min.js"></script>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 
     <title>HealthBite</title>
     <style>
+
+        /* Style for the doctor card */
+.doctor-card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: 10px;
+}
+
+/* Hover effect for the card */
+.doctor-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+/* Style for the doctor's name */
+.doctor-name {
+    font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Style for bio and country text */
+.text-muted {
+    font-size: 0.9rem;
+}
+        .container {
+    max-width: 1200px;
+    margin: 50px auto;
+    display: flex;
+    flex-wrap: wrap;
+    background: #fff;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .contact-info, .contact-form {
+    flex: 1;
+    padding: 40px;
+  }
+  .contact-info {
+    background: #ffe0b2; /* Light orange background */
+  }
+  .info-item {
+    margin-bottom: 20px;
+    font-size: 1.1em;
+  }
+  .info-item span {
+    font-weight: bold;
+  }
+  /* Style links in contact info */
+  .info-item a {
+    color: #FF7F50;
+    text-decoration: none;
+  }
+  .info-item a:hover {
+    text-decoration: underline;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  input, textarea {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: border-color 0.3s;
+  }
+  input:focus, textarea:focus {
+    border-color: #FF7F50; /* Match accent color */
+    outline: none;
+  }
+  button {
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    background-color: #FF7F50; /* Coral/Orange button */
+    color: #fff;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  button:hover {
+    background-color: #e6733b; /* Darker shade for hover */
+  }
+  /* Responsive */
+  @media(max-width: 768px){
+    .container {
+      flex-direction: column;
+    }
+  }
         body {
             background-color: #f8f9fa;
             background-image: url('path/to/your/background-image.jpg'); /* Add your background image path here */
@@ -151,9 +244,10 @@
 
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">  <!-- Align links to the right -->
-            <li class="nav-item">
-                <a class="nav-link" href="{{  url('welcome')}}" style="font-family: cursive; font-size: 20px; margin-left: 20px;">Join Us</a>
-            </li>
+            <li  class="nav-link"><a class="nav-link" style="font-family: cursive; font-size: 20px;" href="#team"><b>Doctors Team</b></a></li>
+            <li  class="nav-link"><a class="nav-link" style="font-family: cursive; font-size: 20px;" href="#services"><b>Services</b></a></li>
+            <li  class="nav-link"><a class="nav-link" style="font-family: cursive; font-size: 20px;" href="#contact"><b>Contact Us</b></a></li>
+            <li class="nav-link"> <a class="nav-link" href="{{  url('welcome')}}" style="font-family: cursive; font-size: 20px; margin-left: 20px;">Join Us</a> </li>
 
         </ul>
     </div>
@@ -176,7 +270,7 @@
     </div>
 
 
-    <div class="row mx-0">
+    {{-- <div class="row mx-0">
         <div class="col-1"></div>
         <div class="col-md-6">
             <div class="mt-5" style="display: flex;">
@@ -186,30 +280,35 @@
             <div data-aos="zoom-out-down">
                 <h1><b> OUR Portfolio</b></h1>
             </div>
-        </div></div>
-    <div class="photo-scroll-container ">
+        </div></div> --}}
+    <div class="photo-scroll-container mt-5 ">
         <div class="splide" id="photo-slider">
             <div class="splide__track">
                 <ul class="splide__list">
-                    {{-- @foreach ($photos as $photo) --}}
                     <li class="splide__slide  text-center">
-                        <img src="{{ asset('../assets/img//team-1.jpg') }}" alt="Photo" />
+                        <img src="{{ asset('../assets/img/image.png') }}" alt="Photo" />
                     </li>
                     <li class="splide__slide  text-center">
-                        <img src="{{ asset('../assets/img//team-2.jpg') }}" alt="Photo" />
+                        <img src="{{ asset('../assets/image9.png') }}" alt="Photo" />
                     </li>
                     <li class="splide__slide  text-center">
-                        <img src="{{ asset('../assets/img//team-3.jpg') }}" alt="Photo" />
+                        <img src="{{ asset('../assets/image8.png') }}" alt="Photo" />
                     </li>
                     <li class="splide__slide  text-center">
-                        <img src="{{ asset('../assets/img//team-4.jpg') }}" alt="Photo" />
+                        <img src="{{ asset('../assets/image7.png') }}" alt="Photo" />
+                    </li>
+                    <li class="splide__slide  text-center">
+                        <img src="{{ asset('../assets/image99.png') }}" alt="Photo" />
+                    </li>
+                    <li class="splide__slide  text-center">
+                        <img src="{{ asset('../assets/image88.png') }}" alt="Photo" />
                     </li>
                     {{-- @endforeach --}}
                 </ul>
             </div>
         </div>
     </div>
-
+    <section id="services">
 
     <div class="row mx-0">
         <div class="col-1"></div>
@@ -224,14 +323,38 @@
         </div>
         <div class="row mx-0 mt-5">
             @php
-                $services = [
-                    ['icon' => 'ac_unit', 'text' => 'Lorem Ipsum', 'description' => 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis'],
-                    ['icon' => 'calendar_today', 'text' => 'Dolor Sitima', 'description' => 'Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi'],
-                    ['icon' => 'calendar_today', 'text' => 'Sedare Persatities', 'description' => 'Modi nostrum vel laborum. Porro fugit error sit minus sapiente sit aspernatur'],
-                    ['icon' => 'account_box', 'text' => 'Magne Dolores', 'description' => 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia'],
-                    ['icon' => 'account_balance', 'text' => 'Nemos Enamand', 'description' => 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore'],
-                    ['icon' => 'adf_scanner', 'text' => 'Dele Cardo', 'description' => 'Quis consequatur saepe eligendi voluptatem consequatur dolor consequuntur'],
-                ];
+               $services = [
+    [
+        'icon' => 'local_dining',
+        'text' => 'Nutritious Meals',
+        'description' => 'Delicious and balanced meals crafted to support your healthy lifestyle and dietary goals.'
+    ],
+    [
+        'icon' => 'fitness_center',
+        'text' => 'Fitness Programs',
+        'description' => 'Customized workout plans to help you stay active, fit, and energized daily.'
+    ],
+    [
+        'icon' => 'spa',
+        'text' => 'Dietary Consultations',
+        'description' => 'Expert advice on meal planning and nutritional diets tailored to your needs.'
+    ],
+    [
+        'icon' => 'arrow_upward',
+        'text' => 'Progress Tracking',
+        'description' => 'Monitor your health journey with tools to track your diet, workouts, and overall progress.'
+    ],
+    [
+        'icon' => 'local_cafe',
+        'text' => 'Healthy Snacks & Beverages',
+        'description' => 'A variety of nutritious snacks and drinks to keep you energised throughout the day.'
+    ],
+    [
+        'icon' => 'self_improvement',
+        'text' => 'Wellness Tips',
+        'description' => 'Guidance on maintaining mental and physical well-being through balanced living.'
+    ],
+];
             @endphp
 
             @foreach($services as $service)
@@ -250,10 +373,13 @@
                 </div>
             @endforeach
         </div>
+    </section>
+
         <div class="col-1"></div>
     </div>
 
-    <div class="row mx-0">
+    <section id="team">
+    <div class="row mx-0 mt-4">
         <div class="col-1"></div>
         <div class="col-md-6">
             <div class="mt-5" style="display: flex;">
@@ -261,23 +387,28 @@
                 <div class="mt-3" style="width: 130px; background-color: orange; height: 1px;"></div>
             </div>
             <div data-aos="zoom-out-down">
-                <h1><b>CHECK OUR Team</b></h1>
+                <h1><b>CHECK OUR DOCTORS Team</b></h1>
             </div>
-        </div>
+        </div></div>
+
         <div class="row mx-0 mt-5">
             @php
-                $teamMembers = [
-                    ['img' => asset('../assets/img//team-1.jpg'), 'text' => 'Walter White', 'text1' => 'Chief Executive Officer'],
-                    ['img' => asset('../assets/img//team-2.jpg'), 'text' => 'Sarah Johnson', 'text1' => 'Product Manager'],
-                    ['img' => asset('../assets/img//team-3.jpg'), 'text' => 'William Anderson', 'text1' => 'CTO'],
-                    ['img' => asset('../assets/img//team-4.jpg'), 'text' => 'Amanda Jepson', 'text1' => 'Accountant'],
-                ];
+            $doctors = \App\Models\User::where('role', 'doctor')
+                        ->where('isAgreeDoctorRegistration', 'agree')->with('doctorInformation')
+                        ->take(4)->get();
             @endphp
 
-            @foreach($teamMembers as $member)
+            {{-- @foreach($doctors as $doctor)
+                <p>{{ $doctor->name }}</p>
+                <p>{{ $doctor->image }}</p>
+                <p>{{ $doctor->country }}</p>
+                <p>{{ $doctor->bio }}</p>
+            @endforeach --}}
+{{--
+            @foreach($doctors as $doctor)
                 <div class="col-md-3 d-flex justify-content-center align-items-center">
                     <div>
-                        <div class="card-header" style="background-image: url('{{ $member['img'] }}'); width: 250px; height: 40vh; background-size: cover; position: center;">
+                        <div class="card-header" style="background-image: url('{{ $doctor['img'] }}'); width: 250px; height: 40vh; background-size: cover; position: center;">
                             <div class="head d-flex justify-content-center align-items-center" style="width: 250px; height: 40vh;">
                                 <div style="margin-top: 180px;">
                                     <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
@@ -288,18 +419,68 @@
                             </div>
                         </div>
                         <div class="card-footer mt-3">
-                            <h4 style="text-align: center;">{{ $member['text'] }}</h4>
-                            <p style="color: gray; text-align: center;">{{ $member['text1'] }}</p>
+                            <h4 style="text-align: center;">{{ $doctor['name'] }}</h4>
+                            <p style="color: gray; text-align: center;">{{ $doctor['bio'] }}</p>
+                            <p style="color: gray; text-align: center;">{{ $doctor['country'] }}</p>
                         </div>
                     </div>
                 </div>
-            @endforeach
+            @endforeach --}}
+
+
+            @foreach($doctors as $doctor)
+         {{-- <img src="{{ asset('storage/' . $myProfile->image) }}" alt="image" /> --}}
+
+<div class="col-md-3 d-flex justify-content-center mb-4">
+    <div class="doctor-card shadow rounded overflow-hidden" style="width: 250px;">
+        <div class="card-header" style="
+            background-image: url('{{ asset('storage/' . $doctor['image']) }}');
+            height: 40vh;
+            background-size: cover;
+            background-position: center;">
+        </div>
+        <div class="card-body text-center bg-white">
+            <h4 class="doctor-name mb-2">{{ $doctor['name'] }}</h4>
+            <p class="doctor-bio text-muted mb-2">{{ $doctor['bio'] }}</p>
+            <p class="doctor-country text-muted mb-0">{{ $doctor['country'] }}</p>
+        </div>
+    </div>
+</div>
+@endforeach
+
+
         </div>
     </div>
 
 
-
-
+    </section>
+<section id="contact">
+    <div class="row mx-0">
+        <div class="col-1"></div>
+        <div class="col-md-6">
+            <div class="mt-5" style="display: flex;">
+                <h5 style="color: gray;">Contact Us</h5>
+                <div class="mt-3" style="width: 130px; background-color: orange; height: 1px;"></div>
+            </div>
+    <div class="container">
+        <div class="contact-info">
+          <div class="info-item"><strong>Address:</strong> 123 Main Street, City, Country</div>
+          <div class="info-item"><strong>Phone:</strong> +1 234 567 890</div>
+          <div class="info-item"><strong>Email:</strong> info@example.com</div>
+          <div class="info-item"><strong>Follow us:</strong>
+            <a href="#">Facebook</a> | <a href="#">Twitter</a> | <a href="#">Instagram</a>
+          </div>
+        </div>
+        <div class="contact-form">
+          <h2>Send a Message</h2>
+          <form>
+            <input type="text" placeholder="Your Name" required />
+            <input type="email" placeholder="Your Email" required />
+            <textarea rows="5" placeholder="Your Message" required></textarea>
+            <button type="submit">Send Message</button>
+          </form>
+        </div></div></div></div>
+</section>
 
     <footer class="footer mt-5">
         <div class="footer-content">
@@ -321,5 +502,11 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    @if(session('message'))
+<script>
+    alert('{{ session('message') }}');
+</script>
+@endif
 </body>
 </html>

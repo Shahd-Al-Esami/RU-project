@@ -36,6 +36,11 @@ public static function monthBills(Request $request)//to filter bills by year and
 //doctor
 
 
+public static function planBills(){
+    $id=auth()->user()->id;
+    $bills=PlanOrder::where('doctor_id',$id)->with('bill')->get();
+return $bills;
+}
 
 public static function patientBills($id){
     $bills=Bill::where('user_id',$id)->with('planOrder')->get();

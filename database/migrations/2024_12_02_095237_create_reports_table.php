@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('doctor_id')->constrained('users');
 
             $table->foreignId('patient_id')->constrained('users');
-            $table->foreignId('plan_id')->constrained('plans')->cascadeOnDelete();
+            $table->foreignId('plan_id')->constrained('plans')->cascadeOnDelete()->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

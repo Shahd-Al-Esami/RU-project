@@ -12,19 +12,19 @@ class UserController extends Controller
 {
 
 //admin
-public  function countUser(){
-    $result = UserService::countUser();
+// public  function countUser(){
+//     $result = UserService::countUser();
 
-    return response()->json(['message' => $result]);
+//     return response()->json(['message' => $result]);
 
-}
+// }
     public function getAllDoctors(Request $request)
     {
 
-        $result = UserService::getAllDoctors($request);
+        $doctors = UserService::getAllDoctors($request);
 
 
-        return response()->json(['message' => $result]);
+return view('patient.allDoctors',compact('doctors'));
     }
 
     public function getDoctor($id)
@@ -85,27 +85,25 @@ public  function countUser(){
 
         return response()->json(['message' => $result]);
     }
-    public function isAgreeDoctor(Request $request,$id)
+    public function isAgreeDoctor($id)
     {
-        $result = UserService::isAgreeDoctor($id,$request);
+        $result = UserService::isAgreeDoctor($id);
 
-        return response()->json(['message' => $result]);
+        return redirect()->route('allPendingDoctors');
     }
-    public function allPendingDoctors()
+    public function allPendingDoctors(Request $request)
     {
-        $result = UserService::allPendingDoctors();
+        $doctors = UserService::allPendingDoctors($request);
 
-        return response()->json(['message' => $result]);
-    }
+return view('admin.doctors',['doctors'=>$doctors]) ;   }
 
     //doctor
 
   public function myPatients()
     {
-        $result = UserService::myPatients();
+        $patients = UserService::myPatients();
 
-        return response()->json(['message' => $result]);
-    }
+return view('doctor.myPatients',['patients'=>$patients] );   }
 
 
   public function getPatientWithInfo($id)

@@ -26,12 +26,12 @@ class LikeController extends Controller
     {
         $result = LikeService::createLike( $post_id);
 
-        return response()->json(['message' => $result]);
+        return redirect()->back();
     }
     public  function disLike($post_id)
     {
         $result = LikeService::disLike($post_id);
 
-        return response()->json(['message' => $result]);
+        return redirect()->back();
     }
 }

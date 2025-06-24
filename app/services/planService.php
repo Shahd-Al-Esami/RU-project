@@ -32,23 +32,24 @@ public static function storePlan($plan_order_id,PlanRequest $request){
     'state'        =>$request->state,
      ]);
 
-    return jsonTrait::jsonResponse(200,'the plan ',$plan);
-
+return $plan;
   }
 
   public static function updatePlan($plan_order_id,PlanRequest $request,$plan_id){
     $plan=Plan::findOrFail($plan_id);
+
     $plan->update([
-    'title'         =>$request->title,
-    'start_date'    =>$request->start_date,
-    'end_date'      =>$request->end_date,
-    'plan_order_id' =>$plan_order_id,
-    'state'         =>$request->state,
-     ]);
+        'title' => $request->input('title'),
+        'state' => $request->input('state'),
+        'plan_order_id' => $plan_order_id,
+        'start_date' => $request->input('start_date'),
+        'end_date' => $request->input('end_date'),
+    ]);
+return $plan;
+    // Optionally, you could return a redirect instead of a view
+    // return redirect()->route('showPlan', $plan->plan_order_id);
+}
 
-    return jsonTrait::jsonResponse(200,'update plan ',$plan);
-
-  }
   public static function deletePlan($id){
     $plan=Plan::findOrFail($id);
 
@@ -63,26 +64,10 @@ public static function storePlan($plan_order_id,PlanRequest $request){
 
 public static function showPlan($plan_order_id){
 
-    $plan=Plan::where('plan_order_id',$plan_order_id)->get();
-    return jsonTrait::jsonResponse(200,' show plan ',$plan);
-
+    $plan=Plan::where('plan_order_id',$plan_order_id)->with(['suggests','review'])->firstOrFail();
+     return $plan;
    }
-//export excel
 
-// public static function export($planId){
-// //   $plan = Plan::findOrFail($planId);
-// // dd('hi');
-// $plan = Plan::find($planId);
-
-// if (!$plan) {
-//     return response()->json(['error' => 'Plan not found'], 404);
-// }
-
-// $export = new PlanExport($planId);
-// return Excel::download($export, 'plan_' . $planId . '.xlsx');
-
-//     //  return Excel::download(new PlanExport($planId),'plan_details.xlsx');
-//    }
 
 
 
@@ -91,9 +76,8 @@ public static function showPlan($plan_order_id){
 
 public static function getPlan($plan_order_id){
 
-    $plan=Plan::where('plan_order_id',$plan_order_id)->with('descriptionPlans')->get();
-    return jsonTrait::jsonResponse(200,'plan with its details',$plan);
-
+    $plan=Plan::where('plan_order_id',$plan_order_id)->with(['descriptionPlans','suggests','review'])->firstOrFail();
+return $plan;
    }
 
 

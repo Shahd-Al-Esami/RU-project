@@ -33,16 +33,14 @@ public static function createLike($post_id){
     ->where('post_id', $post_id)
     ->first();
 
-if ($Like) {
-    return jsonTrait::jsonResponse(400, 'Already like this post');
-}
+if (!$Like) {
     $like=Like::create([
         'patient_id' => $id,
         'post_id' => $post_id,
-]);
-    return jsonTrait::jsonResponse(200,'you like this post',);
+]);}
 
-  }
+return $like;
+}
 
   public static function disLike($post_id){
     $id=auth()->user()->id;

@@ -9,11 +9,11 @@ use App\Http\Requests\PatientInformationRequest;
 
 class PatientInformationController extends Controller
 {
-    public  function myProfile()
+    public  function myProfile($idd)
     {
-        $result = PatientInformationService::myProfile();
+        $myProfile = PatientInformationService::myProfile($idd);
 
-        return response()->json(['message' => $result]);
+        return view('patient.profile',['myProfile'=>$myProfile]);
     }
     public  function updateProfile(Request $request)
     {

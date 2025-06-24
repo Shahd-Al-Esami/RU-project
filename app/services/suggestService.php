@@ -14,7 +14,7 @@ use jsonTrait;
 //doctor
 public static function getSuggests($plan_id){
   $suggests=Suggest::where('plan_id',$plan_id)->get();
-  return jsonTrait::jsonResponse(200,'all suggests of this plan',$suggests);
+return $suggests;
 }
 
 public static function patientSuggests()
@@ -31,7 +31,7 @@ public static function storeSuggest(SuggestRequest $request,$plan_id){
         'patient_id'   => auth()->user()->id,
         'plan_id'      => $plan_id,
     ]);
-    return jsonTrait::jsonResponse(201, 'Stored suggest successfully', $suggest);
+return $suggest;
 }
 
 public static function updateSuggest(SuggestRequest $request,$id,$plan_id){

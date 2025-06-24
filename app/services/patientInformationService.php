@@ -32,11 +32,10 @@ public static function store(PatientInformationRequest $request){
       }
 
 
-          public static function myProfile(){
-            $id=auth()->user()->id;
+          public static function myProfile($idd){
+            $id=$idd;
             $myProfile=User::where('id',$id)->with('patientInformation')->first();
-            return jsonTrait::jsonResponse(200,'my profile',$myProfile);
-
+              return $myProfile;
         }
 
         public static function updateProfile(Request $request){

@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
 <style>
     .nav-link:hover {
         background-color: white; /* Change hover background color to white */
@@ -32,6 +41,8 @@
 @extends('layouts.app')
 
 @section('content')
+
+
 <div class="container-fluid" style="background: url(../assets/img/dashboard.jpg); backface-visibility: hidden;
 background-size: cover;
 background-position-x: center;
@@ -45,16 +56,23 @@ z-index: -1;">
             <div class="sidebar text-dark p-4" style="height: 100vh; background-color: rgba(255, 165, 0, 0.5);">
                 <h3 class="text-center mb-4" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Admin Dashboard</h3>
                 <nav class="nav flex-column">
-                    <a class="nav-link  text-dark hover-bg mb-4" href="{{ route('admin.dashboard') }}"><b>Home</b></a>
+                    <a class="nav-link  text-dark hover-bg mb-4" href="{{ route('admin.myProfile') }}"><b>my Profile</b></a>
                     <h5 class="text-center mb-4" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Mangement Proccess</h5>
 
-                    <a class="nav-link  text-dark hover-bg" href=""><b>Doctors</b></a>
-                    <a class="nav-link text-dark hover-bg" href=""><b>Patients</b></a>
-                    <a class="nav-link text-dark hover-bg" href=""><b>Bills</b></a>
-                    <a class="nav-link text-dark hover-bg" href=""><b>Plans</b></a>
-                    <a class="nav-link text-dark hover-bg" href=""><b>Order Plans</b></a>
+                    {{-- <a class="nav-link  text-dark hover-bg" href="{{route('register')}}"><b>Add Admin</b></a> --}}
+
+                    {{-- <a class="nav-link  text-dark hover-bg" href=""><b>Add Doctor</b></a> --}}
+                    <a class="nav-link  text-dark hover-bg" href=""><b>Food Management</b></a>
+                    <a class="nav-link  text-dark hover-bg" href="{{ route('allPendingDoctors') }}"><b>Doctors Requests</b></a>
+                    <a class="nav-link  text-dark hover-bg" href=""><b>All Doctors</b></a>
+                    <a class="nav-link text-dark hover-bg" href=""><b>All Patients</b></a>
                     <a class="nav-link text-dark hover-bg" href=""><b>Posts</b></a>
+                    <a class="nav-link text-dark hover-bg" href=""><b>Order Plans</b></a>
+                    <a class="nav-link text-dark hover-bg" href=""><b>Appointments</b></a>
+
                     <a class="nav-link text-dark hover-bg" href=""><b>Reports</b></a>
+                    <a class="nav-link text-dark hover-bg" href=""><b>Bills</b></a>
+
                    {{-- <a class="nav-link text-dark hover-bg mt-4" href="{{ route('logout') }}"><b>LogOut</b></a> --}}
                    <form action="{{ route('logout') }}" method="POST" class="mt-4">
                     @csrf
@@ -76,7 +94,7 @@ z-index: -1;">
                     <div class="card mb-4 ">
                         <div class="card-body">
                             <h5 class="card-title">Total Doctors</h5>
-                            <p class="card-text display-4">0</p> <!-- Placeholder for total doctors -->
+                            <p class="card-text display-4">{{ $doctors }}</p> <!-- Placeholder for total doctors -->
                         </div>
                     </div>
                 </div>
@@ -84,20 +102,16 @@ z-index: -1;">
                     <div class="card mb-4 ">
                         <div class="card-body">
                             <h5 class="card-title">Total Patients</h5>
-                            <p class="card-text display-4">0</p> <!-- Placeholder for total patients -->
+                            <p class="card-text display-4">{{ $patients }}</p> <!-- Placeholder for total patients -->
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="card mb-4 ">
                         <div class="card-body">
-                            <a href="{{ route('countPlans') }}" class="nav-link text-dark hover-bg"><b>Count Plans</b></a>
+                            {{-- <a href="{{ route('countPlans') }}" class="nav-link text-dark hover-bg"><b>Count Plans</b></a> --}}
                             <h5 class="card-title">Total plans</h5>
-                            @if($plans > 0)
                             <p class="card-text display-4"> {{ $plans }}</p>
-                            @else
-                            <p class="card-text display-4"> no plan</p>
-                            @endif
                             <!-- Display the count of plans -->
                         </div>
                     </div>
@@ -198,3 +212,7 @@ z-index: -1;">
 
 
 @endsection
+<body>
+
+</body>
+</html>

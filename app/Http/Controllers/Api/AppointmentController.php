@@ -2,35 +2,59 @@
 
 namespace App\Http\Controllers\Api;
 
+use Carbon\Carbon;
+use App\Models\User;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\AppointmentService;
-use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
 {
-    public  function getAvailable($doctor_id,$day,$date)
+    public  function getAvailable(Request $request)
     {
-        $result = AppointmentService::getAvailable($doctor_id,$day,$date);
 
-        return response()->json(['message' => $result]);
-    }
+
+
+        $availableTimes= AppointmentService::getAvailable( $request);
+        $doctor=User::findOrfail($request->doctor_id);
+
+        return view('appointments.available', [
+            'doctor_id' => $request->doctor_id,
+            'doctor' => $doctor,
+            'date' => $request->date,
+             'availableTimes' => $availableTimes,
+        ]);    }
+
+
     public  function bookAppointment(Request $request)
     {
-        $result = AppointmentService::bookAppointment($request);
+        // dd($request);
+         AppointmentService::bookAppointment($request);
 
-        return response()->json(['message' => $result]);
+        return  redirect()->route('home');
+
     }
     public  function getAppointments(Request $request)
     {
-        $result = AppointmentService::getAppointments($request);
+        return AppointmentService::getAppointments($request);
 
-        return response()->json(['message' => $result]);
     }
     public  function myAppointments()
     {
-        $result = AppointmentService::myAppointments();
+        return $result = AppointmentService::myAppointments();
 
-        return response()->json(['message' => $result]);
+    }
+
+
+    public  function cancelStatus(Request $request,$id)
+    {
+        return $result = AppointmentService::cancelStatus($request,$id);
+
+    }
+    public  function doneStatus(Request $request,$id)
+    {
+        return $result = AppointmentService::doneStatus($request,$id);
+
     }
 
 }

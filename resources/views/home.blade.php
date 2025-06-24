@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
     <title>HealthBite</title>
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -141,10 +143,10 @@ z-index: -1;">
                 <h1  style="font-family: cursive; font-size: 25px; margin-left: 20px;"><b>HealthBite</b></h1>
             </div>
             <ul class="nav-links">
-                <li><a href="#posts"><b>Posts</b></a></li>
-                <li><a href="#doctors"><b>Doctors</b></a></li>
-                <li><a href="#services"><b>Services</b></a></li>
-                <li><a href="#contact"><b>Contact Us</b></a></li>
+                <li><a href="{{ route('homePosts') }}"><b>Posts</b></a></li>
+                <li><a href="{{ route('getAllDoctors') }}"><b>Doctors</b></a></li>
+                <li><a href="{{ route('services') }}"><b>Services</b></a></li>
+                <li><a href="{{ route('contact') }}"><b>Contact Us</b></a></li>
             </ul>
         </nav>
     </header>
@@ -155,11 +157,15 @@ z-index: -1;">
             <!-- Sidebar -->
             <div class="sidebar text-dark p-4" style="height: 80vh;">
                 <nav class="nav flex-column mt-5">
-                    <a class="nav-link  text-dark hover-bg mt-5" href="{{ route('admin.dashboard') }}"><h5><b>My Profile</b></h5></a>
-                    <a class="nav-link text-dark hover-bg mt-3" href=""><h5><b>My Plans</b></h5></a>
-                    <a class="nav-link text-dark mt-3 " href=""><h5><b>My Plan Order</b></h5></a>
-                    <a class="nav-link text-dark mt-3 " href=""><h5><b>My Bills</b></h5></a>
-                    <a class="nav-link text-dark mt-3 " href=""><h5><b>My Appointments</b></h5></a>
+
+                    <a class="nav-link  text-dark hover-bg mt-5" href="{{ route('patient.myProfile',['idd'=>auth()->user()->id]) }}"><h5><b>My Profile</b></h5></a>
+                    <a class="nav-link text-dark hover-bg mt-3" href="{{ route('myFollowers') }}"><h5><b>Doctors I Follow</b></h5></a>
+                    <a class="nav-link text-dark mt-3 " href="{{ route('descPlan') }}"><h5><b>Request a Plan ?</b></h5></a>
+                    <a class="nav-link text-dark hover-bg mt-3" href="{{ route('myOrdersPlans') }}"><h5><b>My Plans</b></h5></a>
+                    <a class="nav-link text-dark hover-bg mt-3" href="{{ route('myReports') }}"><h5><b>Doctor Notes</b></h5></a>
+
+                    {{-- <a class="nav-link text-dark mt-3 " href=""><h5><b>My Bills</b></h5></a> --}}
+                    <a class="nav-link text-dark mt-3 " href="{{ route('appointments') }}"><h5><b>My Appointments</b></h5></a>
 
                     <form action="{{ route('logout') }}" method="POST" class="mt-4">
                         @csrf
@@ -167,7 +173,6 @@ z-index: -1;">
                             <b>LogOut</b>
                         </button>
                     </form>
-
 
 
                 </nav>
@@ -191,5 +196,10 @@ z-index: -1;">
     }
 </script> --}}
 
+@if(session('message'))
+<script>
+    alert('{{ session('message') }}');
+</script>
+@endif
 </body>
 </html>
