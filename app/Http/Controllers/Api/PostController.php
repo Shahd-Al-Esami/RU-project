@@ -25,10 +25,9 @@ return view('doctor.addPost');
 
     public  function allPosts()
     {
-        $result = PostService::allPosts();
+        $posts = PostService::allPosts();
 
-        return response()->json(['message' => $result]);
-    }
+return view('admin.posts',['posts'=>$posts]);    }
     public  function doctorPosts($doctor_id)
     {
         $result = PostService::doctorPosts($doctor_id);
@@ -77,9 +76,9 @@ return view('doctor.myPosts',['posts'=>$posts]);    }
     //admin
     public  function getDeletedPosts()
     {
-        $result = PostService::getDeletedPosts();
+        $posts = PostService::getDeletedPosts();
 
-        return response()->json(['message' => $result]);
+        return view('admin.deletedPosts',['posts'=>$posts]);
     }
     //doctor
     public  function myDeletedPosts()

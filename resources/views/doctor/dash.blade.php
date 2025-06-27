@@ -112,7 +112,7 @@ z-index: -1;">
 
                 <nav class="nav flex-column">
 
-                    <h5 class="text-center mb-4 mt-3" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Mangement Proccess</h5>
+                    <h5 class="text-center mb-2 mt-1" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Mangement Proccess</h5>
                     <a class="nav-link text-dark " href="{{ route('doctor.myProfile') }}"><b> My Profile</b></a>
                     <a class="nav-link text-dark " href="{{ route('myPatients') }}"><b> My Patients</b></a>
                     <a class="nav-link text-dark hover-bg" href="{{ route('myPosts') }}"><b> My Posts</b></a>
@@ -121,6 +121,7 @@ z-index: -1;">
 
                     <a class="nav-link text-dark hover-bg" href="{{ route('getReports') }}"><b> My Reports</b></a>
                     <a class="nav-link text-dark hover-bg" href="{{ route('getAppointments') }}"><b> My Appointments</b></a>
+                    <a class="nav-link text-dark hover-bg" href=""><b> Food Table</b></a>
                    {{-- <a class="nav-link text-dark hover-bg mt-4" href="{{ route('logout') }}"><b>LogOut</b></a> --}}
                    <form action="{{ route('logout') }}" method="POST" class="mt-4">
                     @csrf

@@ -152,12 +152,12 @@
         <!-- About Me Section -->
         <div class="myProfile-card">
             <h4>About Me</h4>
-            <p class="bio">height : {{ $myProfile->patientInformation?->height }}</p>
-            <p class="bio">weight : {{ $myProfile->patientInformation?->weight }}</p>
-            <p class="bio">desirable_foods : {{ $myProfile->patientInformation?->desirable_foods }}</p>
-            <p class="bio">financial_state : {{ $myProfile->patientInformation?->financial_state }}</p>
-            <p class="bio">health_state : {{ $myProfile->patientInformation?->health_state }}</p>
-            <p class="bio">my Answers : {{ $myProfile->patientInformation?->answers }}</p>
+            <p class="bio">height : {{ $myProfile->patientInformation?->height??'' }}</p>
+            <p class="bio">weight : {{ $myProfile->patientInformation?->weight??'' }}</p>
+            <p class="bio">desirable_foods : {{ $myProfile->patientInformation?->desirable_foods??'' }}</p>
+            <p class="bio">financial_state : {{ $myProfile->patientInformation?->financial_state??'' }}</p>
+            <p class="bio">health_state : {{ $myProfile->patientInformation?->health_state??'' }}</p>
+            <p class="bio">my Answers : {{ $myProfile->patientInformation?->answers??'' }}</p>
         </div>
 
 

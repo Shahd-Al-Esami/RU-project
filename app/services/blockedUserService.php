@@ -38,7 +38,7 @@ public static function blockUser($id,Request $request)
         $blockedUser->save();
     }
 
-    return jsonTrait::jsonResponse(200, 'blocked successfuly', null);
+return $blockedUser;
 }
 public static function disblockUser($id)
 {
@@ -49,6 +49,6 @@ public static function disblockUser($id)
     $userblock=BlockedUser::where('user_id',$id)->first();
     $userblock->delete();
 
-    return jsonTrait::jsonResponse(200, ' disblocked successfuly.', null);
+return $userblock;
 }
 }

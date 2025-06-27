@@ -158,7 +158,7 @@
         <!-- About Me Section -->
         <div class="doctor-card">
             <h4>About Me</h4>
-            <p class="bio">{{ $doctor->doctorInformation->bio }}</p>
+            <p class="bio">{{ $doctor->doctorInformation->bio?? '' }}</p>
         </div>
 
 

@@ -61,6 +61,18 @@ return $doctors;
     }
 
 //admin
+public static function getDoctors(Request $request){
+    $search=$request->input('search');
+
+    if($search){
+
+    $doctors=User::where('role','doctor')->where('isAgreeDoctorRegistration','agree')->withTrashed()->where('name', 'LIKE', '%' . $search . '%')->get();
+    }else{
+    $doctors=User::where('role','doctor')->where('isAgreeDoctorRegistration','agree')->withTrashed()->get();
+    }
+return $doctors;
+}
+
     public static function getDoctorWithPatients($id){
         $doctor = User::findOrFail($id);
         $hisPatients = $doctor->planOrders->pluck('patient_id');
@@ -72,9 +84,10 @@ return $doctors;
 
     public static function softDelete(User $user){
          $user->delete();
-          return jsonTrait::jsonResponse(204, 'deleted successfuly', null);
-
+      return $user;
     }
+
+
     public static function deletedUsers(){
         $deletedUsers=User::onlyTrashed()->get();
         return jsonTrait::jsonResponse(200, 'deleted Users', $deletedUsers);
@@ -85,7 +98,7 @@ public static function restore($id) {
     $deletedUser = User::withTrashed()->findOrFail($id);
     $deletedUser->restore();
 
-    return jsonTrait::jsonResponse(200, 'restored successfully', $deletedUser);
+return $deletedUser;
 }
 
 
@@ -94,12 +107,11 @@ public static function getAllPatient(Request $request){
     $search=$request->input('search');
 
     if($search){
-    $patients=User::where('role','patient')->where('name', 'LIKE', '%' . $search . '%')->get();
+    $patients=User::where('role','patient')->withTrashed()->where('name', 'LIKE', '%' . $search . '%')->get();
     }
-    $patients=User::where('role','patient')->get();
+    $patients=User::where('role','patient')->withTrashed()->get();
 
-    return jsonTrait::jsonResponse(200, 'restored successfuly', $patients);
-
+return $patients;
 }
 public static function isAgreeDoctor($id){
 $doctor=User::findOrfail($id);
@@ -110,18 +122,12 @@ return $doctor;
 }
 
 
-public static function allPendingDoctors(Request $request) {
-    $search=$request->input('search');
+public static function allPendingDoctors() {
 
-    if($search && $search==='pending'){
-    // Fetch all pending doctors
-    $pendingDoctors = User::where('role', 'doctor')->where('isAgreeDoctorRegistration','LIKE', 'pending')->get();
+    $pendingDoctors = User::where('role', 'doctor')->where('isAgreeDoctorRegistration', 'pending')->get();
 
 return $pendingDoctors;
-    }else{
-    $pendingDoctors = User::where('role', 'doctor')->where('isAgreeDoctorRegistration', 'agree')->get();
 
-    }
  }
 
 //doctors

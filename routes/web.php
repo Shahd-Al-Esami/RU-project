@@ -56,7 +56,6 @@ Auth::routes();
 
 
 
-
 //admins
 
 
@@ -68,13 +67,19 @@ Route::middleware(['auth', 'role:admin'])->group(function() {
 
     Route::get('/admin/plans/count', [PlanOrderController::class, 'countPlans']);
 
+
+    Route::get('/getDoctors',[UserController::class,'getDoctors'])->name('getDoctors');//
+
+
 Route::get('/getAllDoctors',[UserController::class,'getAllDoctors'])->name('getAllDoctors');
 Route::get('/getDoctor/{id}',[UserController::class,'getDoctor'])->name('getDoctor');
 Route::get('/getDoctorWithPatients/{id}',[UserController::class,'getDoctorWithPatients'])->name('getDoctorWithPatients');
-Route::delete('/softDelete/{id}',[UserController::class,'softDelete'])->name('user.softDelete');//doctor
+Route::post('/softDelete/{id}',[UserController::class,'softDelete'])->name('user.softDelete');//doctor
 Route::get('/deletedUsers',[UserController::class,'deletedUsers'])->name('deletedUsers');
 Route::post('/restore/{id}',[UserController::class,'restore'])->name('user.restore');
+
 Route::get('/getAllPatient',[UserController::class,'getAllPatient'])->name('getAllPatient');
+
 Route::post('/isAgreeDoctor/{id}',[UserController::class,'isAgreeDoctor'])->name('isAgreeDoctor');
 Route::get('/allPendingDoctors',[UserController::class,'allPendingDoctors'])->name('allPendingDoctors');
 Route::get('/countUser',[UserController::class,'countUser'])->name('countUser');
@@ -86,11 +91,14 @@ Route::get('/countPlans',[PlanOrderController::class,'countPlans'])->name('count
 
 
 Route::get('/getDeletedPosts',[PostController::class,'getDeletedPosts'])->name('getDeletedPosts');
+Route::get('/admin/allPosts',[PostController::class,'allPosts'])->name('allPosts');
 
 
 Route::get('/getBlockedUsers',[BlockedUserController::class,'getBlockedUsers'])->name('getBlockedUsers');
+
 Route::post('/blockUser/{id}',[BlockedUserController::class,'blockUser'])->name('blockUser');
 Route::post('/disblockUser/{id}',[BlockedUserController::class,'disblockUser'])->name('disblockUser');
+
 Route::get('/countBlockUser',[BlockedUserController::class,'countBlockUser'])->name('countBlockUser');
 
 Route::get('/patientBills/{id}',[BillController::class,'patientBills'])->name('patientBills');

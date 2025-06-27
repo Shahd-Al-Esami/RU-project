@@ -25,13 +25,13 @@ class BlockedUserController extends Controller
 
         $result = BlockedUserService::blockUser($id,$request);
 
-        return response()->json(['message' => $result]);
+        return redirect()->back();
     }
     public  function disblockUser($id)
     {
         $result = BlockedUserService::disblockUser($id);
 
-        return response()->json(['message' => $result]);
+        return redirect()->back();
     }
 
     public  function countBlockUser()

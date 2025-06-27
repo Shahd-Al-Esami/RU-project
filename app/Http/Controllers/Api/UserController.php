@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\UserService;
 use App\Http\Traits\jsonTrait;
 use App\Http\Controllers\Controller;
+use App\Services\BlockedUserService;
 
 class UserController extends Controller
 {
@@ -18,6 +19,7 @@ class UserController extends Controller
 //     return response()->json(['message' => $result]);
 
 // }
+//patient
     public function getAllDoctors(Request $request)
     {
 
@@ -27,6 +29,15 @@ class UserController extends Controller
 return view('patient.allDoctors',compact('doctors'));
     }
 
+//admin
+    public function getDoctors(Request $request)
+    {
+
+        $doctors = UserService::getDoctors($request);
+
+
+return view('admin.doctors',compact('doctors'));
+    }
     public function getDoctor($id)
     {
 
@@ -51,9 +62,31 @@ return view('patient.allDoctors',compact('doctors'));
         $result = UserService::softDelete($user);
 
 
-        return response()->json(['message' => $result]);
+        return redirect()->back();
     }
 
+
+    public function restore($id)
+    {
+        $result = UserService::restore($id);
+
+
+        return redirect()->back();
+    }
+
+    public  function blockUser($id,Request $request)
+    {
+
+        $result = BlockedUserService::blockUser($id,$request);
+
+        return redirect()->back();
+    }
+    public  function disblockUser($id)
+    {
+        $result = BlockedUserService::disblockUser($id);
+
+        return redirect()->back();
+    }
     public function softDeleteMe()//الغاء تنشيط
     {
 
@@ -70,20 +103,14 @@ return view('patient.allDoctors',compact('doctors'));
 
         return response()->json(['message' => $result]);
     }
-    public function restore($id)
-    {
-        $result = UserService::restore($id);
 
-
-        return response()->json(['message' => $result]);
-    }
 
     public function getAllPatient(Request $request)
     {
-        $result = UserService::getAllPatient($request);
+        $patients = UserService::getAllPatient($request);
 
 
-        return response()->json(['message' => $result]);
+        return view('admin.patients',['patients'=>$patients]) ;
     }
     public function isAgreeDoctor($id)
     {
@@ -91,9 +118,9 @@ return view('patient.allDoctors',compact('doctors'));
 
         return redirect()->route('allPendingDoctors');
     }
-    public function allPendingDoctors(Request $request)
+    public function allPendingDoctors()
     {
-        $doctors = UserService::allPendingDoctors($request);
+        $doctors = UserService::allPendingDoctors();
 
 return view('admin.doctors',['doctors'=>$doctors]) ;   }
 

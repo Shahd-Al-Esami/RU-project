@@ -15,8 +15,7 @@ use jsonTrait;
 //doctor
 public static function allPosts (){
 $posts=Post::with(['comments','likes'])->orderBy('created_at', 'DESC')->get();
-return jsonTrait::jsonResponse(200, 'All posts with comments  ', $posts);
-
+return $posts;
 }
 
 
@@ -84,8 +83,7 @@ return $post;
     public static function getDeletedPosts(){
         $posts = Post::onlyTrashed()->get();
 
-        return jsonTrait::jsonResponse(200, 'Retrieved deleted posts successfully', $posts);
-    }
+return $posts;    }
 //doctor
     public static function myDeletedPosts(){
         $id=auth()->user()->id;
