@@ -20,8 +20,7 @@ public static function storeIngredient(Request $request){
         'calories' =>$request->calories,
 
     ]);
-  return jsonTrait::jsonResponse(200,'add ingredient successfully ',$ingredient);
-
+return $ingredient;
 }
 
 public static function updateingredient(Request $request, $id){
@@ -36,21 +35,21 @@ public static function updateingredient(Request $request, $id){
         'calories' =>$request->calories,
 
     ]);
-  return jsonTrait::jsonResponse(200,'update ingredient successfully ',$ingredient);
+    return $ingredient;
 
 }
 
 public static function deleteIngredient($id){
     $ingredient=Ingredient::findOrFail($id);
     $ingredient->delete();
-  return jsonTrait::jsonResponse(200,'delete ingredient successfully ',null);
+    return $ingredient;
 
 }
 //doctor
 public static function index(){
 
 $ingredient=Ingredient::all();
-    return jsonTrait::jsonResponse(200,'display ingredient  ',$ingredient);
+return $ingredient;
 
 }
 

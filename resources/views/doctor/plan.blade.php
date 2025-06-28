@@ -147,17 +147,7 @@
                 <button class="follow-btn toggle-details" data-id="details-{{ $plan->id }}">Show Details</button>
             </td>
 
-            {{-- <td style="text-align:center;">
-
-                <form id="details2" action="{{ route('storeDescriptionPlan',$plan->id) }}" method="POST">
-                    @csrf
-                <button class="follow-btn toggle-details2" data-id="details2-{{ $plan->id }}">Do you have any suggestion?</button>
-                <div id="details2-{{ $plan->id }}" class="suggestion-input" style="display:none; margin-top: 10px;">
-                    <input type="text"  placeholder="Enter your suggestion here..." />
-                    <button class="btn btn-submit-suggestion">Submit</button>
-                </div>
-                </form>
-             </td> --}}
+         
              @if(auth()->user()->role ==='doctor')
 
              <td style="text-align:center;">

@@ -12,13 +12,13 @@ class FoodController extends Controller
     {
         $result = FoodService::storeFood($request);
 
-        return response()->json(['message' => $result]);
+        return redirect()->back()->with('success', 'تم الانشاء الخطة بنجاح');
     }
     public  function updateFood(Request $request,$id)
     {
         $result = FoodService::updateFood( $request,$id);
 
-        return response()->json(['message' => $result]);
+        return redirect()->back()->with('success', 'تم الانشاء الخطة بنجاح');
     }
     public  function foodIngredient($id)
     {
@@ -30,12 +30,11 @@ class FoodController extends Controller
     {
         $result = FoodService::deleteFood($id);
 
-        return response()->json(['message' => $result]);
+        return redirect()->back()->with('success', 'تم الانشاء الخطة بنجاح');
     }
     public  function index()
     {
-        $result = FoodService::index();
+        $foods = FoodService::index();
 
-        return response()->json(['message' => $result]);
-    }
+return view('admin.foods',['foods'=>$foods]);    }
 }

@@ -24,8 +24,7 @@ public static function storeFood(Request $request){
 
     $food->ingredients()->attach($request->ingredient_ids);
 
-  return jsonTrait::jsonResponse(200,'add food successfully ',$food);
-
+return $food;
 }
 
 public static function updateFood(Request $request, $id){
@@ -41,24 +40,22 @@ public static function updateFood(Request $request, $id){
     ]);
     $food->ingredients()->sync($request->ingredient_ids);
 
-  return jsonTrait::jsonResponse(200,'update food successfully ',$food);
-
+return $food;
 }
 
 public static function deleteFood($id){
     $food=Food::findOrFail($id);
-
+if($food->ingredients)
+$food->ingredients()->detach();
     $food->delete();
-  return jsonTrait::jsonResponse(200,'delete food successfully ',null);
-
+return $food;
 }
 //doctor
 
 public static function index(){
 
-    $food=Food::all();
-        return jsonTrait::jsonResponse(200,'display food  ',$food);
-
+    $foods=Food::with('ingredients')->get();
+return $foods;
     }
 //patient +doctor
     public static function foodIngredient($id){

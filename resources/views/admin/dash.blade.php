@@ -62,7 +62,7 @@ z-index: -1;">
                     {{-- <a class="nav-link  text-dark hover-bg" href="{{route('register')}}"><b>Add Admin</b></a> --}}
 
                     <a class="nav-link  text-dark hover-bg" href=""><b>Add User</b></a>
-                    <a class="nav-link  text-dark hover-bg" href=""><b>Food Management</b></a>
+                    <a class="nav-link  text-dark hover-bg" href="{{ route('food.index') }}"><b>Food Management</b></a>
                     <a class="nav-link  text-dark hover-bg" href="{{ route('allPendingDoctors') }}"><b>Doctors Requests</b></a>
                     <a class="nav-link  text-dark hover-bg" href="{{ route('getDoctors') }}"><b>All Doctors</b></a>
                     <a class="nav-link text-dark hover-bg" href="{{ route('getAllPatient') }}"><b>All Patients</b></a>
