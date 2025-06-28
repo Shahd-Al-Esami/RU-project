@@ -121,7 +121,7 @@ z-index: -1;">
 
                     <a class="nav-link text-dark hover-bg" href="{{ route('getReports') }}"><b> My Reports</b></a>
                     <a class="nav-link text-dark hover-bg" href="{{ route('getAppointments') }}"><b> My Appointments</b></a>
-                    <a class="nav-link text-dark hover-bg" href=""><b> Food Table</b></a>
+                    <a class="nav-link text-dark hover-bg" href="{{ route('foodDoctor') }}"><b> Food Table</b></a>
                    {{-- <a class="nav-link text-dark hover-bg mt-4" href="{{ route('logout') }}"><b>LogOut</b></a> --}}
                    <form action="{{ route('logout') }}" method="POST" class="mt-4">
                     @csrf

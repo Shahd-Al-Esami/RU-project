@@ -109,6 +109,8 @@
 @extends('layouts.app')
 
 @section('content')
+<a href="{{ url('/admin/dashboard') }}" class="btn btn-secondary">Go Back</a>
+
 <div class="container">
     <h2 class="text-center text-orange mb-4">🍽️ Food & Ingredients Manager</h2>
 
@@ -209,8 +211,7 @@
 
 
 
-
-    <!-- Foods Table -->
+  <!-- Foods Table -->
     <div class="table-responsive mt-4">
         <table class="table table-striped table-bordered align-middle text-center">
             <thead class="thead-dark">
@@ -250,6 +251,7 @@
                             </div>
                         </td>
                     </form>
+
                     <td>
                         <form action="{{ route('deleteFood', $food->id) }}" method="POST" onsubmit="return confirm('Delete this food?')">
                             @csrf
@@ -263,6 +265,7 @@
         </table>
     </div>
 </div>
+
 
 
 

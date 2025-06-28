@@ -36,5 +36,16 @@ class FoodController extends Controller
     {
         $foods = FoodService::index();
 
-return view('admin.foods',['foods'=>$foods]);    }
+return view('admin.foods',['foods'=>$foods]);
+ }
+
+
+
+  public function show()
+{
+    $foods = FoodService::index();
+
+return view('doctor.foods',['foods'=>$foods]);
+ }
+
 }

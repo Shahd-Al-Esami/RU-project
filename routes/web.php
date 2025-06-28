@@ -144,6 +144,9 @@ Route::get('/getPlansReviews',[ReviewController::class,'getPlansReviews'])->name
 
     Route::middleware(['auth','isAgreeDoctor'])->group(function(){
 
+
+Route::get('/index/foodDoctor',[FoodController::class,'show'])->name('foodDoctor');
+
     Route::post('/storePlan/{plan_order_id}',[PlanController::class,'storePlan'])->name('storePlan');
     Route::post('/updatePlan/{plan_order_id}/{plan_id}',[PlanController::class,'updatePlan'])->name('updatePlan');
     Route::delete('/deletePlan/{id}',[PlanController::class,'deletePlan'])->name('deletePlan');
