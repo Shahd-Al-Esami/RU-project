@@ -139,28 +139,6 @@
 <!-- Container for all 3 cards -->
 <div class="cards-container mt-2">
 
-  <!-- Card 1: Form to create plan order -->
-
-    <!-- Example success message, you can toggle it based on logic -->
-    <!-- <div class="alert-success">Order created successfully!</div> -->
-    {{-- <form method="POST" action="">
-      @csrf --}}
-
-      {{-- <label for="plan_name">Plan Name</label>
-      <input type="text" name="plan_name" id="plan_name" required>
-
-      <label for="description">Description</label>
-      <input type="date" name="description" id="description" required>
-
-      <label for="goals">Goals</label>
-      <input type="date" name="goals" id="goals" required>
-
-      <label for="price">Price ($)</label>
-      <input type="number" name="price" id="price" step="0.01" min="0" required>
-
-      <button type="submit" class="btn">Create Order</button>
-    </form> --}}
-  {{-- </div> --}}
 
   <div class="card">
     <h3>Keep A Healthy Routine</h3>

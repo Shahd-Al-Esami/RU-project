@@ -109,7 +109,7 @@
 @extends('layouts.app')
 
 @section('content')
-<a href="{{ url('getPlanOrders') }}" class="btn btn-secondary go-back-btn">Go Back</a>
+<a href="{{ url()->previous() }}" class="btn btn-secondary go-back-btn">Go Back</a>
 
 <h1>Diet Plans</h1>
 
@@ -147,7 +147,7 @@
                 <button class="follow-btn toggle-details" data-id="details-{{ $plan->id }}">Show Details</button>
             </td>
 
-         
+
              @if(auth()->user()->role ==='doctor')
 
              <td style="text-align:center;">
@@ -258,11 +258,13 @@
             <input type="radio" name="isDone_{{ $descriptionPlan->id }}" value="0" {{ !$descriptionPlan->isDone ? 'checked' : '' }} disabled> No
         </label>
     </td>
+    @if(auth()->user()->role =='doctor')
+
     <td>
         <button class="btn" type="button" onclick="enableEdit({{ $descriptionPlan->id }})">تعديل</button>
         <button class="btn" type="submit" id="saveButton_{{ $descriptionPlan->id }}" disabled>حفظ</button>
     </td>
-
+@endif
 </tr>
 
                         </form>

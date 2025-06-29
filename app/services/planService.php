@@ -22,6 +22,9 @@ class PlanService
 use jsonTrait;
 //doctor
 
+public static function countPlan(){
+    return count(Plan::all());
+}
 public static function storePlan($plan_order_id,PlanRequest $request){
 
     $plan=Plan::create([

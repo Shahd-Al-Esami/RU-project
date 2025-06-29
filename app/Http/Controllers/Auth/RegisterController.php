@@ -30,7 +30,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        // $this->middleware('guest');
     }
 
     /**
@@ -115,14 +115,17 @@ class RegisterController extends Controller
         $user = $result['user'];
 
 
+
+            // Redirect based on user role
+            if (auth()->check() && auth()->user()->role === 'admin') {
+                return redirect()->route('admin.dashboard'); // Admin dashboard route
+            }
+            else{
         Auth::login($user);
         // dd($request->all());
 
-        // Redirect based on user role
-        if ($user->role === 'admin') {
-            return redirect()->route('admin.dashboard'); // Admin dashboard route
 
-        } elseif ($user->role === 'doctor'&& $user->isAgreeDoctorRegistration=='agree') {
+        if ($user->role === 'doctor'&& $user->isAgreeDoctorRegistration=='agree') {
             return redirect()->route('doctor.dashboard'); // Doctor dashboard route
         } elseif ($user->role === 'doctor'&& $user->isAgreeDoctorRegistration  !=  'agree') {
             session()->flash('message', 'You must wait to be accepted .');
@@ -132,5 +135,5 @@ class RegisterController extends Controller
         else {
             return redirect()->route('home'); // Patient dashboard route
         }
-    }
+    }}
 }

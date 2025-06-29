@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('plan_order_id')->constrained('plan_orders');
             $table->foreignId('user_id')->constrained('users');//patient_id
-            // $table->enum('payment_method',['credit_card','paypal']);
             $table->timestamps();
             $table->softDeletes();
         });

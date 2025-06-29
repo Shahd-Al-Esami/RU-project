@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\User;
 use App\Models\PlanOrder;
 use Illuminate\Http\Request;
 use App\Http\Traits\jsonTrait;
+use App\Models\PatientInformation;
 use App\Services\PlanOrderService;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PatientInformationRequest;
 use App\Http\Requests\PlanOrderRequest;
-use App\Models\PatientInformation;
+use App\Http\Requests\PatientInformationRequest;
 
 class PlanOrderController extends Controller
 {
@@ -29,10 +30,18 @@ public function createPlanOrder()
 }
     public function getAllPlanOrders()
     {
-        $result = PlanOrderService::getAllPlanOrders();
+        $planOrders = PlanOrderService::getAllPlanOrders();
 
-        return response()->json(['message' => $result]);
-    }
+return view('admin.planOrders',['planOrders'=>$planOrders])    ;
+}
+
+
+// public function goToPlanOrders()
+// {
+//        $users=User::where('role','doctor')->where('isAgreeDoctorRegistration','agree')->get();
+
+//         return view('admin.planOrders',['users'=>$users]);
+// }
     public  function showPlanOrder($id)
     {
         $result = PlanOrderService::showPlanOrder($id);

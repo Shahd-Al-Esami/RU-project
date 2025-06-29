@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Bill extends Model
 {
     use HasFactory;
-    protected $fillable=['payment_method','planOrder_id','user_id'];
+    protected $fillable=['planOrder_id','user_id'];
 
     public function user(): BelongsTo{
         return $this->belongsTo(User::class,'user_id');

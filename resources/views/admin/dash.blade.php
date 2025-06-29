@@ -46,7 +46,7 @@
 <div class="container-fluid" style="background: url(../assets/img/dashboard.jpg); backface-visibility: hidden;
 background-size: cover;
 background-position-x: center;
-height: 100vh;
+height: 105vh;
 width: 100%;
 background-repeat: no-repeat;
 z-index: -1;">
@@ -61,17 +61,17 @@ z-index: -1;">
 
                     {{-- <a class="nav-link  text-dark hover-bg" href="{{route('register')}}"><b>Add Admin</b></a> --}}
 
-                    <a class="nav-link  text-dark hover-bg" href=""><b>Add User</b></a>
+                    <a class="nav-link  text-dark hover-bg" href="{{ route('addUser') }}"><b>Add User</b></a>
                     <a class="nav-link  text-dark hover-bg" href="{{ route('food.index') }}"><b>Food Management</b></a>
                     <a class="nav-link  text-dark hover-bg" href="{{ route('allPendingDoctors') }}"><b>Doctors Requests</b></a>
                     <a class="nav-link  text-dark hover-bg" href="{{ route('getDoctors') }}"><b>All Doctors</b></a>
                     <a class="nav-link text-dark hover-bg" href="{{ route('getAllPatient') }}"><b>All Patients</b></a>
                     <a class="nav-link text-dark hover-bg" href="{{ route('allPosts') }}"><b>Posts</b></a>
-                    <a class="nav-link text-dark hover-bg" href=""><b>Order Plans</b></a>
-                    <a class="nav-link text-dark hover-bg" href=""><b>Appointments</b></a>
+                    <a class="nav-link text-dark hover-bg" href="{{ route('getAllPlanOrders') }}"><b>Order Plans</b></a>
+                    <a class="nav-link text-dark hover-bg" href="{{ route('getAllAppointments') }}"><b>Appointments</b></a>
 
-                    <a class="nav-link text-dark hover-bg" href=""><b>Reports</b></a>
-                    <a class="nav-link text-dark hover-bg" href=""><b>Bills</b></a>
+                    <a class="nav-link text-dark hover-bg" href="{{ route('getAllreports') }}"><b>Reports</b></a>
+                    <a class="nav-link text-dark hover-bg" href="{{ route('AllmonthBills') }}"><b>Bills</b></a>
 
                    {{-- <a class="nav-link text-dark hover-bg mt-4" href="{{ route('logout') }}"><b>LogOut</b></a> --}}
                    <form action="{{ route('logout') }}" method="POST" class="mt-4">
@@ -112,6 +112,17 @@ z-index: -1;">
                             {{-- <a href="{{ route('countPlans') }}" class="nav-link text-dark hover-bg"><b>Count Plans</b></a> --}}
                             <h5 class="card-title">Total plans</h5>
                             <p class="card-text display-4"> {{ $plans }}</p>
+                            <!-- Display the count of plans -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card  ">
+                        <div class="card-body">
+                            {{-- <a href="{{ route('countPlans') }}" class="nav-link text-dark hover-bg"><b>Count Plans</b></a> --}}
+                            <h5 class="card-title">Total plan Orders</h5>
+                            <p class="card-text display-4"> {{ $planOrders }}</p>
                             <!-- Display the count of plans -->
                         </div>
                     </div>

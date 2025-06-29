@@ -70,6 +70,8 @@ Route::middleware(['auth', 'role:admin'])->group(function() {
 
     Route::get('/getDoctors',[UserController::class,'getDoctors'])->name('getDoctors');//
 
+Route::get('/admin/addUser',[UserController::class,'addUser'])->name('addUser');
+
 
 Route::get('/getAllDoctors',[UserController::class,'getAllDoctors'])->name('getAllDoctors');
 Route::get('/getDoctor/{id}',[UserController::class,'getDoctor'])->name('getDoctor');
@@ -84,7 +86,9 @@ Route::post('/isAgreeDoctor/{id}',[UserController::class,'isAgreeDoctor'])->name
 Route::get('/allPendingDoctors',[UserController::class,'allPendingDoctors'])->name('allPendingDoctors');
 Route::get('/countUser',[UserController::class,'countUser'])->name('countUser');
 
-Route::get('/getAllPlanOrders',[PlanOrderController::class,'getAllPlanOrders'])->name('getAllPlanOrders');
+// Route::get('/planOrders/admin',[PlanOrderController::class,'getAllPlanOrders'])->name('getAllPlanOrders.admin');
+
+Route::get('/admin/getAllPlanOrders',[PlanOrderController::class,'getAllPlanOrders'])->name('getAllPlanOrders');
 Route::get('/showPlanOrder/{id}',[PlanOrderController::class,'showPlanOrder'])->name('showPlanOrder');
 
 Route::get('/countPlans',[PlanOrderController::class,'countPlans'])->name('countPlans');
@@ -102,11 +106,11 @@ Route::post('/disblockUser/{id}',[BlockedUserController::class,'disblockUser'])-
 Route::get('/countBlockUser',[BlockedUserController::class,'countBlockUser'])->name('countBlockUser');
 
 Route::get('/patientBills/{id}',[BillController::class,'patientBills'])->name('patientBills');
-Route::get('/monthBills',[BillController::class,'monthBills'])->name('monthBills');
+Route::get('/admin/monthBills',[BillController::class,'AllmonthBills'])->name('AllmonthBills');
 
 
 Route::get('/allreportsOfDoctor/{id}',[ReportController::class,'allreportsOfDoctor'])->name('allreportsOfDoctor');
-Route::get('/getAllreports',[ReportController::class,'getAllreports'])->name('getAllreports');
+Route::get('/admin/getAllreports',[ReportController::class,'getAllreports'])->name('getAllreports');
 
 
 Route::get('/countMonthBills',[MonthBillsController::class,'countMonthBills'])->name('countMonthBills');
@@ -122,6 +126,7 @@ Route::delete('/deleteFood/{id}',[FoodController::class,'deleteFood'])->name('de
 Route::post('/updateFood/{id}',[FoodController::class,'updateFood'])->name('updateFood');
 Route::get('/index/food',[FoodController::class,'index'])->name('food.index');
 
+Route::get('/admin/getAllAppointments',[AppointmentController::class,'getAllAppointments'])->name('getAllAppointments');
 
 Route::get('/getPlansReviews',[ReviewController::class,'getPlansReviews'])->name('getPlansReviews');
 

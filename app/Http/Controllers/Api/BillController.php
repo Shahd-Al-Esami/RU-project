@@ -9,13 +9,14 @@ use App\Http\Controllers\Controller;
 use App\Services\BillService;
 
 class BillController extends Controller
+
 { use jsonTrait;
 //admin
-    public  function monthBills(Request $request)
+    public  function AllmonthBills(Request $request)
     {
-        $result = BillService::monthBills($request);
+        $bills = BillService::AllmonthBills($request);
 
-        return response()->json(['message' => $result]);
+return view('admin.bills',['bills'=>$bills]);
     }
     public  function patientBills($id)
     {

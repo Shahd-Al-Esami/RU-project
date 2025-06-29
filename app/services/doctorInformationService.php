@@ -42,7 +42,7 @@ return $myProfile;
 public static function updateProfile(Request $request){
     $id=auth()->user()->id;
     $user=User::findOrFail($id);
-    $image=null;
+    $path=null;
     if(request()->hasFile('image'))
     {
         $path = uploadImage('image', $user->role == 'doctor' ? 'doctors' : ($user->role == 'patient' ? 'patients' : 'admins'), 'public');

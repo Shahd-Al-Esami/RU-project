@@ -39,6 +39,12 @@ class AppointmentController extends Controller
         return AppointmentService::getAppointments($request);
 
     }
+    //admin
+    public  function getAllAppointments(Request $request)
+    {
+        return AppointmentService::getAllAppointments($request);
+
+    }
     public  function myAppointments()
     {
         return $result = AppointmentService::myAppointments();

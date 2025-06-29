@@ -57,11 +57,11 @@ return view('patient.myReports',['reports'=>$reports]);
 
         return response()->json(['message' => $result]);
     }
-    public  function getAllreports()
+    public  function getAllreports(Request $request)
     {
-        $result = ReportService::getAllreports();
+        $reports = ReportService::getAllreports($request);
 
-        return response()->json(['message' => $result]);
+return view('admin.reports',['reports'=>$reports]);
     }
 
 

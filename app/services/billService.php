@@ -13,25 +13,37 @@ class BillService
 
 use jsonTrait;
 //admin
-public static function monthBills(Request $request)//to filter bills by year and month
-    {
-        $month=$request->input('month');
-        $year=$request->input('year');
+    public static function AllmonthBills(Request $request)
+{
+    $doctorId = $request->input('doctor_id'); // معرف الطبيب
+    $date = $request->input('date');        // الشهر
 
-        if($month && $year)
-        {
-            $bills = Bill::whereYear('created_at', $year)
-            ->whereMonth('created_at', $month)
-            ->get();
-       return jsonTrait::jsonResponse(200, 'All Bills in this date', $bills);
+    $query = PlanOrder::query();
+
+
+        // تصفية حسب تاريخ الفواتير (created_at)
+        if ($date && $doctorId) {
+            $query->where('doctor_id', $doctorId);
+
+            return $bills = $query->with('bill')
+            ->whereDate('created_at', '=',$date)->get();
 
         }
-        $bills =Bill::orderBy('created_at','desc')->get();
 
-       return jsonTrait::jsonResponse(200, 'All Bills', $bills);
+    // تصفية بواسطة معرف الطبيب إذا وجد
+    if ($doctorId) {
+        $query->where('doctor_id', $doctorId);
+     return $bills = $query->with('bill')->orderBy('created_at','desc')->get();
+
     }
 
 
+
+    // جلب البيانات مع الفواتير
+
+    $bills =PlanOrder::orderBy('created_at','desc')->get();
+    return $bills;
+}
 
 //doctor
 

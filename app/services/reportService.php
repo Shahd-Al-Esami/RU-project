@@ -91,13 +91,29 @@ public static function allreportsOfDoctor($id){
 
 }
 
-public static function getAllreports(){
-$reports=Report::paginate(5);
-return jsonTrait::jsonResponse(200, 'all reports', $reports);
+public static function getAllReports(Request $request)
+{
+    $search = $request->input('search');
 
+    // Get all patient IDs (for the current doctor context, you may need to filter further if applicable)
+    $patient_ids_query = Report::pluck('patient_id');
+
+    if ($search) {
+        // Find patients matching the search name
+        $patient_ids = User::whereIn('id', $patient_ids_query)
+            ->where('name', 'LIKE', '%' . $search . '%')
+            ->pluck('id');
+
+        // Fetch reports for these patients
+        $reports = Report::whereIn('patient_id', $patient_ids)->get();
+    } else {
+        // Fetch all reports ordered by date
+        $reports = Report::orderBy('date', 'DESC')->get();
+    }
+
+    // Return reports as JSON response
+return $reports;
 }
-
-
 
 
 }

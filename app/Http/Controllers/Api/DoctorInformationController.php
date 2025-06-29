@@ -30,7 +30,9 @@ return view('admin.profile',['admin'=>$admin])  ;
 return view('doctor.updateProfile',['doctor'=>$doctor])  ;
 }
     public  function updateProfile(Request $request)
-    { if(!auth()->user()->role==='admin'){
+    {
+        if(auth()->user()->role ==='doctor')
+        {
         $result = DoctorInformationService::updateProfile($request);
 
         return redirect()->route('doctor.myProfile');

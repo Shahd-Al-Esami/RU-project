@@ -13,12 +13,12 @@ class UserController extends Controller
 {
 
 //admin
-// public  function countUser(){
-//     $result = UserService::countUser();
 
-//     return response()->json(['message' => $result]);
+public  function addUser(){
 
-// }
+return view('admin.register');
+}
+
 //patient
     public function getAllDoctors(Request $request)
     {

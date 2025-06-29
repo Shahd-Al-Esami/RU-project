@@ -18,11 +18,12 @@ class HomeController extends Controller
     }
     public function adminDash()
     {
-       $plans = PlanOrderService::countPlans();
+       $planOrders = PlanOrderService::countPlanOrderss();
+       $plans = PlanService::countPlan();
        $patients = UserService::countPatients();
        $doctors = UserService::countDoctors();
 
-        return view('admin.dash',compact('plans','patients','doctors'));
+        return view('admin.dash',compact('plans','patients','doctors','planOrders'));
     }
 
     // protected function authenticated($request, $user)

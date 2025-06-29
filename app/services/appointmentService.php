@@ -96,7 +96,7 @@ public static function getAppointments(Request $request)
     if ($search) {
         $query->whereDate('date', '=', $search);
 
-     
+
      }
 
     $appointments = $query->orderBy('date', 'DESC')->get();
@@ -104,6 +104,23 @@ public static function getAppointments(Request $request)
     return view('doctor.apoointments',['appointments'=>$appointments]);
 }
 
+//admin
+public static function getAllAppointments(Request $request)
+{
+    $search = $request->input('search');
+
+    if ($search) {
+        // Filter appointments by the search date
+        $appointments = Appointment::whereDate('date', '=', $search)
+            ->orderBy('date', 'DESC')
+            ->get();
+    } else {
+        // Fetch all appointments ordered by date descending
+        $appointments = Appointment::orderBy('date', 'DESC')->get();
+    }
+
+    return view('admin.apoointments', ['appointments' => $appointments]);
+}
 
 //patient
 public static function myAppointments(){

@@ -19,6 +19,10 @@ use jsonTrait;
 //admin
 
 
+public static function countPlanOrderss(){
+    return count(PlanOrder::all());
+
+}
 public static function countPlans(){
     return count(PlanOrder::all());
 
@@ -29,9 +33,9 @@ return $doctors;
 }
 
 public static function getAllPlanOrders(){
-        $planOrders=PlanOrder::orderBy('created_at', 'DESC')->get();
-        return jsonTrait::jsonResponse(200, 'All plan orders  ', $planOrders);
 
+        $planOrders=PlanOrder::orderBy('created_at', 'DESC')->get();
+return $planOrders;
     }
 
     public static function showPlanOrder($id){
